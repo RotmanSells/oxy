@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOURGROUP — Инвестиции. Архитектура. Строительство. Туризм</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1400&q=80&auto=format" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-particles"></div>
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <span class="preloader-brand">FOURGROUP</span>
+                <span class="preloader-tagline">Инвестиции. Архитектура. Строительство. Туризм.</span>
+            </div>
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="preloaderBar"></div>
+            </div>
+            <div class="preloader-status">
+                <span class="preloader-text" id="preloaderText">Загрузка</span>
+                <span class="preloader-dots"><span>.</span><span>.</span><span>.</span></span>
+                <span class="preloader-percent" id="preloaderPercent">0%</span>
+            </div>
+        </div>
+        <div class="preloader-grid"></div>
+    </div>
+
+    <!-- Background Slider -->
+    <div class="bg-slider" id="bgSlider">
+        <div class="slide active" data-section="hero" style="background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1400&q=80&auto=format')"></div>
+        <div class="slide" data-section="about" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920')"></div>
+        <div class="slide" data-section="projects" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920')"></div>
+        <div class="slide" data-section="services" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920')"></div>
+        <div class="slide" data-section="advantages" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920')"></div>
+        <div class="slide" data-section="contacts" style="background-image: url('https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=1920')"></div>
+    </div>
+
+    <!-- Section Images Layer -->
+    <div class="section-images-layer" id="sectionImagesLayer">
+        <div class="section-img active" data-section="hero">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80&auto=format" alt="" loading="eager">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="about">
+            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="projects">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="services">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="supply">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="advantages">
+            <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="tourism">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="partners">
+            <img src="https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+        <div class="section-img" data-section="contacts">
+            <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80&auto=format" alt="" loading="lazy">
+            <div class="section-img-overlay"></div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">FOURGROUP</a>
+                <nav class="main-nav">
+                    <a href="#about" class="nav-link">О нас</a>
+                    <a href="#services" class="nav-link">Услуги</a>
+                    <a href="#advantages" class="nav-link">Преимущества</a>
+                    <a href="#contacts" class="nav-link">Контакты</a>
+                </nav>
+                <nav class="lang-switcher">
+                    <a href="#" class="lang-link active">RU</a>
+                    <a href="#" class="lang-link">EN</a>
+                    <a href="#" class="lang-link">HY</a>
+                </nav>
+                <button class="menu-toggle" aria-label="Открыть меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="hero-top-line"></div>
+
+                <div class="hero-locations">
+                    <span>Ереван</span><span class="loc-sep">|</span>
+                    <span>Москва</span><span class="loc-sep">|</span>
+                    <span>Санкт-Петербург</span><span class="loc-sep">|</span>
+                    <span>Краснодар</span><span class="loc-sep">|</span>
+                    <span>Таиланд</span>
+                </div>
+
+                <h1 class="main-title">
+                    <span class="title-line">Ваш капитал</span>
+                    <span class="title-line highlight">в надёжных руках</span>
+                </h1>
+
+                <p class="description">
+                    От идеи до управления активами — девелопмент полного цикла для инвесторов и застройщиков.
+                </p>
+
+                <div class="hero-formula">
+                    <span class="formula-item">архитектура</span>
+                    <span class="formula-sep">·</span>
+                    <span class="formula-item">строительство</span>
+                    <span class="formula-sep">·</span>
+                    <span class="formula-item">инвестиции</span>
+                </div>
+
+                <div class="cta-wrapper">
+                    <a href="https://t.me/gyurjyan" class="cta-button primary" target="_blank" rel="noopener">
+                        <span>СВЯЗАТЬСЯ</span>
+                        <svg class="arrow-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="hero-facts">
+                    <div class="fact-item">
+                        <span class="fact-number" data-count="15" data-suffix="+">0+</span>
+                        <span class="fact-label">лет опыта</span>
+                    </div>
+                    <div class="fact-divider"></div>
+                    <div class="fact-item">
+                        <span class="fact-number" data-count="120" data-suffix="+">0+</span>
+                        <span class="fact-label">проектов</span>
+                    </div>
+                    <div class="fact-divider"></div>
+                    <div class="fact-item">
+                        <span class="fact-number" data-count="4" data-suffix="">0</span>
+                        <span class="fact-label">страны</span>
+                    </div>
+                    <div class="fact-divider"></div>
+                    <div class="fact-item">
+                        <span class="fact-number" data-count="98" data-suffix="%">0%</span>
+                        <span class="fact-label">довольных клиентов</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span class="scroll-text">SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">О КОМПАНИИ</span>
+                <h2 class="section-title">Экспертность на каждом этапе</h2>
+            </div>
+            <div class="about-glass-card">
+                <div class="about-glass-inner">
+                    <div class="about-left">
+                        <div class="about-photo-ring">
+                            <div class="about-photo">
+                                <img src="https://optim.tildacdn.com/tild6261-6266-4331-b037-303161323935/-/resize/780x/-/format/webp/qI1KN24_SiYuyywdrxWz.jpg.webp" alt="Ксения Котова" loading="lazy">
+                            </div>
+                        </div>
+                        <span class="about-photo-caption">Ксения Котова</span>
+                    </div>
+                    <div class="about-right-content">
+                        <div class="about-text">
+                            <p class="lead">
+                                Я, Ксения Котова, основатель и идейный вдохновитель инвестиционной компании FOURGROUP.
+                            </p>
+                            <p>
+                                За время работы в дизайнерской и строительной сфере мне удалось сформировать профессиональную команду специалистов с более чем двадцатилетним стажем. За счёт этого мы можем гарантировать долговечность и надёжность всех выполненных нами проектов!
+                            </p>
+                            <p>
+                                Безупречный интерьер или прекрасный дом — это отлично, но для нас важнее наши клиенты! Мы предоставляем Вам полный доступ к процессу строительства и ремонта!
+                            </p>
+                            <p>
+                                Основной принцип нашей работы заключается в создании архитектуры и интерьеров <strong style="color: #c9a962;">«ВНЕ ВРЕМЕНИ»</strong> — вечно ценных и всегда вдохновляющих!
+                            </p>
+                            <p>
+                                Ваши желания с нами становятся реальностью!
+                            </p>
+                        </div>
+                        <div class="about-stats">
+                            <div class="stat-glass">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">лет опыта</span>
+                            </div>
+                            <div class="stat-glass">
+                                <span class="stat-number">120+</span>
+                                <span class="stat-label">проектов</span>
+                            </div>
+                            <div class="stat-glass">
+                                <span class="stat-number">4</span>
+                                <span class="stat-label">страны</span>
+                            </div>
+                            <div class="stat-glass">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">довольных</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section" id="projects">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label">ПОРТФОЛИО</span>
+                <h2 class="section-title">Реализованные проекты</h2>
+                <p class="section-desc">Объекты, которые мы создали от концепции до сдачи</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card large">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" alt="Премиальная резиденция" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Резиденция</span>
+                        <h3 class="project-name">Villa Hillside</h3>
+                        <p class="project-loc">Ереван, Армения</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600" alt="Бизнес-центр" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Бизнес-центр</span>
+                        <h3 class="project-name">Gyumri Plaza</h3>
+                        <p class="project-loc">Гюмри, Армения</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600" alt="Отель" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Отель</span>
+                        <h3 class="project-name">Dilijan Resort</h3>
+                        <p class="project-loc">Дилижан, Армения</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600" alt="Апарт-отель" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Апартаменты</span>
+                        <h3 class="project-name">Sevan View</h3>
+                        <p class="project-loc">Озеро Севан</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600" alt="Туристический комплекс" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Комплекс</span>
+                        <h3 class="project-name">Tatev Valley</h3>
+                        <p class="project-loc">Татев, Армения</p>
+                    </div>
+                </div>
+                <div class="project-card large">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" alt="Загородный дом" loading="lazy">
+                    <div class="project-overlay">
+                        <span class="project-tag">Резиденция</span>
+                        <h3 class="project-name">Mountain Estate</h3>
+                        <p class="project-loc">Цахкадзор, Армения</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services section" id="services">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label">НАПРАВЛЕНИЯ</span>
+                <h2 class="section-title">Комплексные решения</h2>
+                <p class="section-desc">Четыре столпа нашей экспертности, работающие как единый механизм</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-glass">
+                        <div class="service-visual">
+                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=300" alt="Инвестиции" loading="lazy">
+                        </div>
+                        <h3 class="service-title">Инвестиции</h3>
+                        <p class="service-desc">Финансовое моделирование, оценка рисков, привлечение капитала и управление инвестиционными портфелями в недвижимости.</p>
+                        <a href="#contacts" class="service-link">
+                            <span>Узнать больше</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="service-glow"></div>
+                </div>
+                <div class="service-card">
+                    <div class="service-glass">
+                        <div class="service-visual">
+                            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=300" alt="Архитектура" loading="lazy">
+                        </div>
+                        <h3 class="service-title">Архитектура</h3>
+                        <p class="service-desc">Концептуальное проектирование, 3D-визуализация, разработка уникальных архитектурных решений под климат и ландшафт.</p>
+                        <a href="#contacts" class="service-link">
+                            <span>Узнать больше</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="service-glow"></div>
+                </div>
+                <div class="service-card">
+                    <div class="service-glass">
+                        <div class="service-visual">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=300" alt="Строительство" loading="lazy">
+                        </div>
+                        <h3 class="service-title">Строительство</h3>
+                        <p class="service-desc">Генподряд, управление строительством, контроль качества, поставка материалов и снабжение объектов.</p>
+                        <a href="#contacts" class="service-link">
+                            <span>Узнать больше</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="service-glow"></div>
+                </div>
+                <div class="service-card">
+                    <div class="service-glass">
+                        <div class="service-visual">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300" alt="Туризм" loading="lazy">
+                        </div>
+                        <h3 class="service-title">Туризм</h3>
+                        <p class="service-desc">Создание туристических комплексов, операционный запуск, управление отелями и рекреационными объектами.</p>
+                        <a href="#contacts" class="service-link">
+                            <span>Узнать больше</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="service-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supply Section -->
+    <section class="supply section" id="supply">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label">СНАБЖЕНИЕ</span>
+                <h2 class="section-title">Материалы и оборудование</h2>
+                <p class="section-desc">Прямые поставки для строительства и инженерных систем — от фанкойлов до отделочных материалов</p>
+            </div>
+            <div class="supply-grid">
+                <div class="supply-card">
+                    <div class="supply-visual">
+                        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500" alt="Кондиционирование" loading="lazy">
+                    </div>
+                    <div class="supply-body">
+                        <h3 class="supply-title">Климатические системы</h3>
+                        <p class="supply-desc">Фанкойлы, чиллеры, VRF-системы, приточно-вытяжная вентиляция — проектирование и поставка под ключ.</p>
+                    </div>
+                </div>
+                <div class="supply-card">
+                    <div class="supply-visual">
+                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500" alt="Стройматериалы" loading="lazy">
+                    </div>
+                    <div class="supply-body">
+                        <h3 class="supply-title">Строительные материалы</h3>
+                        <p class="supply-desc">Бетон, арматура, кирпич, гипсокартон, изоляция — прямые поставки от производителей с лучшими ценами.</p>
+                    </div>
+                </div>
+                <div class="supply-card">
+                    <div class="supply-visual">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=500" alt="Отделка" loading="lazy">
+                    </div>
+                    <div class="supply-body">
+                        <h3 class="supply-title">Отделочные материалы</h3>
+                        <p class="supply-desc">Керамогранит, паркет, краски, фасадные системы, декоративные элементы премиум-класса.</p>
+                    </div>
+                </div>
+                <div class="supply-card">
+                    <div class="supply-visual">
+                        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=500" alt="Инженерия" loading="lazy">
+                    </div>
+                    <div class="supply-body">
+                        <h3 class="supply-title">Инженерное оборудование</h3>
+                        <p class="supply-desc">Насосные станции, электрика, кабельная продукция, автоматика и системы умного дома.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="advantages" id="advantages">
+        <div class="advantages-hero">
+            <img class="advantages-hero-bg" src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920" alt="" loading="lazy">
+            <div class="advantages-hero-overlay"></div>
+            <div class="advantages-hero-content">
+                <span class="section-label">ПОЧЕМУ МЫ</span>
+                <h2 class="section-title">Преимущества работы с FOURGROUP</h2>
+                <p class="section-desc">Шесть причин выбрать нас для вашего следующего проекта</p>
+            </div>
+        </div>
+        <div class="advantages-cards-wrap">
+            <div class="container">
+                <div class="advantages-grid">
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500" alt="Команда" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Единая команда</h3>
+                            <p class="advantage-desc">Все специалисты — от аналитиков до прорабов — работают в одной компании без посредников.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=500" alt="Сроки" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Фиксированные сроки</h3>
+                            <p class="advantage-desc">Гарантируем соблюдение календарных графиков с финансовой ответственностью за просрочку.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500" alt="Прозрачность" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Прозрачность</h3>
+                            <p class="advantage-desc">Онлайн-отчётность, еженедельные сводки и полная финансовая прозрачность на каждом этапе.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500" alt="Качество" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Премьер-качество</h3>
+                            <p class="advantage-desc">Проверенные материалы, авторский надзор и многоступенчатый контроль качества.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500" alt="Цикл" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Полный цикл</h3>
+                            <p class="advantage-desc">От идеи до операционного запуска — берём на себя каждый этап под ключ.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-glass">
+                        <div class="advantage-visual">
+                            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=500" alt="Мир" loading="lazy">
+                        </div>
+                        <div class="advantage-body">
+                            <h3 class="advantage-title">Международный опыт</h3>
+                            <p class="advantage-desc">Проекты в Армении, Грузии, России и ОАЭ. Локальные рынки и мировые стандарты.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tourism Section -->
+    <section class="tourism section" id="tourism">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label">ТУРИЗМ</span>
+                <h2 class="section-title">Туристический бизнес под ключ</h2>
+                <p class="section-desc">От подбора земли до запуска объекта — создаём инфраструктуру отдыха</p>
+            </div>
+            <div class="tourism-grid">
+                <div class="tourism-card">
+                    <div class="tourism-visual">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" alt="Отели и резорты" loading="lazy">
+                    </div>
+                    <div class="tourism-body">
+                        <h3 class="tourism-title">Отели и резорты</h3>
+                        <p class="tourism-desc">Проектирование, строительство и операционный запуск гостиничных комплексов: от концепции до первых гостей.</p>
+                    </div>
+                </div>
+                <div class="tourism-card">
+                    <div class="tourism-visual">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Капсульные дома" loading="lazy">
+                    </div>
+                    <div class="tourism-body">
+                        <h3 class="tourism-title">Капсульные дома</h3>
+                        <p class="tourism-desc">Модульные решения для глэмпинга и экологичного отдыха — быстрый монтаж, минимальное вмешательство в природу.</p>
+                    </div>
+                </div>
+                <div class="tourism-card">
+                    <div class="tourism-visual">
+                        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=600" alt="Глэмпинг" loading="lazy">
+                    </div>
+                    <div class="tourism-body">
+                        <h3 class="tourism-title">Глэмпинг-кластеры</h3>
+                        <p class="tourism-desc">Создание туристических кластеров с полным циклом: инфраструктура, дизайн, маркетинг и управление.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners section" id="partners">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label">ПАРТНЁРЫ</span>
+                <h2 class="section-title">Нам доверяют профессионалы</h2>
+                <p class="section-desc">Работаем с ведущими компаниями строительного и финансового секторов</p>
+            </div>
+            <div class="partners-grid">
+                <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l8-4 8 4v14"/><path d="M10 9a2 2 0 012-2h0a2 2 0 012 2v12H10V9z"/></svg>
+                    </div>
+                    <h4 class="partner-name">Архитектурные бюро</h4>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20M2 6h20M2 10h20M2 14h20M2 18h20"/></svg>
+                    </div>
+                    <h4 class="partner-name">Монолитные работы</h4>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h4 class="partner-name">Банки и инвесторы</h4>
+                </div>
+                    <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h4 class="partner-name">Дизайн-студии</h4>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    </div>
+                    <h4 class="partner-name">Ландшафтные партнёры</h4>
+                </div>
+                <div class="partner-item">
+                    <div class="partner-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <h4 class="partner-name">Снабжающие компании</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contacts">
+        <div class="cta-bg">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920" alt="" loading="lazy">
+            <div class="cta-bg-overlay"></div>
+        </div>
+        <div class="cta-grid">
+            <div class="cta-text">
+                <span class="section-label">КОНТАКТЫ</span>
+                <h2 class="cta-title">Обсудим ваш проект</h2>
+                <p class="cta-desc">Оставьте заявку — мы свяжемся в течение 24 часов и подготовим индивидуальное предложение под ваши задачи.</p>
+                <div class="cta-messengers">
+                    <span class="messengers-label">Быстрая связь</span>
+                    <div class="messengers-row">
+                        <a href="https://wa.me/37499123456" class="messenger-btn whatsapp" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.13 1.585 5.929L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://t.me/gyurjyan" class="messenger-btn telegram" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.062 3.345-.48.33-.913.49-1.303.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="tel:+37499123456" class="messenger-btn phone">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                            <span>Позвонить</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-form-wrapper">
+                <form class="cta-form" id="contactForm" action="#" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+374 ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Интересующее направление</label>
+                        <select id="service" name="service">
+                            <option value="">Выберите направление</option>
+                            <option value="investment">Инвестиции</option>
+                            <option value="architecture">Архитектура</option>
+                            <option value="construction">Строительство</option>
+                            <option value="tourism">Туризм</option>
+                            <option value="complex">Комплексный проект</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">О проекте</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Расскажите кратко о вашем проекте или задаче..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">
+                        <span>ОТПРАВИТЬ ЗАЯВКУ</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="cta-footer-bar">
+            <div class="cta-footer-brand">
+                <span class="cta-footer-logo">FOURGROUP</span>
+                <p>Инвестиции. Архитектура. Строительство. Туризм.</p>
+            </div>
+            <div class="cta-footer-col">
+                <h4>Адрес</h4>
+                <p>Ереван, Армения<br>ул. Таманяна, 1</p>
+            </div>
+            <div class="cta-footer-col">
+                <h4>Контакты</h4>
+                <p><a href="mailto:info@gyurjyan.com">info@gyurjyan.com</a></p>
+                <p><a href="tel:+37499123456">+374 99 123 456</a></p>
+            </div>
+            <div class="cta-footer-col">
+                <h4>Соцсети</h4>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">LinkedIn</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
