@@ -104,9 +104,9 @@ body {
     position: relative;
     z-index: 2;
     text-align: center;
-    max-width: 500px;
-    width: 90%;
-    padding: 0 20px;
+    max-width: 600px;
+    width: 92%;
+    padding: 0 24px;
 }
 
 .preloader-logo {
@@ -116,11 +116,11 @@ body {
 .preloader-brand {
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
+    font-size: 52px;
     font-weight: 300;
     letter-spacing: 8px;
     color: #ffffff;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     animation: logoPulse 2s ease-in-out infinite;
 }
 
@@ -131,7 +131,7 @@ body {
 
 .preloader-tagline {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.45);
     letter-spacing: 3px;
@@ -140,11 +140,11 @@ body {
 
 /* Progress bar */
 .preloader-bar-wrap {
-    width: 280px;
-    height: 3px;
+    width: 320px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 3px;
-    margin: 0 auto 32px;
+    border-radius: 4px;
+    margin: 0 auto 36px;
     overflow: hidden;
     position: relative;
 }
@@ -185,12 +185,12 @@ body {
 }
 
 .preloader-text {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 2px;
     text-transform: uppercase;
-    max-width: 280px;
+    max-width: 320px;
     width: 100%;
     text-align: center;
 }
@@ -217,11 +217,11 @@ body {
 
 .preloader-percent {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 300;
     color: #c9a962;
     margin-left: 4px;
-    width: 42px;
+    width: 52px;
     text-align: left;
     display: inline-block;
 }
@@ -1561,7 +1561,7 @@ body.loading .footer {
 
 .supply-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
@@ -1614,6 +1614,21 @@ body.loading .footer {
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.55);
     font-weight: 300;
+}
+
+.supply-partner-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #c9a962;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.supply-partner-link:hover {
+    color: #e8d5a3;
 }
 
 /* ========================================
@@ -2532,31 +2547,32 @@ body.loading .footer {
     }
 
     .preloader-brand {
-        font-size: 28px;
+        font-size: 36px;
         letter-spacing: 4px;
     }
 
     .preloader-tagline {
-        font-size: 10px;
+        font-size: 12px;
         letter-spacing: 2px;
     }
 
     .preloader-bar-wrap {
-        width: 200px;
+        width: 260px;
+        height: 4px;
     }
 
     .preloader-status {
         flex-direction: column;
-        gap: 4px;
+        gap: 6px;
     }
 
     .preloader-text {
-        font-size: 11px;
+        font-size: 13px;
         letter-spacing: 1px;
     }
 
     .preloader-percent {
-        font-size: 14px;
+        font-size: 18px;
     }
 
     .scroll-indicator {
