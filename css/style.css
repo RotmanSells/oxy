@@ -229,6 +229,7 @@ body {
 body.loading .bg-slider,
 body.loading .overlay,
 body.loading .header,
+body.loading .hero,
 body.loading .section,
 body.loading .cta-section,
 body.loading .footer {
@@ -537,7 +538,6 @@ body.loading .footer {
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
     transition: color 0.3s ease;
-    white-space: nowrap;
 }
 
 .formula-item:hover {
@@ -554,7 +554,7 @@ body.loading .footer {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(40px, 6vw, 84px);
     font-weight: 300;
-    line-height: 1.08;
+    line-height: 1.2;
     margin-bottom: 28px;
     text-shadow: 0 4px 40px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.5);
 }
@@ -2080,18 +2080,17 @@ body.loading .footer {
 .hero .title-line,
 .hero .description,
 .hero .cta-button {
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards;
+    animation: fadeInUp 1s ease both;
 }
 
-.hero .hero-top-line { opacity: 0; animation: fadeInUp 0.8s ease forwards; animation-delay: 0.05s; }
-.hero .hero-locations { opacity: 0; animation: fadeInUp 0.8s ease forwards; animation-delay: 0.1s; }
+.hero .hero-top-line { animation: fadeInUp 0.8s ease both; animation-delay: 0.05s; }
+.hero .hero-locations { animation: fadeInUp 0.8s ease both; animation-delay: 0.1s; }
 .hero .title-line:nth-child(1) { animation-delay: 0.25s; }
 .hero .title-line:nth-child(2) { animation-delay: 0.35s; }
 .hero .description { animation-delay: 0.5s; }
-.hero .hero-formula { opacity: 0; animation: fadeInUp 0.8s ease forwards; animation-delay: 0.65s; }
-.hero .cta-wrapper { opacity: 0; animation: fadeInUp 0.8s ease forwards; animation-delay: 0.85s; }
-.hero .hero-facts { opacity: 0; animation: fadeInUp 0.8s ease forwards; animation-delay: 1.05s; }
+.hero .hero-formula { animation: fadeInUp 0.8s ease both; animation-delay: 0.65s; }
+.hero .cta-wrapper { animation: fadeInUp 0.8s ease both; animation-delay: 0.85s; }
+.hero .hero-facts { animation: fadeInUp 0.8s ease both; animation-delay: 1.05s; }
 
 /* Scroll reveal for sections */
 .reveal {
@@ -2457,6 +2456,15 @@ body.loading .footer {
 
     .hero {
         padding: 90px 0 40px;
+        min-height: auto;
+    }
+
+    .content-wrapper {
+        max-width: 100%;
+    }
+
+    .title-line, .description, .hero-locations {
+        overflow-wrap: break-word;
     }
 
     /* .section-img[data-section="hero"]::after,
