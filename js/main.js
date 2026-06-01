@@ -44,11 +44,7 @@ function animateLoader() {
     const newPhraseIndex = Math.min(Math.floor(elapsed / PHRASE_DURATION), phrases.length - 1);
     if (newPhraseIndex !== currentPhraseIndex) {
         currentPhraseIndex = newPhraseIndex;
-        preloaderText.style.opacity = '0';
-        setTimeout(() => {
-            preloaderText.textContent = phrases[currentPhraseIndex];
-            preloaderText.style.opacity = '1';
-        }, 120);
+        preloaderText.textContent = phrases[currentPhraseIndex];
     }
 
     if (timeProgress < 1 || !resourcesLoaded) {

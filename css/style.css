@@ -104,8 +104,9 @@ body {
     position: relative;
     z-index: 2;
     text-align: center;
-    width: 500px;
-    padding: 0 40px;
+    max-width: 500px;
+    width: 90%;
+    padding: 0 20px;
 }
 
 .preloader-logo {
@@ -180,6 +181,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .preloader-text {
@@ -188,10 +190,9 @@ body {
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: opacity 0.2s ease;
-    width: 280px;
+    max-width: 280px;
+    width: 100%;
     text-align: center;
-    white-space: nowrap;
 }
 
 .preloader-dots {
@@ -2524,6 +2525,38 @@ body.loading .footer {
 
     .cta-button.large {
         padding: 18px 32px;
+    }
+
+    .preloader-content {
+        padding: 0 16px;
+    }
+
+    .preloader-brand {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+
+    .preloader-tagline {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .preloader-bar-wrap {
+        width: 200px;
+    }
+
+    .preloader-status {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .preloader-text {
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+
+    .preloader-percent {
+        font-size: 14px;
     }
 
     .scroll-indicator {
