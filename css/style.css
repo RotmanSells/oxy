@@ -2069,6 +2069,11 @@ body.loading .footer {
     display: flex;
 }
 
+.phone-dropdown.active .messenger-btn {
+    flex: 1 1 0;
+    justify-content: center;
+}
+
 .messengers-row.phones {
     margin-top: 8px;
 }
