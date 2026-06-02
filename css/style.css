@@ -2032,7 +2032,6 @@ body.loading .footer {
 .phone-toggle-wrap {
     position: relative;
     display: inline-block;
-    margin-top: 8px;
 }
 
 .phone-toggle {
@@ -2040,6 +2039,13 @@ body.loading .footer {
     border: 1px solid rgba(201, 169, 98, 0.25);
     color: #c9a962;
     cursor: pointer;
+    appearance: none;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1;
 }
 
 .phone-toggle:hover {
