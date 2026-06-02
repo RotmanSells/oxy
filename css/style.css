@@ -454,7 +454,7 @@ body.loading .footer {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.lang-link {
+.lang-btn {
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -463,10 +463,14 @@ body.loading .footer {
     transition: all 0.3s ease;
     padding: 4px 8px;
     border-radius: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.lang-link:hover,
-.lang-link.active {
+.lang-btn:hover,
+.lang-btn.active {
     color: #ffffff;
     background: rgba(201, 169, 98, 0.15);
 }
@@ -2585,7 +2589,7 @@ body.loading .footer {
         flex-shrink: 0;
     }
 
-    .lang-link {
+    .lang-btn {
         font-size: 10px;
         padding: 2px 4px;
     }

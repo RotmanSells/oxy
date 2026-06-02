@@ -24,7 +24,7 @@
                 <div class="preloader-bar" id="preloaderBar"></div>
             </div>
             <div class="preloader-status">
-                <span class="preloader-text" id="preloaderText">Загрузка</span>
+                <span class="preloader-text" id="preloaderText" data-i18n="preloader_text">Загрузка</span>
                 <span class="preloader-dots"><span>.</span><span>.</span><span>.</span></span>
                 <span class="preloader-percent" id="preloaderPercent">0%</span>
             </div>
@@ -96,19 +96,18 @@
             <div class="header-content">
                 <a href="#" class="logo">INTEGRA KOTOVA</a>
                 <nav class="main-nav">
-                    <a href="#about" class="nav-link" data-section="1">О нас</a>
-                    <a href="#projects" class="nav-link" data-section="2">Проекты</a>
-                    <a href="#services" class="nav-link" data-section="3">Услуги</a>
-                    <a href="#supply" class="nav-link" data-section="4">Снабжение</a>
-                    <a href="#advantages" class="nav-link" data-section="5">Преимущества</a>
-                    <a href="#tourism" class="nav-link" data-section="6">Туризм</a>
-                    <a href="#partners" class="nav-link" data-section="7">Партнеры</a>
-                    <a href="#contacts" class="nav-link" data-section="8">Контакты</a>
+                    <a href="#about" class="nav-link" data-section="1" data-i18n="nav_about">О нас</a>
+                    <a href="#projects" class="nav-link" data-section="2" data-i18n="nav_projects">Проекты</a>
+                    <a href="#services" class="nav-link" data-section="3" data-i18n="nav_services">Услуги</a>
+                    <a href="#supply" class="nav-link" data-section="4" data-i18n="nav_supply">Снабжение</a>
+                    <a href="#advantages" class="nav-link" data-section="5" data-i18n="nav_advantages">Преимущества</a>
+                    <a href="#tourism" class="nav-link" data-section="6" data-i18n="nav_tourism">Туризм</a>
+                    <a href="#partners" class="nav-link" data-section="7" data-i18n="nav_partners">Партнеры</a>
+                    <a href="#contacts" class="nav-link" data-section="8" data-i18n="nav_contacts">Контакты</a>
                 </nav>
                 <nav class="lang-switcher">
-                    <a href="#" class="lang-link active">RU</a>
-                    <a href="#" class="lang-link">EN</a>
-                    <a href="#" class="lang-link">HY</a>
+                    <button class="lang-btn active" data-lang="ru" data-i18n="lang_ru">RU</button>
+                    <button class="lang-btn" data-lang="en" data-i18n="lang_en">EN</button>
                 </nav>
                 <button class="menu-toggle" aria-label="Открыть меню">
                     <span></span>
@@ -126,37 +125,37 @@
                 <div class="hero-top-line"></div>
 
                 <div class="hero-locations">
-                    <span>Ереван</span><span class="loc-sep">|</span>
-                    <span>Москва</span><span class="loc-sep">|</span>
-                    <span>Санкт-Петербург</span><span class="loc-sep">|</span>
-                    <span>Краснодар</span><span class="loc-sep">|</span>
-                    <span>Таиланд</span>
+                    <span data-i18n="hero_loc_yerevan">Ереван</span><span class="loc-sep">|</span>
+                    <span data-i18n="hero_loc_moscow">Москва</span><span class="loc-sep">|</span>
+                    <span data-i18n="hero_loc_spb">Санкт-Петербург</span><span class="loc-sep">|</span>
+                    <span data-i18n="hero_loc_krasnodar">Краснодар</span><span class="loc-sep">|</span>
+                    <span data-i18n="hero_loc_thailand">Таиланд</span>
                 </div>
 
                 <h1 class="main-title">
-                    <span class="title-line">Ваш капитал</span>
-                    <span class="title-line highlight">в надёжных руках</span>
+                    <span class="title-line" data-i18n="hero_title_line1">Ваш капитал</span>
+                    <span class="title-line highlight" data-i18n="hero_title_line2">в надёжных руках</span>
                 </h1>
 
-                <p class="description">
+                <p class="description" data-i18n="hero_desc">
                     От идеи до управления активами — девелопмент полного цикла: строительство, дизайн, земля, туризм и инвестиции.
                 </p>
 
                 <div class="hero-formula">
-                    <span class="formula-item">строительство</span>
+                    <span class="formula-item" data-i18n="hero_formula_construction">строительство</span>
                     <span class="formula-sep">·</span>
-                    <span class="formula-item">дизайн</span>
+                    <span class="formula-item" data-i18n="hero_formula_design">дизайн</span>
                     <span class="formula-sep">·</span>
-                    <span class="formula-item">земля</span>
+                    <span class="formula-item" data-i18n="hero_formula_land">земля</span>
                     <span class="formula-sep">·</span>
-                    <span class="formula-item">туризм</span>
+                    <span class="formula-item" data-i18n="hero_formula_tourism">туризм</span>
                     <span class="formula-sep">·</span>
-                    <span class="formula-item">инвестиции</span>
+                    <span class="formula-item" data-i18n="hero_formula_investments">инвестиции</span>
                 </div>
 
                 <div class="cta-wrapper">
                     <a href="https://t.me/gyurjyan" class="cta-button primary" target="_blank" rel="noopener">
-                        <span>СВЯЗАТЬСЯ</span>
+                        <span data-i18n="hero_cta">СВЯЗАТЬСЯ</span>
                         <svg class="arrow-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
@@ -166,29 +165,29 @@
                 <div class="hero-facts">
                     <div class="fact-item">
                         <span class="fact-number" data-count="15" data-suffix="+">0+</span>
-                        <span class="fact-label">лет опыта</span>
+                        <span class="fact-label" data-i18n="stat_experience">лет опыта</span>
                     </div>
                     <div class="fact-divider"></div>
                     <div class="fact-item">
                         <span class="fact-number" data-count="120" data-suffix="+">0+</span>
-                        <span class="fact-label">проектов</span>
+                        <span class="fact-label" data-i18n="stat_projects">проектов</span>
                     </div>
                     <div class="fact-divider"></div>
                     <div class="fact-item">
                         <span class="fact-number" data-count="4" data-suffix="">0</span>
-                        <span class="fact-label">страны</span>
+                        <span class="fact-label" data-i18n="stat_countries">страны</span>
                     </div>
                     <div class="fact-divider"></div>
                     <div class="fact-item">
                         <span class="fact-number" data-count="98" data-suffix="%">0%</span>
-                        <span class="fact-label">довольных клиентов</span>
+                        <span class="fact-label" data-i18n="stat_satisfied">довольных клиентов</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="scroll-indicator">
-            <span class="scroll-text">SCROLL</span>
+            <span class="scroll-text" data-i18n="hero_scroll">SCROLL</span>
             <div class="scroll-line"></div>
         </div>
     </section>
@@ -197,8 +196,8 @@
     <section class="about section" id="about">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">О КОМПАНИИ</span>
-                <h2 class="section-title">Экспертность на каждом этапе</h2>
+                <span class="section-label" data-i18n="about_label">О КОМПАНИИ</span>
+                <h2 class="section-title" data-i18n="about_title">Экспертность на каждом этапе</h2>
             </div>
             <div class="about-glass-card">
                 <div class="about-glass-inner">
@@ -212,32 +211,32 @@
                     </div>
                     <div class="about-right-content">
                         <div class="about-text">
-                            <p class="lead">
+                            <p class="lead" data-i18n="about_lead">
                                 Ксения Котова
                             </p>
-                            <p>
+                            <p data-i18n="about_p1">
                                 Я верю, что недвижимость — это не просто квадратные метры, а сложная экосистема, где пересекаются смелая архитектура, строгий финансовый расчет и комфорт будущего.
                             </p>
-                            <p>
+                            <p data-i18n="about_p2">
                                 За годы работы в сфере строительства и управления проектами я и моя команда выработали формулу идеального объекта: эстетика + юридическая чистота + высокая доходность. Мы не просто строим — мы создаем ликвидные активы в самых перспективных точках мира: от динамичного Еревана и деловых столиц России до курортного рая в Таиланде.
                             </p>
                         </div>
                         <div class="about-stats">
                             <div class="stat-glass">
                                 <span class="stat-number">15+</span>
-                                <span class="stat-label">лет опыта</span>
+                                <span class="stat-label" data-i18n="stat_experience">лет опыта</span>
                             </div>
                             <div class="stat-glass">
                                 <span class="stat-number">120+</span>
-                                <span class="stat-label">проектов</span>
+                                <span class="stat-label" data-i18n="stat_projects">проектов</span>
                             </div>
                             <div class="stat-glass">
                                 <span class="stat-number">4</span>
-                                <span class="stat-label">страны</span>
+                                <span class="stat-label" data-i18n="stat_countries">страны</span>
                             </div>
                             <div class="stat-glass">
                                 <span class="stat-number">98%</span>
-                                <span class="stat-label">довольных</span>
+                                <span class="stat-label" data-i18n="stat_satisfied">довольных</span>
                             </div>
                         </div>
                     </div>
@@ -250,9 +249,9 @@
     <section class="projects section" id="projects">
         <div class="container">
             <div class="section-header center">
-                <span class="section-label">ПОРТФОЛИО</span>
-                <h2 class="section-title">Реализованные проекты</h2>
-                <p class="section-desc">Объекты, которые мы создали от концепции до сдачи</p>
+                <span class="section-label" data-i18n="projects_label">ПОРТФОЛИО</span>
+                <h2 class="section-title" data-i18n="projects_title">Реализованные проекты</h2>
+                <p class="section-desc" data-i18n="projects_desc">Объекты, которые мы создали от концепции до сдачи</p>
             </div>
             <div class="projects-slider" id="projectsSlider">
                 <div class="projects-slider-track">
@@ -347,9 +346,9 @@
     <section class="agclub section" id="agclub">
         <div class="container">
             <div class="section-header center">
-                <span class="section-label">ИНВЕСТИЦИИ</span>
+                <span class="section-label" data-i18n="agclub_label">ИНВЕСТИЦИИ</span>
                 <h2 class="section-title">AG Club Villas</h2>
-                <p class="section-desc">26 премиальных вилл на Пхукете · 1.2 га · полный цикл от земли до продажи</p>
+                <p class="section-desc" data-i18n="agclub_desc">26 премиальных вилл на Пхукете · 1.2 га · полный цикл от земли до продажи</p>
             </div>
             <div class="agclub-grid">
                 <div class="agclub-item">
@@ -379,9 +378,9 @@
     <section class="services section" id="services">
         <div class="container">
             <div class="section-header center">
-                <span class="section-label">НАПРАВЛЕНИЯ</span>
-                <h2 class="section-title">Комплексные решения</h2>
-                <p class="section-desc">Шесть направлений нашей экспертности, работающие как единый механизм</p>
+                <span class="section-label" data-i18n="services_label">НАПРАВЛЕНИЯ</span>
+                <h2 class="section-title" data-i18n="services_title">Комплексные решения</h2>
+                <p class="section-desc" data-i18n="services_desc">Шесть направлений нашей экспертности, работающие как единый механизм</p>
             </div>
             <div class="services-grid">
                 <div class="service-card">
@@ -389,10 +388,10 @@
                         <div class="service-visual">
                             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=300" alt="Строительство" loading="lazy">
                         </div>
-                        <h3 class="service-title">Строительство</h3>
-                        <p class="service-desc">Генподряд, управление строительством, контроль качества, поставка материалов и снабжение объектов.</p>
+                        <h3 class="service-title" data-i18n="service_construction">Строительство</h3>
+                        <p class="service-desc" data-i18n="service_construction_desc">Генподряд, управление строительством, контроль качества, поставка материалов и снабжение объектов.</p>
                         <a href="#contacts" class="service-link">
-                            <span>Узнать больше</span>
+                            <span data-i18n="service_link">Узнать больше</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>
@@ -830,6 +829,7 @@
         </div>
     </div>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
