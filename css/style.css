@@ -2497,7 +2497,15 @@ body.loading .footer {
     }
 
     .lang-switcher {
-        display: none;
+        gap: 8px;
+        margin-left: 8px;
+        padding-left: 8px;
+        flex-shrink: 0;
+    }
+
+    .lang-link {
+        font-size: 10px;
+        padding: 2px 4px;
     }
 
     .menu-toggle {
