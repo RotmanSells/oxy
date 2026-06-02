@@ -325,15 +325,8 @@ body.loading .footer {
     /* background: linear-gradient(180deg, rgba(13, 20, 35, 0.45) 0%, rgba(13, 20, 35, 0.25) 50%, rgba(13, 20, 35, 0.5) 100%); */
 }
 
-/* Hide background images for sections that have their own images */
-.section-img[data-section="projects"],
-.section-img[data-section="services"],
-.section-img[data-section="supply"],
-.section-img[data-section="advantages"],
-.section-img[data-section="tourism"],
-.section-img[data-section="partners"] {
-    display: none !important;
-}
+/* Background images show behind all sections via z-index layering */
+/* .section has z-index: 2, .section-images-layer has z-index: -2 */
 
 /* Hero → About smooth crossfade (commented out)
 .section-img[data-section="hero"]::after {
