@@ -139,6 +139,7 @@ function initApp() {
     initActiveNav();
     initScrollIndicator();
     initContactForm();
+    initPhoneToggle();
     preloadImages();
     animateHeroFacts();
     initSupplyCarousel();
@@ -481,6 +482,27 @@ function initContactForm() {
             btn.style.color = '';
             form.reset();
         }, 2500);
+    });
+}
+
+// Phone toggle dropdown
+function initPhoneToggle() {
+    const toggle = document.querySelector('.phone-toggle');
+    const dropdown = document.querySelector('.phone-dropdown');
+    if (!toggle || !dropdown) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = dropdown.classList.contains('active');
+        dropdown.classList.toggle('active');
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
     });
 }
 

@@ -2029,6 +2029,34 @@ body.loading .footer {
     flex-wrap: wrap;
 }
 
+.phone-toggle-wrap {
+    position: relative;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.phone-toggle {
+    background: rgba(201, 169, 98, 0.12);
+    border: 1px solid rgba(201, 169, 98, 0.25);
+    color: #c9a962;
+    cursor: pointer;
+}
+
+.phone-toggle:hover {
+    background: rgba(201, 169, 98, 0.2);
+}
+
+.phone-dropdown {
+    display: none;
+    gap: 8px;
+    margin-top: 8px;
+    animation: fadeInUp 0.2s ease both;
+}
+
+.phone-dropdown.active {
+    display: flex;
+}
+
 .messengers-row.phones {
     margin-top: 8px;
 }
