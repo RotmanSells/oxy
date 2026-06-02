@@ -1246,7 +1246,7 @@ body.loading .footer {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
@@ -2374,7 +2374,7 @@ body.loading .footer {
     }
 
     .service-card {
-        min-height: 340px;
+        min-height: 320px;
     }
 
     .service-glass {
@@ -2892,20 +2892,24 @@ body.loading .footer {
     }
 
     .service-card {
-        min-height: 280px;
+        min-height: 240px;
     }
 
     .service-glass {
-        padding: 28px;
+        padding: 20px;
     }
 
     .service-visual {
         width: 100%;
-        height: 100px;
+        height: 90px;
     }
 
     .service-title {
-        font-size: 26px;
+        font-size: 18px;
+    }
+
+    .service-desc {
+        font-size: 10px;
     }
 
     .form-row {
