@@ -795,74 +795,57 @@ function initFullscreenSections() {
         goToSection(currentIndex - 1);
     }
 
-    if (navUp) navUp.addEventListener('click', prevSection);
-    if (navDown) navDown.addEventListener('click', nextSection);
-
-    // Menu links click handler
+    // Menu links click handler — smooth scroll to section
     document.querySelectorAll('.nav-link[data-section]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const idx = parseInt(link.dataset.section);
-            goToSection(idx);
+            if (idx >= 0 && idx < sections.length) {
+                sections[idx].scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
 
-    // Keyboard navigation
+    // Keyboard navigation — arrows scroll to adjacent section
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            e.preventDefault();
-            prevSection();
+        if (e.key === 'ArrowUp') {
+            const prev = Math.max(currentIndex - 1, 0);
+            sections[prev]?.scrollIntoView({ behavior: 'smooth' });
         }
-        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-            e.preventDefault();
-            nextSection();
+        if (e.key === 'ArrowDown') {
+            const next = Math.min(currentIndex + 1, sections.length - 1);
+            sections[next]?.scrollIntoView({ behavior: 'smooth' });
         }
     });
 
-    // Wheel navigation — scroll inside section, switch at edges
-    let wheelTimeout;
-    document.addEventListener('wheel', (e) => {
-        const activeSection = sections[currentIndex];
-        if (!activeSection) return;
+    // Nav buttons scroll to section smoothly
+    if (navUp) {
+        navUp.addEventListener('click', () => {
+            const prev = Math.max(currentIndex - 1, 0);
+            sections[prev]?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+    if (navDown) {
+        navDown.addEventListener('click', () => {
+            const next = Math.min(currentIndex + 1, sections.length - 1);
+            sections[next]?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
 
-        const canScrollDown = activeSection.scrollHeight > activeSection.clientHeight;
-        const atTop = activeSection.scrollTop <= 0;
-        const atBottom = activeSection.scrollTop + activeSection.clientHeight >= activeSection.scrollHeight - 1;
-
-        // If section has scrollable content, allow scrolling unless at edge
-        if (canScrollDown) {
-            if (e.deltaY > 0 && !atBottom) {
-                // scrolling down and not at bottom — allow
-                return;
+    // Update active dot on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const idx = Array.from(sections).indexOf(entry.target);
+                if (idx !== -1) {
+                    currentIndex = idx;
+                    updateNav();
+                }
             }
-            if (e.deltaY < 0 && !atTop) {
-                // scrolling up and not at top — allow
-                return;
-            }
-        }
+        });
+    }, { threshold: 0.5 });
 
-        // At edge or no scroll — switch section
-        e.preventDefault();
-        clearTimeout(wheelTimeout);
-        wheelTimeout = setTimeout(() => {
-            if (e.deltaY > 0) nextSection();
-            else if (e.deltaY < 0) prevSection();
-        }, 50);
-    }, { passive: false });
-
-    // Touch/swipe
-    let touchStartY = 0;
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    document.addEventListener('touchend', (e) => {
-        const diff = touchStartY - e.changedTouches[0].screenY;
-        if (Math.abs(diff) > 60) {
-            if (diff > 0) nextSection();
-            else prevSection();
-        }
-    }, { passive: true });
+    sections.forEach(s => observer.observe(s));
 
     updateNav();
 }
