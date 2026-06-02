@@ -1309,23 +1309,22 @@ body.loading .footer {
     opacity: 1;
 }
 
-/* Service visual — round photo */
+/* Service visual — wide rectangular photo */
 .service-visual {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
+    width: 100%;
+    height: 160px;
+    border-radius: 16px;
     overflow: hidden;
-    margin-bottom: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 40px rgba(201, 169, 98, 0.18);
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 30px rgba(201, 169, 98, 0.12);
     transition: all 0.4s ease;
     flex-shrink: 0;
 }
 
 .service-card:hover .service-visual {
-    border-color: rgba(201, 169, 98, 0.35);
-    box-shadow: 0 0 40px rgba(201, 169, 98, 0.25);
-    transform: scale(1.05);
+    border-color: rgba(201, 169, 98, 0.3);
+    box-shadow: 0 0 40px rgba(201, 169, 98, 0.2);
 }
 
 .service-visual img {
@@ -2390,8 +2389,8 @@ body.loading .footer {
     }
 
     .service-visual {
-        width: 120px;
-        height: 120px;
+        width: 100%;
+        height: 140px;
     }
 
     .supply-grid {
@@ -2712,8 +2711,8 @@ body.loading .footer {
     }
 
     .service-visual {
-        width: 110px;
-        height: 110px;
+        width: 100%;
+        height: 120px;
     }
 
     .scroll-indicator {
@@ -2908,7 +2907,7 @@ body.loading .footer {
     }
 
     .service-visual {
-        width: 100px;
+        width: 100%;
         height: 100px;
     }
 
