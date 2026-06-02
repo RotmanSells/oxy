@@ -2194,6 +2194,59 @@ body.loading .footer {
 }
 
 /* ========================================
+   AG CLUB VILLAS SECTION
+======================================== */
+.agclub {
+    background: rgba(10, 15, 30, 0.3);
+    position: relative;
+}
+
+.agclub-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.agclub-item {
+    text-align: center;
+    padding: 28px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+}
+
+.agclub-num {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: #c9a962;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.agclub-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.agclub-note {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/* ========================================
    CTA FOOTER BAR
 ======================================== */
 .cta-footer-bar {
@@ -2848,6 +2901,24 @@ body.loading .footer {
     .service-visual {
         width: 100%;
         height: 160px;
+    }
+
+    .agclub-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .agclub-num {
+        font-size: 24px;
+    }
+
+    .agclub-label {
+        font-size: 11px;
+    }
+
+    .agclub-note {
+        font-size: 13px;
+        margin-top: 20px;
     }
 
     .form-row {
