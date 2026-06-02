@@ -665,6 +665,7 @@ function initProjectsSlider() {
 
     let currentSlide = 0;
     let autoPlayInterval;
+    let userInteracted = false;
     const totalSlides = slides.length;
 
     function goToSlide(index) {
@@ -689,6 +690,7 @@ function initProjectsSlider() {
     }
 
     function startAutoPlay() {
+        if (userInteracted) return;
         autoPlayInterval = setInterval(nextSlide, 4000);
     }
 
@@ -696,14 +698,33 @@ function initProjectsSlider() {
         clearInterval(autoPlayInterval);
     }
 
-    if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoPlay(); prevSlide(); startAutoPlay(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoPlay(); nextSlide(); startAutoPlay(); });
+    function handleUserInteraction(callback) {
+        userInteracted = true;
+        stopAutoPlay();
+        callback();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => handleUserInteraction(prevSlide));
+    if (nextBtn) nextBtn.addEventListener('click', () => handleUserInteraction(nextSlide));
 
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => { stopAutoPlay(); goToSlide(index); startAutoPlay(); });
+        dot.addEventListener('click', () => handleUserInteraction(() => goToSlide(index)));
     });
 
-    // Pause on hover
+    // Touch/swipe inside slider
+    let touchStartX = 0;
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) {
+            handleUserInteraction(() => diff > 0 ? nextSlide() : prevSlide());
+        }
+    }, { passive: true });
+
+    // Hover still pauses but doesn't mark as user interaction
     slider.addEventListener('mouseenter', stopAutoPlay);
     slider.addEventListener('mouseleave', startAutoPlay);
 
