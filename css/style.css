@@ -2121,6 +2121,21 @@ body.loading .footer {
     box-shadow: 0 8px 20px rgba(201, 169, 98, 0.2);
 }
 
+/* Phone toggle button — overrides .messenger-btn, must come after */
+.messenger-btn.phone-toggle {
+    background: rgba(201, 169, 98, 0.12);
+    border: 1.5px solid rgba(201, 169, 98, 0.25);
+    color: #c9a962;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.messenger-btn.phone-toggle:hover {
+    background: rgba(201, 169, 98, 0.2);
+}
+
 /* CTA Form */
 .cta-form-wrapper {
     background: rgba(255, 255, 255, 0.04);
