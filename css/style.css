@@ -806,11 +806,14 @@ body.loading .footer {
     overflow: hidden;
     background: rgba(10, 15, 30, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
 }
 
 .projects-slider-track {
     position: relative;
-    height: 480px;
+    flex: 1;
+    min-height: 360px;
 }
 
 .project-slide {
@@ -882,8 +885,10 @@ body.loading .footer {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    padding: 20px;
-    background: rgba(10, 15, 30, 0.4);
+    padding: 16px 20px;
+    background: rgba(10, 15, 30, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: 0;
 }
 
 .project-slider-btn {
@@ -2541,10 +2546,6 @@ body.loading .footer {
         font-size: 32px;
     }
 
-    .projects-slider-track {
-        height: 380px;
-    }
-
     .project-slide-name {
         font-size: 28px;
     }
@@ -2816,10 +2817,6 @@ body.loading .footer {
     /* .blob {
         filter: blur(40px);
     } */
-
-    .projects-slider-track {
-        height: 300px;
-    }
 
     .project-slide-name {
         font-size: 22px;
