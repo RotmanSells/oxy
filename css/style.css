@@ -1267,7 +1267,7 @@ body.loading .footer {
     position: relative;
     z-index: 2;
     width: 100%;
-    padding: 24px;
+    padding: 20px;
     background: transparent;
     transition: all 0.4s ease;
     overflow: hidden;
@@ -1277,18 +1277,15 @@ body.loading .footer {
     background: transparent;
 }
 
-/* Service visual — wide rectangular photo */
+/* Service visual — photo with rounded corners */
 .service-visual {
     width: 100%;
-    height: 180px;
+    height: 140px;
+    border-radius: 12px;
     overflow: hidden;
+    margin-bottom: 16px;
     position: relative;
-    cursor: pointer;
-}
-
-.service-card:hover .service-visual {
-    border-color: rgba(201, 169, 98, 0.3);
-    box-shadow: 0 0 40px rgba(201, 169, 98, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .service-visual img {
@@ -1299,7 +1296,7 @@ body.loading .footer {
 }
 
 .service-card:hover .service-visual img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 /* Glow behind card */
@@ -1324,26 +1321,26 @@ body.loading .footer {
 
 .service-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 400;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     color: #ffffff;
 }
 
 .service-desc {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 1.5;
     color: rgba(255, 255, 255, 0.65);
     font-weight: 300;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     max-width: 340px;
 }
 
 .service-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
+    gap: 6px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: 1.5px;
     color: #c9a962;
@@ -2346,7 +2343,7 @@ body.loading .footer {
 
     .service-visual {
         width: 100%;
-        height: 160px;
+        height: 140px;
     }
 
     .supply-grid {
@@ -2658,7 +2655,7 @@ body.loading .footer {
 
     .service-visual {
         width: 100%;
-        height: 140px;
+        height: 160px;
     }
 
     .scroll-indicator {
@@ -2846,7 +2843,7 @@ body.loading .footer {
 
     .service-visual {
         width: 100%;
-        height: 120px;
+        height: 160px;
     }
 
     .form-row {
