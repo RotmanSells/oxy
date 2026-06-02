@@ -2031,7 +2031,7 @@ body.loading .footer {
 
 .phone-toggle-wrap {
     position: relative;
-    display: inline-block;
+    display: block;
 }
 
 .phone-toggle {
@@ -2123,13 +2123,25 @@ body.loading .footer {
 
 /* Phone toggle button — overrides .messenger-btn, must come after */
 .messenger-btn.phone-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    line-height: normal;
     background: rgba(201, 169, 98, 0.12);
     border: 1.5px solid rgba(201, 169, 98, 0.25);
     color: #c9a962;
     appearance: none;
     -webkit-appearance: none;
     box-sizing: border-box;
-    font-family: inherit;
+    margin: 0;
 }
 
 .messenger-btn.phone-toggle:hover {
