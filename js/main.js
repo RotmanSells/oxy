@@ -819,9 +819,29 @@ function initFullscreenSections() {
         }
     });
 
-    // Wheel navigation with debounce
+    // Wheel navigation — scroll inside section, switch at edges
     let wheelTimeout;
     document.addEventListener('wheel', (e) => {
+        const activeSection = sections[currentIndex];
+        if (!activeSection) return;
+
+        const canScrollDown = activeSection.scrollHeight > activeSection.clientHeight;
+        const atTop = activeSection.scrollTop <= 0;
+        const atBottom = activeSection.scrollTop + activeSection.clientHeight >= activeSection.scrollHeight - 1;
+
+        // If section has scrollable content, allow scrolling unless at edge
+        if (canScrollDown) {
+            if (e.deltaY > 0 && !atBottom) {
+                // scrolling down and not at bottom — allow
+                return;
+            }
+            if (e.deltaY < 0 && !atTop) {
+                // scrolling up and not at top — allow
+                return;
+            }
+        }
+
+        // At edge or no scroll — switch section
         e.preventDefault();
         clearTimeout(wheelTimeout);
         wheelTimeout = setTimeout(() => {
