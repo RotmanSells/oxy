@@ -2035,17 +2035,22 @@ body.loading .footer {
 }
 
 .phone-toggle {
-    background: rgba(201, 169, 98, 0.12);
-    border: 1px solid rgba(201, 169, 98, 0.25);
-    color: #c9a962;
-    cursor: pointer;
-    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     padding: 12px 22px;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    line-height: 1;
+    font-family: inherit;
+    background: rgba(201, 169, 98, 0.12);
+    border: 1.5px solid rgba(201, 169, 98, 0.25);
+    color: #c9a962;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
 }
 
 .phone-toggle:hover {
