@@ -2703,18 +2703,22 @@ body.loading .footer {
     }
 
     .hero-formula {
-        gap: 8px;
+        gap: 6px;
         margin-bottom: 24px;
-        padding: 6px 14px;
+        padding: 4px 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 100%;
     }
 
     .formula-item {
-        font-size: 12px;
+        font-size: 10px;
         letter-spacing: 0.5px;
+        white-space: nowrap;
     }
 
     .formula-sep {
-        font-size: 14px;
+        font-size: 10px;
     }
 
     .hero-facts {
