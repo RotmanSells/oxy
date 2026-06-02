@@ -2032,6 +2032,7 @@ body.loading .footer {
 .phone-toggle-wrap {
     position: relative;
     display: block;
+    margin-top: 12px;
 }
 
 .phone-toggle {
