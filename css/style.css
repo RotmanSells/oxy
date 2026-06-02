@@ -407,7 +407,7 @@ body.loading .footer {
 
 .main-nav {
     display: flex;
-    gap: 36px;
+    gap: 24px;
 }
 
 .nav-link {
@@ -416,6 +416,7 @@ body.loading .footer {
     letter-spacing: 1.5px;
     color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
+    white-space: nowrap;
     text-transform: uppercase;
     transition: color 0.3s ease;
     position: relative;
@@ -452,6 +453,9 @@ body.loading .footer {
 .lang-switcher {
     display: flex;
     gap: 14px;
+    margin-left: 24px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .lang-link {
@@ -2337,6 +2341,17 @@ body.loading .footer {
 /* ========================================
    RESPONSIVE
 ======================================== */
+@media (max-width: 1200px) {
+    .main-nav {
+        gap: 16px;
+    }
+
+    .nav-link {
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+}
+
 @media (max-width: 1024px) {
     .container {
         padding: 0 32px;
