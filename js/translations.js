@@ -21,7 +21,7 @@ const translations = {
         hero_loc_krasnodar: "Краснодар",
         hero_loc_thailand: "Таиланд",
         hero_title_line1: "Ваш капитал",
-        hero_title_line2: "в надежных руках",
+        hero_title_line2: "В НАДЁЖНЫХ РУКАХ",
         hero_desc: "От идеи до управления активами — девелопмент полного цикла: девелопмент, архитектура, ландшафтный дизайн, строительство и туризм.",
         hero_formula_development: "девелопмент",
         hero_formula_architecture: "архитектура",
@@ -117,7 +117,7 @@ const translations = {
 
         // Advantages
         advantages_label: "ПОЧЕМУ МЫ",
-        advantages_title: "Преимущества работы с Integrakotova",
+        advantages_title: "ПРЕИМУЩЕСТВА РАБОТЫ С INTEGRA KOTOVA",
         advantages_desc: "Шесть причин выбрать нас для вашего следующего проекта",
         adv_team: "Единая команда",
         adv_team_desc: "Все специалисты — от аналитиков до прорабов — работают в одной компании без посредников.",
@@ -224,7 +224,7 @@ const translations = {
         hero_loc_krasnodar: "Krasnodar",
         hero_loc_thailand: "Thailand",
         hero_title_line1: "Your capital",
-        hero_title_line2: "in trusted hands",
+        hero_title_line2: "IN TRUSTED HANDS",
         hero_desc: "From idea to asset management — full-cycle development: development, architecture, landscape design, construction and tourism.",
         hero_formula_development: "development",
         hero_formula_architecture: "architecture",
@@ -320,7 +320,7 @@ const translations = {
 
         // Advantages
         advantages_label: "WHY US",
-        advantages_title: "Benefits of working with Integrakotova",
+        advantages_title: "BENEFITS OF WORKING WITH INTEGRA KOTOVA",
         advantages_desc: "Six reasons to choose us for your next project",
         adv_team: "Unified Team",
         adv_team_desc: "All specialists — from analysts to foremen — work in one company with no intermediaries.",
@@ -427,7 +427,7 @@ const translations = {
         hero_loc_krasnodar: "Կրասնոդար",
         hero_loc_thailand: "Թայլանդ",
         hero_title_line1: "Ձեր կապիտալը",
-        hero_title_line2: "հուսալի ձեռքերում",
+        hero_title_line2: "ՀՈՒՍԱԼԻ ՁԵՌՔԵՐՈՒՄ",
         hero_desc: "Գաղափարից մինչև ակտիվների կառավարում՝ լիակատար ցիկլի դևելոպմենտ. դևելոպմենտ, ճարտարապետություն, լանդշաֆտային դիզայն, շինարարություն և տուրիզմ։",
         hero_formula_development: "դևելոպմենտ",
         hero_formula_architecture: "ճարտարապետություն",
