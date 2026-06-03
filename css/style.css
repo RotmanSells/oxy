@@ -2743,6 +2743,15 @@ body.loading .footer {
         gap: 8px;
     }
 
+    .phone-toggle-wrap {
+        display: block;
+    }
+
+    .messenger-btn.phone-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
     .messenger-btn {
         justify-content: center;
     }
