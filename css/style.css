@@ -2035,7 +2035,7 @@ body.loading .footer {
 
 .phone-toggle-wrap {
     position: relative;
-    display: block;
+    display: inline-block;
     margin-top: 12px;
 }
 
@@ -2137,7 +2137,6 @@ body.loading .footer {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
     padding: 12px 22px;
     border-radius: 50px;
     font-size: 13px;
