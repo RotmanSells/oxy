@@ -403,6 +403,209 @@ const translations = {
 
         aria_menu: "Open menu",
         aria_close: "Close",
+    },
+
+    hy: {
+        // Preloader
+        preloader_text: "Բեռնում",
+        preloader_tagline: "Շինարարություն. Դիզայն. Հողամասեր. Տուրիզմ. Ներդրումներ.",
+
+        // Navigation
+        nav_about: "Մեր մասին",
+        nav_projects: "Նախագծեր",
+        nav_services: "Ծառայություններ",
+        nav_supply: "Մատակարարում",
+        nav_advantages: "Առավելություններ",
+        nav_tourism: "Տուրիզմ",
+        nav_partners: "Գործընկերներ",
+        nav_contacts: "Կոնտակտներ",
+
+        // Hero
+        hero_loc_yerevan: "Երևան",
+        hero_loc_moscow: "Մոսկվա",
+        hero_loc_spb: "Սանկտ-Պետերբուրգ",
+        hero_loc_krasnodar: "Կրասնոդար",
+        hero_loc_thailand: "Թայլանդ",
+        hero_title_line1: "Ձեր կապիտալը",
+        hero_title_line2: "հուսալի ձեռքերում",
+        hero_desc: "Գաղափարից մինչև ակտիվների կառավարում՝ լիակատար ցիկլի դևելոպմենտ. շինարարություն, դիզայն, հողամասեր, տուրիզմ և ներդրումներ։",
+        hero_formula_construction: "շինարարություն",
+        hero_formula_design: "դիզայն",
+        hero_formula_land: "հող",
+        hero_formula_tourism: "տուրիզմ",
+        hero_formula_investments: "ներդրումներ",
+        hero_cta: "ԿԱՊՎԵԼ",
+        hero_fact_projects: "նախագծեր",
+        hero_fact_countries: "երկրներ",
+        hero_scroll: "SCROLL",
+
+        // About
+        about_label: "ՄԵՐ ՄԱՍԻՆ",
+        about_title: "Պրոֆեսիոնալիզմ յուրաքանչյուր փուլում",
+        about_lead: "Կսենյա Կոտովա",
+        about_p1: "Հավատում եմ, որ անշարժ գույքը պարզապես քառակուսի մետր չէ, այլ բարդ էկոհամակարգ, որտեղ համընկնում են համարձակ ճարտարապետությունը, խիստ ֆինանսական հաշվարկը և ապագայի հարմարավետությունը։",
+        about_p2: "Շինարարության և նախագծերի կառավարման ոլորտում տարիների ընթացքում ես և իմ թիմը մշակել ենք իդեալական օբյեկտի բանաձևը՝ էսթետիկա + իրավական մաքրություն + բարձր շահութաբերություն։ Մենք ոչ միայն կառուցում ենք՝ ստեղծում ենք լիկվիդ ակտիվներ աշխարի ամենախոստումնալից կետերում՝ դինամիկ Երևանից և Ռուսաստանի գործարար մայրաքաղաքներից մինչև հանգստի ռազա Թայլանդում։",
+        stat_experience: "տարվա փորձ",
+        stat_projects: "նախագծեր",
+        stat_countries: "երկրներ",
+        stat_satisfied: "բավարարված",
+
+        // Projects
+        projects_label: "ՊՈՐՏՖՈԼԻՈ",
+        projects_title: "Իրականացված նախագծեր",
+        projects_desc: "Օբյեկտներ, որոնք ստեղծել ենք կոնցեպցիայից մինչև հանձնում",
+        project_tag_agclub: "AG Club Villas",
+        project_name_agclub: "26 պրեմիում վիլլա",
+        project_loc_agclub: "Պհուկետ, Թայլանդ — ներդրումներ $6.6M-ից",
+        project_tag_villa: "Վիլլա",
+        project_name_sochi: "Sochi Hillside",
+        project_loc_sochi: "Սոչի, Ռուսաստան",
+        project_tag_residence: "Ռեզիդենցիա",
+        project_name_krasnodar: "Krasnodar Estate",
+        project_loc_krasnodar: "Կրասնոդար, Ռուսաստան",
+        project_tag_apart: "Ապարտ-հոթել",
+        project_name_moscow: "Moscow Sky",
+        project_loc_moscow: "Մոսկվա, Ռուսաստան",
+        project_name_neva: "Neva Premium",
+        project_loc_neva: "Սանկտ-Պետերբուրգ, Ռուսաստան",
+        project_tag_villas: "Վիլլաներ",
+        project_name_collection: "Villa Collection",
+        project_loc_collection: "Պրեմիում վիլլաներ՝ բանալին ձեռքին",
+        project_tag_monolith: "Մոնոլիտ",
+        project_name_monolith: "Monolith Plus",
+        project_loc_monolith: "Մոնոլիտային շինարարություն",
+        project_tag_tourism: "Տուրիզմ",
+        project_name_yerevan: "Yerevan Tourism Hub",
+        project_loc_yerevan: "Երևան, Հայաստան — տուրիստական բիզնես՝ բանալին ձեռքին",
+        slider_prev: "Նախորդ",
+        slider_next: "Հաջորդ",
+
+        // AG Club Villas
+        agclub_label: "ՆԵՐԴՐՈՒՄՆԵՐ",
+        agclub_title: "AG Club Villas",
+        agclub_desc: "26 պրեմիում վիլլա Պհուկետում · 1.2 հա · լիակատար ցիկլ՝ հողից մինչև վաճառք",
+        agclub_total: "նախագծի արժեք",
+        agclub_entry: "ներդրողի մուտք (70%)",
+        agclub_profit: "մաքուր շահույթ",
+        agclub_growth: "հողի աճ 10 տարում",
+        agclub_note: "Մուտքի տարբերակներ՝ 30% / 70% / 100%: Նախագիծը պատրաստման փուլում է՝ հարթակը մաքրված է, թույլտվությունները ստացված: Շինարարությունը պատրաստ է սկսվել:",
+
+        // Services
+        services_label: "ՈՒՂՂՈՒԹՅՈՒՆՆԵՐ",
+        services_title: "Բարդ լուծումներ",
+        services_desc: "Մեր փորձաքննության վեց ուղղություններ, որոնք գործում են որպես միասնական մեխանիզմ",
+        service_construction: "Շինարարություն",
+        service_construction_desc: "Գլխավոր կապալառություն, շինարարության կառավարում, որակի վերահսկողություն, նյութերի մատակարարում և օբյեկտների ապահովում։",
+        service_tourism: "Տուրիզմ",
+        service_tourism_desc: "Տուրիստական համալիրների ստեղծում, օպերացիոն մեկնարկ, հյուրանոցների և ռեկրեացիոն օբյեկտների կառավարում։",
+        service_design: "Դիզայն և ավարտ",
+        service_design_desc: "Դիզայներական վերանորոգում, ներքին ավարտ, կահույքի և դեկորի համալրում՝ սև աշխատանքից մինչև բանալին ձեռքին հանձնում։",
+        service_land: "Հողամասեր",
+        service_land_desc: "Հողամասերի ընտրություն և ձևակերպում շինարարության և տուրիստական բիզնեսի համար՝ վայրերի վերլուծություն, իրավական ուղեկցում, փաստաթղթերի պատրաստում։",
+        service_architecture: "Ճարտարապետություն",
+        service_architecture_desc: "Կոնցեպտուալ նախագծում, 3D վիզուալիզացիա, եզակի ճարտարապետական լուծումների մշակում՝ կլիմային և լանդշաֆտային պայմաններին համապատասխան։",
+        service_investments: "Ներդրումներ",
+        service_investments_desc: "Ֆինանսական մոդելավորում, ռիսկերի գնահատում, կապիտալի ներգրավում և ներդրումային պորտֆելների կառավարում անշարժ գույքում։",
+        service_link: "Իմանալ ավելին",
+
+        // Supply
+        supply_label: "ՄԱՏԱԿԱՐԱՐՈՒՄ",
+        supply_title: "Նյութեր և սարքավորումներ",
+        supply_desc: "Կլիմայական համակարգերի, ավարտման նյութերի և կահույքի ուղիղ մատակարարում՝ լիակատար ցիկլ ձեր նախագծի համար",
+        supply_climate: "Կլիմայական համակարգեր",
+        supply_climate_desc: "Առաջարկում ենք լուծումներ ջերմային պոմպերով՝ ջեռուցման, հովացման և տաք ջրամատակարարման համար՝ բնակելի և կոմերցիոն տարածքների համար: Մեր տեխնոլոգիաները ապահովում են էներգաարդյունավետություն և հարմարավետություն ցանկացած եղանակային պայմաններում։",
+        supply_partner_link: "ecoliq.am",
+        supply_finish: "Ավարտման նյութեր",
+        supply_finish_desc: "Կերամոգրանիտ, պարկետ, ներկեր, ճակտային համակարգեր, պրեմիում դեկորատիվ էլեմենտներ։",
+        supply_furniture: "Օբյեկտի համալրում",
+        supply_furniture_desc: "կահույք տեխնիկա դեկոր",
+        supply_furniture_desc2: "Կորպուսային և փափուկ կահույքի պատվերային պատրաստում։ Ուղիղ մատակարարումներ Թուրքիայից և Չինաստանից։",
+
+        // Advantages
+        advantages_label: "ԻՆՉՈՒ ՄԵՆՔ",
+        advantages_title: "INTEGRA KOTOVA-ի հետ աշխատելու առավելություններ",
+        advantages_desc: "Վեց պատճառ՝ ընտրելու մեզ ձեր հաջորդ նախագծի համար",
+        adv_team: "Միասնական թիմ",
+        adv_team_desc: "Բոլոր մասնագետները՝ անալիտիկներից մինչև պրորաբներ՝ աշխատում են մեկ կազմակերպությունում՝ առանց միջնորդների։",
+        adv_deadlines: "Ֆիքսված ժամկետներ",
+        adv_deadlines_desc: "Երաշխավորում ենք օրացուցային գրաֆիկների պահպանումը՝ ձգձգման դեպքում ֆինանսական պատասխանատվությամբ։",
+        adv_transparency: "Թափանցիկություն",
+        adv_transparency_desc: "Առցանց հաշվետվություն, շաբաթական ամփոփումներ և լիակատար ֆինանսական թափանցիկություն յուրաքանչյուր փուլում։",
+        adv_quality: "Պրեմիում որակ",
+        adv_quality_desc: "Ստուգված նյութեր, հեղինակային հսկողություն և բազմաստիճան որակի վերահսկողություն։",
+        adv_cycle: "Լիակատար ցիկլ",
+        adv_cycle_desc: "Գաղափարից մինչև օպերացիոն մեկնարկ՝ վերցնում ենք ամեն փուլի վրա բանալին ձեռքին։",
+        adv_global: "Միջազգային փորձ",
+        adv_global_desc: "Նախագծեր Հայաստանում, Ռուսաստանում, Թայլանդում, Ղազախստանում։",
+
+        // Tourism
+        tourism_label: "ՏՈՒՐԻԶՄ",
+        tourism_title: "Տուրիստական բիզնես՝ բանալին ձեռքին",
+        tourism_desc: "Մասնակցությունների ընտրություն, նախագծում և տուրիստական օբյեկտների մեկնարկ՝ հողից մինչև առաջին հյուրերը: Պհուկետի շուկա՝ հող +400% 10 տարում, կղզու միայն 20%-ն է կառուցապատված։",
+        tourism_hotels: "Հյուրանոցներ և ռեզորտներ",
+        tourism_hotels_desc: "Տուրիստական համալիրների նախագծում՝ կոնցեպցիայից մինչև ներդրումներ",
+        tourism_land: "Կապսուլային տներ",
+        tourism_land_desc: "Մոդուլային լուծումներ գլեմփինգի և էկո-հանգստի համար՝ արագ մոնտաժ, նվազագույն միջամտություն բնությանը",
+        tourism_ops: "Գլեմփինգ-կլաստերներ",
+        tourism_ops_desc: "Տուրիստական կլաստերների ստեղծում լիակատար ցիկլով՝ ինֆրակտուրա, դիզայն, մարքեթինգ և կառավարում",
+
+        // Partners
+        partners_label: "ԳՈՐԾԸՆԿԵՐՆԵՐ",
+        partners_title: "Մասնագետները վստահում են մեզ",
+        partners_desc: "Աշխատում ենք շինարարական և ֆինանսական ոլորտի առաջատար ընկերությունների հետ",
+        partner_arch: "Ճարտարապետական բյուրոներ",
+        partner_monolith: "Մոնոլիտային աշխատանքներ",
+        partner_banks: "Բանկեր և ներդրողներ",
+        partner_design: "Դիզայն ստուդիաներ",
+        partner_landscape: "Լանդշաֆտային գործընկերներ",
+        partner_supply: "Մատակարարող ընկերություններ",
+
+        // Contacts / CTA
+        contacts_label: "ԿՈՆՏԱԿՏՆԵՐ",
+        contacts_title: "Քննարկենք ձեր նախագիծը",
+        contacts_desc: "Թողեք հայտ՝ մենք կկապվենք 24 ժամվա ընթացքում և կպատրաստենք անհատական առաջարկ՝ ձեր խնդիրների համար։",
+        contacts_fast: "Արագ կապ",
+        contacts_whatsapp: "WhatsApp",
+        contacts_telegram: "Telegram",
+        contacts_call: "Զանգահարել",
+        contacts_russia: "Ռուսաստան",
+        contacts_armenia: "Հայաստան",
+        form_name: "Անուն",
+        form_name_placeholder: "Ձեր անունը",
+        form_phone: "Հեռախոս",
+        form_phone_placeholder: "+7 (999) 999-99-99",
+        form_email: "Email",
+        form_email_placeholder: "your@email.com",
+        form_service: "Հետաքրքիր ուղղություն",
+        form_service_placeholder: "Ընտրեք ուղղությունը",
+        form_service_construction: "Շինարարություն",
+        form_service_design: "Դիզայն և ավարտ",
+        form_service_land: "Հողամասեր",
+        form_service_tourism: "Տուրիզմ",
+        form_service_architecture: "Ճարտարապետություն",
+        form_service_investments: "Ներդրումներ",
+        form_service_complex: "Բարդ նախագիծ",
+        form_message: "Նախագծի մասին",
+        form_message_placeholder: "Կարճ պատմեք ձեր նախագծի կամ խնդրի մասին...",
+        form_submit: "ՈՒՂԱՐԿԵԼ ՀԱՅՏ",
+        form_success: "ՈՒՂԱՐԿՎԱԾ!",
+
+        // Footer
+        footer_address_title: "Հասցե",
+        footer_address: "Երևան, Հայաստան",
+        footer_street: "Թամանյան փ., 1",
+        footer_contacts_title: "Կոնտակտներ",
+        footer_email: "info@gyurjyan.com",
+        footer_social_title: "Սոցցանցեր",
+        footer_instagram: "Instagram",
+        footer_linkedin: "LinkedIn",
+
+        // Language switcher
+        lang_ru: "RU",
+        lang_en: "EN",
+
+        aria_menu: "Բացել մենյուն",
+        aria_close: "Փակել",
     }
 };
 
@@ -411,7 +614,7 @@ let currentLang = localStorage.getItem('siteLang') || 'ru';
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('siteLang', lang);
-    document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+    document.documentElement.lang = lang;
     applyTranslations();
     updateLangSwitcher();
 }
