@@ -6,13 +6,70 @@
 ## 2. Стек
 | Компонент | Технология |
 |-----------|------------|
+| Frontend | **Astro** + TypeScript |
 | Backend | Node.js + Express |
 | База данных | SQLite (файл `data.db`) |
 | Telegram Bot | `node-telegram-bot-api` |
 | Загрузка файлов | Multer |
-| Фронтенд | Vanilla JS (`fetch` к API) |
 | Хостинг (этап 1) | Локальный ПК |
 | Хостинг (этап 2) | VPS + домен |
+
+## 2.1 Почему Astro
+
+После анализа проекта (5400+ строк, 10 секций, слайдеры, форма, мультиязычность, динамический контент) выбор сделан в пользу **Astro**:
+
+| Критерий | Astro | Next.js | SvelteKit |
+|----------|-------|---------|-----------|
+| **Контентные сайты** | ✅ Создан для этого | Перебор — тянет React | Хорош, но не специализация |
+| **Мультиязычность** | ✅ Из коробки (`/ru/`, `/en/`, `/hy/`) | Костыли | Есть, но сложнее |
+| **TypeScript** | ✅ Из коробки, без настройки | Есть | Есть |
+| **Минимум JS** | ✅ 0 JS по умолч. — только где нужно | ~100KB React на клиент | ~20KB Svelte runtime |
+| **SEO** | ✅ Идеальный — HTML на сервере | Хороший | Хороший |
+| **Скорость** | ✅ Top-1 по performance | Хороший | Хороший |
+| **Простота** | ✅ Синтаксис ≈ HTML | JSX + хуки | Своё синтаксис |
+| **Интерактивность** | Острова (`<Counter client:load />`) | Встроенная | Встроенная |
+| **Динам. контент** | ✅ `fetch` при сборке или SSR | SSR/SSG | SSR/SSG |
+
+### Почему НЕ Next.js
+- Лендинг не требует React — тянет 100KB лишнего JS
+- Сложнее поддерживать (React-опыт нужен)
+- Больше boilerplate для простых задач
+
+### Почему НЕ SvelteKit
+- Отличный фреймворк, но Astro **специально заточен** под контентные сайты
+- Если бы нужно было веб-приложение (личный кабинет, фильтры) — выбрал бы SvelteKit
+
+### Как выглядит миграция
+
+**Сейчас (HTML):**
+```html
+<section class="hero">
+  <h1>Ваш капитал</h1>
+</section>
+```
+
+**Будет (Astro + TypeScript):**
+```astro
+---
+const content = await fetch('http://localhost:3000/api/content').then(r => r.json());
+---
+<section class="hero">
+  <h1>{content.hero_title}</h1>
+</section>
+```
+
+### Что остаётся 1:1
+- Весь CSS (`style.css` переносится целиком)
+- Все анимации и эффекты (scroll-trigger, parallax, glow)
+- Все шрифты и картинки
+- Логика слайдеров (как "острова" интерактивности)
+
+### Что станет проще
+- **Мультиязычность**: `src/pages/[lang]/index.astro` вместо `translations.js`
+- **Динамический контент**: серверный `fetch` при сборке или SSR
+- **TypeScript**: из коробки, без `tsconfig.json`
+- **SEO**: `<SEO title={content.hero_title} />` компонент
+- **Сборка**: `npm run build` → статические HTML-файлы
 
 ## 3. Архитектура
 ```
@@ -233,17 +290,24 @@ fetch('/api/track', {
 - [ ] ngrok для webhook Telegram (временный публичный URL)
 - [ ] Проверка: бот редактирует → сайт обновляется
 
-### Этап 8 — TypeScript-миграция (после стабилизации)
-- [ ] Добавить `tsconfig.json`
-- [ ] Переименовать `.js` → `.ts`
-- [ ] Типизировать: `content.service.ts`, `ai.service.ts`, `analytics.service.ts`
-- [ ] Типы для БД: `ContentItem`, `Visit`, `Event`, `AIResponse`
-- [ ] Типы для API: `TrackBody`, `EditBody`, `AskBody`
-- [ ] Установить `typescript`, `@types/express`, `@types/node`
-- [ ] Настроить `npm run build` (tsc → dist/)
-- [ ] Обновить `server.ts` для работы из `dist/`
+### Этап 8 — Astro-фронтенд (переписывание сайта)
+- [ ] `npm create astro@latest` — новый проект
+- [ ] Перенос CSS 1:1 в `src/styles/global.css`
+- [ ] Создать компоненты: `Hero.astro`, `About.astro`, `Projects.astro`, `Services.astro`, `Supply.astro`, `Advantages.astro`, `Tourism.astro`, `Partners.astro`, `Contacts.astro`, `Footer.astro`
+- [ ] Мультиязычность: `src/pages/[lang]/index.astro` (`ru`, `en`, `hy`)
+- [ ] Динамический контент: `const content = await fetch('http://localhost:3000/api/content')`
+- [ ] Интерактивные острова: `<Slider client:load />`, `<Form client:load />`
+- [ ] SEO-компонент: `<SEO title={content.hero_title} />`
+- [ ] Сборка: `npm run build` → `dist/` (статические HTML)
 
-### Этап 9 — Перенос на сервер (после покупки)
+### Этап 9 — TypeScript типизация (Astro + Backend)
+- [ ] `tsconfig.json` для Astro (из коробки) + отдельный для backend
+- [ ] Типы для API: `ContentItem`, `Visit`, `Event`, `AIResponse`
+- [ ] Типы для запросов: `TrackBody`, `EditBody`, `AskBody`
+- [ ] Типы для AI: `PromptContext`, `AIResponse`
+- [ ] Переименовать `backend/*.js` → `*.ts`
+
+### Этап 10 — Перенос на сервер (после покупки)
 - [ ] Купить VPS + домен
 - [ ] Установить Node.js + PM2
 - [ ] Настроить Nginx (reverse proxy + SSL)
@@ -251,6 +315,19 @@ fetch('/api/track', {
 - [ ] Постоянный webhook
 
 ## 8. Зависимости (package.json)
+
+### Frontend (Astro)
+```json
+{
+  "dependencies": {
+    "astro": "^4.0.0",
+    "typescript": "^5.3.0",
+    "@astrojs/ts-plugin": "^1.3.0"
+  }
+}
+```
+
+### Backend (Node.js + Express)
 ```json
 {
   "dependencies": {
@@ -335,49 +412,86 @@ DB_PATH=./data.db
 
 ---
 
-## 11. Как писать сейчас, чтобы легко мигрировать на TypeScript
+## 11. Структура проекта (Astro + Backend)
 
-### Структура файлов (уже TS-ready)
+### Полная структура
 ```
-backend/
-├── config/
-│   └── index.js              # env + constants
-├── db/
-│   ├── index.js              # SQLite connection
-│   └── migrations.js         # CREATE TABLE
-├── middleware/
-│   ├── auth.js               # ADMIN_CHAT_ID проверка
-│   └── upload.js             # Multer
-├── routes/
-│   ├── api.js                # /api/content, /api/upload
-│   ├── stats.js              # /api/stats, /api/track
-│   ├── ai.js                 # /api/ask
-│   └── bot.js                # Telegram webhook handlers
-├── services/
-│   ├── content.js            # CRUD контента
-│   ├── analytics.js          # агрегация статистики
-│   └── ai.js                 # OpenAI API + prompts
-├── utils/
-│   └── helpers.js            # formatDate, sanitize и т.д.
-├── public/
-│   └── track.js              # фронтенд-трекер
-├── server.js                 # Express entry point
-└── package.json
+integrakotova/
+├── frontend/                 # Astro проект
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Hero.astro
+│   │   │   ├── About.astro
+│   │   │   ├── Projects.astro
+│   │   │   ├── Services.astro
+│   │   │   ├── Supply.astro
+│   │   │   ├── Advantages.astro
+│   │   │   ├── Tourism.astro
+│   │   │   ├── Partners.astro
+│   │   │   ├── Contacts.astro
+│   │   │   ├── Footer.astro
+│   │   │   └── SEO.astro
+│   │   ├── islands/          # Интерактивные компоненты
+│   │   │   ├── Slider.tsx    # Слайдеры (React/Preact)
+│   │   │   ├── Form.tsx      # Контактная форма
+│   │   │   └── Track.tsx     # Аналитика-трекер
+│   │   ├── layouts/
+│   │   │   └── Base.astro    # Общий layout (head, nav, footer)
+│   │   ├── pages/
+│   │   │   └── [lang]/
+│   │   │       └── index.astro   # /ru/, /en/, /hy/
+│   │   ├── styles/
+│   │   │   └── global.css    # Весь CSS из style.css
+│   │   └── types/
+│   │       └── api.ts        # Типы: ContentItem, Visit, Event
+│   ├── astro.config.mjs
+│   ├── package.json          # astro, typescript
+│   └── tsconfig.json         # Из коробки
+│
+├── backend/                  # Node.js API
+│   ├── config/
+│   │   └── index.js          # env + constants
+│   ├── db/
+│   │   ├── index.js          # SQLite connection
+│   │   └── migrations.js     # CREATE TABLE
+│   ├── middleware/
+│   │   ├── auth.js           # ADMIN_CHAT_ID проверка
+│   │   └── upload.js         # Multer
+│   ├── routes/
+│   │   ├── api.js            # /api/content, /api/upload
+│   │   ├── stats.js          # /api/stats, /api/track
+│   │   ├── ai.js             # /api/ask
+│   │   └── bot.js            # Telegram webhook handlers
+│   ├── services/
+│   │   ├── content.js        # CRUD контента
+│   │   ├── analytics.js      # агрегация статистики
+│   │   └── ai.js             # OpenAI API + prompts
+│   ├── utils/
+│   │   └── helpers.js        # formatDate, sanitize и т.д.
+│   ├── server.js             # Express entry point
+│   └── package.json          # express, sqlite3, openai
+│
+└── .env                      # Общий env для обеих частей
 ```
 
-### Правила для будущей миграции
-1. **Модульная структура** — каждый сервис в отдельном файле, не складывать всё в `server.js`
-2. **JSDoc типы** — добавлять комментарии `/** @type {string} */` — потом легко конвертировать
-3. **Строгие имена** — `editBody`, `trackBody` вместо `body` — потом станут интерфейсами
-4. **Не использовать `any`** — уже сейчас не писать грязный код
-5. **Separate concerns** — `routes` принимают HTTP, `services` — бизнес-логика, `db` — SQL
+### Принципы для Astro-фронтенда
+1. **Компоненты = секции** — каждая секция сайта = отдельный `.astro` файл
+2. **0 JS по умолчанию** — вся интерактивность только в `islands/` (`client:load`)
+3. **CSS 1:1** — `global.css` переносится без изменений, Astro сам оптимизирует
+4. **Динамика на сервере** — `fetch` к API в frontmatter (`---`) при сборке
+5. **Мультиязычность через роутинг** — `src/pages/[lang]/index.astro` + `getStaticPaths()`
 
-### Что изменится при миграции
+### Принципы для Backend
+1. **Модульная структура** — каждый сервис в отдельном файле
+2. **JSDoc типы** — уже сейчас для лёгкой миграции на TS
+3. **Separate concerns** — `routes` принимают HTTP, `services` — бизнес-логика, `db` — SQL
+
+### Что изменится при миграции на TS
 ```diff
-- // services/content.js
+- // backend/services/content.js
 - function getContent(key) { ... }
 
-+ // services/content.ts
++ // backend/services/content.ts
 + interface ContentItem {
 +   key: string;
 +   value: string;
@@ -387,9 +501,12 @@ backend/
 + function getContent(key: string): Promise<ContentItem> { ... }
 ```
 
-Миграция займёт **1–2 часа** при такой структуре — просто добавить `.ts` + типы.
+Миграция backend на TypeScript займёт **1–2 часа** — просто добавить `.ts` + типы.  
+Astro уже с TypeScript из коробки.
 
 ## 12. Объём кода (оценка)
+
+### Backend (Node.js + Express)
 | Компонент | База | +Аналитика | +AI |
 |-----------|------|------------|-----|
 | `server.js` + `config.js` | ~80 | ~100 | ~120 |
@@ -403,15 +520,41 @@ backend/
 | `services/analytics.js` | — | ~200 | ~200 |
 | `services/ai.js` | — | — | ~180 |
 | `public/track.js` | — | ~80 | ~80 |
-| **Итого** | **~570** | **~1300** | **~1750** |
+| **Backend итого** | **~570** | **~1300** | **~1750** |
 
-- Аналитика: **+730 строк**
-- AI-ассистент: **+450 строк**
-- **Полный проект: ~1750 строк**
+### Frontend (Astro + TypeScript)
+| Компонент | Строк | Описание |
+|-----------|-------|----------|
+| Компоненты секций (10 шт) | ~400 | Hero.astro, About.astro, Projects.astro... |
+| Layouts + SEO | ~80 | Base.astro, SEO.astro |
+| Islands (интерактив) | ~200 | Slider.tsx, Form.tsx, Track.tsx |
+| Стили | ~1 | global.css переносится 1:1 |
+| Роутинг мультиязычности | ~50 | [lang]/index.astro + getStaticPaths |
+| Типы API | ~50 | api.ts — ContentItem, Visit, Event |
+| **Frontend итого** | **~780** | |
+
+### Полный проект
+| | Backend | Frontend | **Всего** |
+|---|---------|----------|-----------|
+| База (контент + бот) | ~570 | ~780 | **~1350** |
+| +Аналитика | ~1300 | ~780 | **~2080** |
+| +AI | **~1750** | ~780 | **~2530** |
 
 ---
 
 ## Следующий шаг
-Когда будешь готов — скажи, и я начну писать бэкенд: `server.js`, `db.js`, API, бота, **аналитику и AI**.
 
-По умолчанию начну с **основы** (контент + бот), потом аналитику, потом AI.
+**Старт:** Создать Astro-проект (`npm create astro@latest`) и backend (`npm init`).
+
+**Порядок работы:**
+1. **Этап 1-3:** Backend — `server.js`, `db.js`, API, бот (основа)
+2. **Этап 4-5:** Frontend — Astro компоненты, мультиязычность, динамический контент
+3. **Этап 6:** Аналитика — трекер, статистика, команды бота
+4. **Этап 7:** AI — OpenAI, анализ, редактирование
+5. **Этап 8:** TypeScript типизация backend
+6. **Этап 9-10:** Тесты, деплой на VPS
+
+Когда будешь готов — скажи **«старт»**, и я начну писать код:
+- `npm create astro@latest` для frontend
+- `npm init` + Express для backend
+- Первый commit: базовая структура обоих частей
