@@ -233,7 +233,17 @@ fetch('/api/track', {
 - [ ] ngrok для webhook Telegram (временный публичный URL)
 - [ ] Проверка: бот редактирует → сайт обновляется
 
-### Этап 8 — Перенос на сервер (после покупки)
+### Этап 8 — TypeScript-миграция (после стабилизации)
+- [ ] Добавить `tsconfig.json`
+- [ ] Переименовать `.js` → `.ts`
+- [ ] Типизировать: `content.service.ts`, `ai.service.ts`, `analytics.service.ts`
+- [ ] Типы для БД: `ContentItem`, `Visit`, `Event`, `AIResponse`
+- [ ] Типы для API: `TrackBody`, `EditBody`, `AskBody`
+- [ ] Установить `typescript`, `@types/express`, `@types/node`
+- [ ] Настроить `npm run build` (tsc → dist/)
+- [ ] Обновить `server.ts` для работы из `dist/`
+
+### Этап 9 — Перенос на сервер (после покупки)
 - [ ] Купить VPS + домен
 - [ ] Установить Node.js + PM2
 - [ ] Настроить Nginx (reverse proxy + SSL)
@@ -325,7 +335,61 @@ DB_PATH=./data.db
 
 ---
 
-## 11. Объём кода (оценка)
+## 11. Как писать сейчас, чтобы легко мигрировать на TypeScript
+
+### Структура файлов (уже TS-ready)
+```
+backend/
+├── config/
+│   └── index.js              # env + constants
+├── db/
+│   ├── index.js              # SQLite connection
+│   └── migrations.js         # CREATE TABLE
+├── middleware/
+│   ├── auth.js               # ADMIN_CHAT_ID проверка
+│   └── upload.js             # Multer
+├── routes/
+│   ├── api.js                # /api/content, /api/upload
+│   ├── stats.js              # /api/stats, /api/track
+│   ├── ai.js                 # /api/ask
+│   └── bot.js                # Telegram webhook handlers
+├── services/
+│   ├── content.js            # CRUD контента
+│   ├── analytics.js          # агрегация статистики
+│   └── ai.js                 # OpenAI API + prompts
+├── utils/
+│   └── helpers.js            # formatDate, sanitize и т.д.
+├── public/
+│   └── track.js              # фронтенд-трекер
+├── server.js                 # Express entry point
+└── package.json
+```
+
+### Правила для будущей миграции
+1. **Модульная структура** — каждый сервис в отдельном файле, не складывать всё в `server.js`
+2. **JSDoc типы** — добавлять комментарии `/** @type {string} */` — потом легко конвертировать
+3. **Строгие имена** — `editBody`, `trackBody` вместо `body` — потом станут интерфейсами
+4. **Не использовать `any`** — уже сейчас не писать грязный код
+5. **Separate concerns** — `routes` принимают HTTP, `services` — бизнес-логика, `db` — SQL
+
+### Что изменится при миграции
+```diff
+- // services/content.js
+- function getContent(key) { ... }
+
++ // services/content.ts
++ interface ContentItem {
++   key: string;
++   value: string;
++   type: 'text' | 'image';
++   section?: string;
++ }
++ function getContent(key: string): Promise<ContentItem> { ... }
+```
+
+Миграция займёт **1–2 часа** при такой структуре — просто добавить `.ts` + типы.
+
+## 12. Объём кода (оценка)
 | Компонент | База | +Аналитика | +AI |
 |-----------|------|------------|-----|
 | `server.js` + `config.js` | ~80 | ~100 | ~120 |
