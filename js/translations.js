@@ -2,6 +2,7 @@ const translations = {
     ru: {
         // Preloader
         preloader_text: "Загрузка",
+        preloader_tagline: "Строительство. Дизайн. Земля. Туризм. Инвестиции.",
 
         // Navigation
         nav_about: "О нас",
@@ -135,12 +136,12 @@ const translations = {
         tourism_label: "ТУРИЗМ",
         tourism_title: "Туристический бизнес под ключ",
         tourism_desc: "Подбор участков, проектирование и запуск туристических объектов — от земли до первых гостей. Рынок Пхукета: земля +400% за 10 лет, застроено только 20% острова.",
-        tourism_hotels: "Отели и комплексы",
-        tourism_hotels_desc: "Проектирование и запуск отелей, вилл и туристических комплексов — от концепции до первых гостей.",
-        tourism_land: "Земля под туризм",
-        tourism_land_desc: "Подбор и оформление земельных участков с высоким инвестиционным потенциалом в туристических зонах.",
-        tourism_ops: "Операционный запуск",
-        tourism_ops_desc: "Управление, маркетинг и операционная поддержка на старте — чтобы объект заработал сразу.",
+        tourism_hotels: "Отели и резорты",
+        tourism_hotels_desc: "Проектирование туристических комплексов: от концепции до инвестиций",
+        tourism_land: "Капсульные дома",
+        tourism_land_desc: "Модульные решения для глэмпинга и экологичного отдыха: быстрый монтаж, минимальное вмешательство в природу",
+        tourism_ops: "Глэмпинг-кластеры",
+        tourism_ops_desc: "Создание туристических кластеров с полным циклом: инфраструктура, дизайн, маркетинг и управление",
 
         // Partners
         partners_label: "ПАРТНЕРЫ",
@@ -195,6 +196,7 @@ const translations = {
     en: {
         // Preloader
         preloader_text: "Loading",
+        preloader_tagline: "Construction. Design. Land. Tourism. Investments.",
 
         // Navigation
         nav_about: "About",
@@ -328,12 +330,12 @@ const translations = {
         tourism_label: "TOURISM",
         tourism_title: "Tourism Business Turnkey",
         tourism_desc: "Land selection, design and launch of tourism facilities — from land to first guests. Phuket market: land +400% in 10 years, only 20% of the island is built up.",
-        tourism_hotels: "Hotels & Complexes",
-        tourism_hotels_desc: "Design and launch of hotels, villas and tourist complexes — from concept to first guests.",
-        tourism_land: "Land for Tourism",
-        tourism_land_desc: "Selection and registration of land plots with high investment potential in tourist zones.",
-        tourism_ops: "Operational Launch",
-        tourism_ops_desc: "Management, marketing and operational support at launch — so the property starts earning immediately.",
+        tourism_hotels: "Hotels & Resorts",
+        tourism_hotels_desc: "Design of tourist complexes: from concept to investments",
+        tourism_land: "Capsule Houses",
+        tourism_land_desc: "Modular solutions for glamping and eco-tourism: fast installation, minimal environmental impact",
+        tourism_ops: "Glamping Clusters",
+        tourism_ops_desc: "Creating tourist clusters with full cycle: infrastructure, design, marketing and management",
 
         // Partners
         partners_label: "PARTNERS",
