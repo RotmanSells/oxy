@@ -144,9 +144,15 @@ const translations = {
         tourism_ops_desc: "Создание туристических кластеров с полным циклом: инфраструктура, дизайн, маркетинг и управление",
 
         // Partners
-        partners_label: "ПАРТНЕРЫ",
-        partners_title: "Надежные партнеры",
-        partners_desc: "Только проверенные подрядчики, поставщики и юристы",
+        partners_label: "ПАРТНЁРЫ",
+        partners_title: "Нам доверяют профессионалы",
+        partners_desc: "Работаем с ведущими компаниями строительного и финансового секторов",
+        partner_arch: "Архитектурные бюро",
+        partner_monolith: "Монолитные работы",
+        partner_banks: "Банки и инвесторы",
+        partner_design: "Дизайн-студии",
+        partner_landscape: "Ландшафтные партнёры",
+        partner_supply: "Снабжающие компании",
 
         // Contacts / CTA
         contacts_label: "КОНТАКТЫ",
@@ -191,6 +197,9 @@ const translations = {
         // Language switcher
         lang_ru: "RU",
         lang_en: "EN",
+
+        aria_menu: "Открыть меню",
+        aria_close: "Закрыть",
     },
 
     en: {
@@ -339,8 +348,14 @@ const translations = {
 
         // Partners
         partners_label: "PARTNERS",
-        partners_title: "Trusted Partners",
-        partners_desc: "Only verified contractors, suppliers and lawyers",
+        partners_title: "Trusted by Professionals",
+        partners_desc: "Working with leading companies in construction and finance",
+        partner_arch: "Architectural Bureaus",
+        partner_monolith: "Monolithic Works",
+        partner_banks: "Banks & Investors",
+        partner_design: "Design Studios",
+        partner_landscape: "Landscape Partners",
+        partner_supply: "Supply Companies",
 
         // Contacts / CTA
         contacts_label: "CONTACTS",
@@ -385,6 +400,9 @@ const translations = {
         // Language switcher
         lang_ru: "RU",
         lang_en: "EN",
+
+        aria_menu: "Open menu",
+        aria_close: "Close",
     }
 };
 
@@ -420,6 +438,14 @@ function applyTranslations() {
         const key = el.dataset.i18nPlaceholder;
         if (t[key] !== undefined) {
             el.placeholder = t[key];
+        }
+    });
+
+    // Handle aria-label attributes
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.dataset.i18nAria;
+        if (t[key] !== undefined) {
+            el.setAttribute('aria-label', t[key]);
         }
     });
 
