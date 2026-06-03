@@ -2,7 +2,7 @@ const translations = {
     ru: {
         // Preloader
         preloader_text: "Загрузка",
-        preloader_tagline: "Строительство. Дизайн. Земля. Туризм. Инвестиции.",
+        preloader_tagline: "Строительство. Дизайн. Участки. Туристический бизнес. Инвестиции.",
 
         // Navigation
         nav_about: "О нас",
@@ -22,11 +22,11 @@ const translations = {
         hero_loc_thailand: "Таиланд",
         hero_title_line1: "Ваш капитал",
         hero_title_line2: "в надежных руках",
-        hero_desc: "От идеи до управления активами — девелопмент полного цикла: строительство, дизайн, земля, туризм и инвестиции.",
+        hero_desc: "От идеи до управления активами — девелопмент полного цикла: строительство, дизайн, участки, туристический бизнес и инвестиции.",
         hero_formula_construction: "строительство",
         hero_formula_design: "дизайн",
-        hero_formula_land: "земля",
-        hero_formula_tourism: "туризм",
+        hero_formula_land: "участки",
+        hero_formula_tourism: "туристический бизнес",
         hero_formula_investments: "инвестиции",
         hero_cta: "СВЯЗАТЬСЯ",
         hero_fact_projects: "проектов",
@@ -205,7 +205,7 @@ const translations = {
     en: {
         // Preloader
         preloader_text: "Loading",
-        preloader_tagline: "Construction. Design. Land. Tourism. Investments.",
+        preloader_tagline: "Construction. Design. Land Plots. Tourism Business. Investments.",
 
         // Navigation
         nav_about: "About",
@@ -225,11 +225,11 @@ const translations = {
         hero_loc_thailand: "Thailand",
         hero_title_line1: "Your capital",
         hero_title_line2: "in trusted hands",
-        hero_desc: "From idea to asset management — full-cycle development: construction, design, land, tourism and investments.",
+        hero_desc: "From idea to asset management — full-cycle development: construction, design, land plots, tourism business and investments.",
         hero_formula_construction: "construction",
         hero_formula_design: "design",
-        hero_formula_land: "land",
-        hero_formula_tourism: "tourism",
+        hero_formula_land: "land plots",
+        hero_formula_tourism: "tourism business",
         hero_formula_investments: "investments",
         hero_cta: "GET IN TOUCH",
         hero_fact_projects: "projects",
@@ -408,7 +408,7 @@ const translations = {
     hy: {
         // Preloader
         preloader_text: "Բեռնում",
-        preloader_tagline: "Շինարարություն. Դիզայն. Հողամասեր. Տուրիզմ. Ներդրումներ.",
+        preloader_tagline: "Շինարարություն. Դիզայն. Հողամասեր. Տուրիստական բիզնես. Ներդրումներ.",
 
         // Navigation
         nav_about: "Մեր մասին",
@@ -428,11 +428,11 @@ const translations = {
         hero_loc_thailand: "Թայլանդ",
         hero_title_line1: "Ձեր կապիտալը",
         hero_title_line2: "հուսալի ձեռքերում",
-        hero_desc: "Գաղափարից մինչև ակտիվների կառավարում՝ լիակատար ցիկլի դևելոպմենտ. շինարարություն, դիզայն, հողամասեր, տուրիզմ և ներդրումներ։",
+        hero_desc: "Գաղափարից մինչև ակտիվների կառավարում՝ լիակատար ցիկլի դևելոպմենտ. շինարարություն, դիզայն, հողամասեր, տուրիստական բիզնես և ներդրումներ։",
         hero_formula_construction: "շինարարություն",
         hero_formula_design: "դիզայն",
-        hero_formula_land: "հող",
-        hero_formula_tourism: "տուրիզմ",
+        hero_formula_land: "հողամասեր",
+        hero_formula_tourism: "տուրիստական բիզնես",
         hero_formula_investments: "ներդրումներ",
         hero_cta: "ԿԱՊՎԵԼ",
         hero_fact_projects: "նախագծեր",
