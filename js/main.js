@@ -522,7 +522,7 @@ window.addEventListener('resize', () => {
 //   CARD IMAGE CAROUSEL (supply + tourism)
 // ========================================
 function initSupplyCarousel() {
-    const selectors = ['.supply-visual', '.tourism-visual'];
+    const selectors = ['.supply-visual', '.tourism-visual', '.service-visual.carousel'];
 
     selectors.forEach(selector => {
         const visuals = document.querySelectorAll(selector);
@@ -555,8 +555,8 @@ function initSupplyCarousel() {
 
             // Open lightbox on click
             visual.addEventListener('click', () => {
-                const card = visual.closest('.supply-card, .tourism-card');
-                const cardImages = card.querySelectorAll('.supply-visual img, .tourism-visual img');
+                const card = visual.closest('.supply-card, .tourism-card, .service-card');
+                const cardImages = card.querySelectorAll('.supply-visual img, .tourism-visual img, .service-visual img');
                 openLightbox(cardImages, currentIndex);
             });
 

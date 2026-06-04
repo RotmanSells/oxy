@@ -605,9 +605,10 @@ body.loading .footer {
 }
 
 .formula-sep {
-    color: rgba(201, 169, 98, 0.6);
-    font-size: 18px;
+    color: rgba(201, 169, 98, 0.5);
+    font-size: 10px;
     font-weight: 300;
+    letter-spacing: 2px;
 }
 
 .main-title {
@@ -625,7 +626,6 @@ body.loading .footer {
 
 .title-line.highlight {
     color: #e8d5a3;
-    font-style: italic;
     font-weight: 400;
     text-shadow: 0 0 30px rgba(201, 169, 98, 0.4), 0 0 60px rgba(201, 169, 98, 0.15);
 }
@@ -1337,6 +1337,25 @@ body.loading .footer {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+}
+
+/* Carousel mode for service cards */
+.service-visual.carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out, transform 0.5s ease;
+    z-index: 1;
+}
+
+.service-visual.carousel img.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.service-visual.carousel:hover img {
+    transform: scale(1.05);
 }
 
 .service-card:hover .service-visual img {
@@ -2659,7 +2678,7 @@ body.loading .footer {
     }
 
     .formula-sep {
-        font-size: 16px;
+        font-size: 8px;
     }
 
     .main-title {
