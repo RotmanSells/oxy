@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import aboutPhoto from '../../assets/images/photo_2026-06-02_23-08-04.jpg';
+---
+
+<section class="about section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">О КОМПАНИИ</span>
+      <h2 class="section-title">Экспертность на каждом этапе</h2>
+    </div>
+    <div class="about-glass-card">
+      <div class="about-glass-inner">
+        <div class="about-left">
+          <div class="about-photo-ring">
+            <div class="about-photo">
+              <Image src={aboutPhoto} alt="Ксения Котова" width={400} height={550} loading="lazy" />
+            </div>
+          </div>
+          <span class="about-photo-caption">&nbsp;</span>
+        </div>
+        <div class="about-right-content">
+          <div class="about-text">
+            <p class="lead">Ксения Котова</p>
+            <p>
+              Я верю, что недвижимость — это не просто квадратные метры, а сложная экосистема, где пересекаются смелая архитектура, строгий финансовый расчет и комфорт будущего.
+            </p>
+            <p>
+              За годы работы в сфере строительства и управления проектами я и моя команда выработали формулу идеального объекта: эстетика + юридическая чистота + высокая доходность. Мы не просто строим — мы создаем ликвидные активы в самых перспективных точках мира: от динамичного Еревана и деловых столиц России до курортного рая в Таиланде.
+            </p>
+          </div>
+          <div class="about-stats">
+            <div class="stat-glass">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">лет опыта</span>
+            </div>
+            <div class="stat-glass">
+              <span class="stat-number">120+</span>
+              <span class="stat-label">проектов</span>
+            </div>
+            <div class="stat-glass">
+              <span class="stat-number">4</span>
+              <span class="stat-label">страны</span>
+            </div>
+            <div class="stat-glass">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">довольных</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

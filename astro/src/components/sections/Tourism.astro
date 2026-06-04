@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import tourismHotels from '../../assets/images/photo_2026-06-01_20-02-17.jpg';
+import capsule01 from '../../assets/images/product_photo_01.jpg';
+import capsule02 from '../../assets/images/product_photo_02.jpg';
+import capsule03 from '../../assets/images/product_photo_03.jpg';
+import glamping01 from '../../assets/images/glamping_01.png';
+import glamping02 from '../../assets/images/glamping_02.png';
+import glamping03 from '../../assets/images/glamping_03.png';
+import glamping04 from '../../assets/images/glamping_04.png';
+---
+
+<section class="tourism section" id="tourism">
+  <div class="container">
+    <div class="section-header center">
+      <span class="section-label">ТУРИЗМ</span>
+      <h2 class="section-title">Туристический бизнес под ключ</h2>
+      <p class="section-desc">Подбор участков, проектирование и запуск туристических объектов — от земли до первых гостей. Рынок Пхукета: земля +400% за 10 лет, застроено только 20% острова.</p>
+    </div>
+    <div class="tourism-grid">
+      <div class="tourism-card" data-lightbox-group="hotels">
+        <div class="tourism-visual">
+          <Image class="active" src={tourismHotels} alt="Проектирование туристических комплексов" width={600} height={400} loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" alt="Отель" width={600} height={400} loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600" alt="Резорт" width={600} height={400} loading="lazy" />
+        </div>
+        <div class="tourism-body">
+          <h3 class="tourism-title">Отели и резорты</h3>
+          <p class="tourism-desc">ПРОЕКТИРОВАНИЕ ТУРИСТИЧЕСКИХ КОМПЛЕКСОВ: ОТ КОНЦЕПЦИИ ДО ИНВЕСТИЦИЙ</p>
+        </div>
+      </div>
+      <div class="tourism-card" data-lightbox-group="capsule">
+        <div class="tourism-visual">
+          <Image class="active" src={capsule01} alt="Капсульные дома" width={600} height={400} loading="lazy" />
+          <Image src={capsule02} alt="Модули" width={600} height={400} loading="lazy" />
+          <Image src={capsule03} alt="Природа" width={600} height={400} loading="lazy" />
+        </div>
+        <div class="tourism-body">
+          <h3 class="tourism-title">Капсульные дома</h3>
+          <p class="tourism-desc">МОДУЛЬНЫЕ РЕШЕНИЯ ДЛЯ ГЛЭМПИНГА И ЭКОЛОГИЧНОГО ОТДЫХА: БЫСТРЫЙ МОНТАЖ, МИНИМАЛЬНОЕ ВМЕШАТЕЛЬСТВО В ПРИРОДУ</p>
+        </div>
+      </div>
+      <div class="tourism-card" data-lightbox-group="glamping">
+        <div class="tourism-visual">
+          <Image class="active" src={glamping01} alt="Глэмпинг" width={600} height={400} loading="lazy" />
+          <Image src={glamping02} alt="Кластер" width={600} height={400} loading="lazy" />
+          <Image src={glamping03} alt="Кемпинг" width={600} height={400} loading="lazy" />
+          <Image src={glamping04} alt="Территория" width={600} height={400} loading="lazy" />
+        </div>
+        <div class="tourism-body">
+          <h3 class="tourism-title">Глэмпинг-кластеры</h3>
+          <p class="tourism-desc">СОЗДАНИЕ ТУРИСТИЧЕСКИХ КЛАСТЕРОВ С ПОЛНЫМ ЦИКЛОМ: ИНФРАСТРУКТУРА, ДИЗАЙН, МАРКЕТИНГ И УПРАВЛЕНИЕ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

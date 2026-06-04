@@ -1,0 +1,24 @@
+/* Typography */
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.main-title,
+.section-title,
+.cta-title,
+.about-text .lead,
+.project-slide-name,
+.advantage-title,
+.service-title,
+.supply-title,
+.tourism-title,
+.stat-number,
+.fact-number,
+.agclub-num,
+.preloader-brand,
+.about-photo-caption {
+  font-family: 'Cormorant Garamond', serif;
+}

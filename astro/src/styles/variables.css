@@ -1,0 +1,26 @@
+:root {
+  /* Colors */
+  --color-bg: #141414;
+  --color-bg-dark: #0a0f1c;
+  --color-gold: #c9a962;
+  --color-gold-light: #d4b876;
+  --color-gold-highlight: #e8d5a3;
+  --color-cyan: #64c8ff;
+  --color-white: #ffffff;
+  --color-text-muted: rgba(255, 255, 255, 0.55);
+  --color-text-secondary: rgba(255, 255, 255, 0.75);
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  /* Fonts */
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Montserrat', sans-serif;
+
+  /* Spacing */
+  --container-max: 1280px;
+  --section-padding: 120px;
+
+  /* Transitions */
+  --transition-fast: 0.3s ease;
+  --transition-smooth: 0.4s ease;
+  --transition-slow: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
