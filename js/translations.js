@@ -30,14 +30,15 @@ const translations = {
         hero_formula_tourism: "туризм",
         hero_cta: "СВЯЗАТЬСЯ",
         hero_fact_projects: "проектов",
-        hero_fact_countries: "страны",
+        hero_fact_countries: "стран",
         hero_scroll: "SCROLL",
 
         // About
         about_label: "О КОМПАНИИ",
         about_title: "Экспертность на каждом этапе",
-        about_lead: "Ксения Котова",
-        about_photo_caption: "Основатель Ксения Котова",
+        about_lead: "Основатель и управляющий партнер холдинга INTEGRA KOTOVA GROUP",
+        about_photo_caption: "Ксения Котова",
+        about_quote: "«Моя задача - превращать сложные строительные процессы и высокую эстетику дизайна в предсказуемые, ликвидные и вдохновляющие бизнес-активы».",
         about_p1: "Я верю, что недвижимость — это не просто квадратные метры, а сложная экосистема, где пересекаются смелая архитектура, строгий финансовый расчет и комфорт будущего.",
         about_p2: "За годы работы в сфере строительства и управления проектами я и моя команда выработали формулу идеального объекта: эстетика + юридическая чистота + высокая доходность. Мы не просто строим — мы создаем ликвидные активы в самых перспективных точках мира: от динамичного Еревана и деловых столиц России до курортного рая в Таиланде.",
         about_comp_fullcycle: "Полный цикл девелопмента",
@@ -46,7 +47,7 @@ const translations = {
         about_comp_premium: "Премьер-класс",
         stat_experience: "лет опыта",
         stat_projects: "проектов",
-        stat_countries: "страны",
+        stat_countries: "стран",
         stat_satisfied: "довольных",
 
         // Projects
@@ -117,7 +118,7 @@ const translations = {
         supply_finish: "Отделочные материалы",
         supply_finish_desc: "Керамогранит, паркет, краски, фасадные системы, декоративные элементы премиум-класса.",
         supply_furniture: "Комплектация объекта",
-        supply_furniture_desc: "мебель техника декор",
+        supply_furniture_desc: "мебель, техника, декор",
         supply_furniture_desc2: "Изготовление корпусной и мягкой мебели по индивидуальному дизайну. Прямые поставки из Турции и Китая.",
 
         // Advantages
@@ -135,7 +136,7 @@ const translations = {
         adv_cycle: "Полный цикл",
         adv_cycle_desc: "От идеи до операционного запуска — берем на себя каждый этап под ключ.",
         adv_global: "Международный опыт",
-        adv_global_desc: "Проекты в Армении, России, Тайланде, Казахстане.",
+        adv_global_desc: "Проекты в Армении, России, Таиланде, Казахстане.",
 
         // Tourism
         tourism_label: "ТУРИЗМ",
@@ -151,13 +152,18 @@ const translations = {
         // Partners
         partners_label: "ПАРТНЁРЫ",
         partners_title: "Нам доверяют профессионалы",
-        partners_desc: "Работаем с ведущими компаниями строительного и финансового секторов",
-        partner_arch: "Архитектурные бюро",
-        partner_monolith: "Монолитные работы",
-        partner_banks: "Банки и инвесторы",
-        partner_design: "Дизайн-студии",
-        partner_landscape: "Ландшафтные партнёры",
-        partner_supply: "Снабжающие компании",
+        partners_desc: "Работаем с ведущими компаниями строительного и туристического секторов",
+        partner_1_name: "СК «23-й район»",
+        partner_1_desc: "Каркасные дома",
+        partner_2_name: "AG Club Villas",
+        partner_2_desc: "Виллы на Пхукете",
+        partner_3_name: "Adamantum Group",
+        partner_3_desc: "Строительство на Пхукете",
+        partner_4_name: "Фасад Шин",
+        partner_4_desc: "Фасадные работы",
+        partner_5_name: "ECOLIQ",
+        partner_5_desc: "Тепловые насосы и солнечная энергия",
+        partner_link_open: "Открыть ↗",
 
         // Contacts / CTA
         contacts_label: "КОНТАКТЫ",
@@ -244,18 +250,19 @@ const translations = {
         // About
         about_label: "ABOUT",
         about_title: "Expertise at every stage",
-        about_lead: "Ksenia Kotova",
-        about_photo_caption: "Founder Ksenia Kotova",
+        about_lead: "Founder & Managing Partner of INTEGRA KOTOVA GROUP",
+        about_photo_caption: "Ksenia Kotova",
+        about_quote: "\"My task is to transform complex construction processes and high design aesthetics into predictable, liquid and inspiring business assets.\"",
         about_p1: "I believe that real estate is not just square meters, but a complex ecosystem where bold architecture, rigorous financial planning and future comfort intersect.",
         about_p2: "Over the years in construction and project management, my team and I have developed the formula for the perfect property: aesthetics + legal purity + high profitability. We don't just build — we create liquid assets in the world's most promising locations: from dynamic Yerevan and Russia's business capitals to the resort paradise of Thailand.",
         about_comp_fullcycle: "Full-Cycle Development",
         about_comp_global: "International Projects",
         about_comp_invest: "Investment Support",
         about_comp_premium: "Premium Class",
-        stat_experience: "years experience",
+        stat_experience: "years of experience",
         stat_projects: "projects",
         stat_countries: "countries",
-        stat_satisfied: "satisfied",
+        stat_satisfied: "satisfied clients",
 
         // Projects
         projects_label: "PORTFOLIO",
@@ -277,7 +284,7 @@ const translations = {
         project_loc_neva: "St. Petersburg, Russia",
         project_tag_villas: "Villas",
         project_name_collection: "Villa Collection",
-        project_loc_collection: "Premium villas turnkey",
+        project_loc_collection: "Premium turnkey villas",
         project_tag_monolith: "Monolith",
         project_name_monolith: "Monolith Plus",
         project_loc_monolith: "Monolithic construction",
@@ -325,8 +332,8 @@ const translations = {
         supply_finish: "Finishing Materials",
         supply_finish_desc: "Porcelain stoneware, parquet, paints, facade systems, premium-class decorative elements.",
         supply_furniture: "Project Furnishing",
-        supply_furniture_desc: "furniture appliances decor",
-        supply_furniture_desc2: "Manufacturing of custom and soft furniture. Direct supplies from Turkey and China.",
+        supply_furniture_desc: "furniture, appliances, decor",
+        supply_furniture_desc2: "Custom cabinetry and upholstered furniture. Direct supplies from Turkey and China.",
 
         // Advantages
         advantages_label: "WHY US",
@@ -341,7 +348,7 @@ const translations = {
         adv_quality: "Premier Quality",
         adv_quality_desc: "Tested materials, author's supervision and multi-stage quality control.",
         adv_cycle: "Full Cycle",
-        adv_cycle_desc: "From idea to operational launch — we take care of every stage turnkey.",
+        adv_cycle_desc: "From idea to operational launch — we handle every stage turnkey.",
         adv_global: "International Experience",
         adv_global_desc: "Projects in Armenia, Russia, Thailand, Kazakhstan.",
 
@@ -359,13 +366,18 @@ const translations = {
         // Partners
         partners_label: "PARTNERS",
         partners_title: "Trusted by Professionals",
-        partners_desc: "Working with leading companies in construction and finance",
-        partner_arch: "Architectural Bureaus",
-        partner_monolith: "Monolithic Works",
-        partner_banks: "Banks & Investors",
-        partner_design: "Design Studios",
-        partner_landscape: "Landscape Partners",
-        partner_supply: "Supply Companies",
+        partners_desc: "Working with leading companies in construction, tourism and energy",
+        partner_1_name: "SK «23rd District»",
+        partner_1_desc: "Frame Houses",
+        partner_2_name: "AG Club Villas",
+        partner_2_desc: "Villas in Phuket",
+        partner_3_name: "Adamantum Group",
+        partner_3_desc: "Construction in Phuket",
+        partner_4_name: "Facade Shin",
+        partner_4_desc: "Facade Works",
+        partner_5_name: "ECOLIQ",
+        partner_5_desc: "Heat Pumps & Solar Energy",
+        partner_link_open: "Open ↗",
 
         // Contacts / CTA
         contacts_label: "CONTACTS",
@@ -391,7 +403,7 @@ const translations = {
         form_service_tourism: "Tourism",
         form_service_architecture: "Architecture",
         form_service_investments: "Investments",
-        form_service_complex: "Complex Project",
+        form_service_complex: "Comprehensive Project",
         form_message: "About project",
         form_message_placeholder: "Tell us briefly about your project or task...",
         form_submit: "SEND REQUEST",
@@ -452,18 +464,19 @@ const translations = {
         // About
         about_label: "ՄԵՐ ՄԱՍԻՆ",
         about_title: "Պրոֆեսիոնալիզմ յուրաքանչյուր փուլում",
-        about_lead: "Կսենյա Կոտովա",
-        about_photo_caption: "Հիմնադիր Կսենյա Կոտովա",
-        about_p1: "Հավատում եմ, որ անշարժ գույքը պարզապես քառակուսի մետր չէ, այլ բարդ էկոհամակարգ, որտեղ համընկնում են համարձակ ճարտարապետությունը, խիստ ֆինանսական հաշվարկը և ապագայի հարմարավետությունը։",
-        about_p2: "Շինարարության և նախագծերի կառավարման ոլորտում տարիների ընթացքում ես և իմ թիմը մշակել ենք իդեալական օբյեկտի բանաձևը՝ էսթետիկա + իրավական մաքրություն + բարձր շահութաբերություն։ Մենք ոչ միայն կառուցում ենք՝ ստեղծում ենք լիկվիդ ակտիվներ աշխարի ամենախոստումնալից կետերում՝ դինամիկ Երևանից և Ռուսաստանի գործարար մայրաքաղաքներից մինչև հանգստի ռազա Թայլանդում։",
+        about_lead: "INTEGRA KOTOVA GROUP հոլդինգի հիմնադիր և կառավարող գործընկեր",
+        about_photo_caption: "Կսենյա Կոտովա",
+        about_quote: "«Իմ առաքելությունն է՝ բարդ շինարարական գործընթացները և դիզայնի բարձր էսթետիկան վերածել կանխատեսելի, իրացվող և ոգեշնչող բիզնես ակտիվների»։",
+        about_p1: "Հավատում եմ, որ անշարժ գույքը պարզապես քառակուսի մետր չէ, այլ բարդ էկոհամակարգ, որտեղ հատվում են համարձակ ճարտարապետությունը, խիստ ֆինանսական հաշվարկը և ապագայի հարմարավետությունը։",
+        about_p2: "Շինարարության և նախագծերի կառավարման ոլորտում տարիների ընթացքում ես և իմ թիմը մշակել ենք իդեալական օբյեկտի բանաձևը՝ էսթետիկա + իրավական մաքրություն + բարձր շահութաբերություն։ Մենք ոչ միայն կառուցում ենք՝ ստեղծում ենք իրացվող ակտիվներ աշխարի ամենախոստումնալից կետերում՝ դինամիկ Երևանից և Ռուսաստանի գործարար մայրաքաղաքներից մինչև հանգստի դրախտ Թայլանդում։",
         about_comp_fullcycle: "Լիակատար ցիկլի դևելոպմենտ",
         about_comp_global: "Միջազգային նախագծեր",
         about_comp_invest: "Ներդրումային ուղեկցում",
         about_comp_premium: "Պրեմիում դաս",
-        stat_experience: "տարվա փորձ",
+        stat_experience: "տարիների փորձ",
         stat_projects: "նախագծեր",
         stat_countries: "երկրներ",
-        stat_satisfied: "բավարարված",
+        stat_satisfied: "գոհ հաճախորդներ",
 
         // Projects
         projects_label: "ՊՈՐՏՖՈԼԻՈ",
@@ -485,13 +498,13 @@ const translations = {
         project_loc_neva: "Սանկտ-Պետերբուրգ, Ռուսաստան",
         project_tag_villas: "Վիլլաներ",
         project_name_collection: "Villa Collection",
-        project_loc_collection: "Պրեմիում վիլլաներ՝ բանալին ձեռքին",
+        project_loc_collection: "Պրեմիում վիլլաներ՝ պատրաստի հանձնմամբ",
         project_tag_monolith: "Մոնոլիտ",
         project_name_monolith: "Monolith Plus",
         project_loc_monolith: "Մոնոլիտային շինարարություն",
         project_tag_tourism: "Տուրիզմ",
         project_name_yerevan: "Yerevan Tourism Hub",
-        project_loc_yerevan: "Երևան, Հայաստան — տուրիստական բիզնես՝ բանալին ձեռքին",
+        project_loc_yerevan: "Երևան, Հայաստան — տուրիստական բիզնես՝ պատրաստի հանձնմամբ",
         slider_prev: "Նախորդ",
         slider_next: "Հաջորդ",
 
@@ -503,7 +516,7 @@ const translations = {
         agclub_entry: "ներդրողի մուտք (70%)",
         agclub_profit: "մաքուր շահույթ",
         agclub_growth: "հողի աճ 10 տարում",
-        agclub_note: "Մուտքի տարբերակներ՝ 30% / 70% / 100%: Նախագիծը պատրաստման փուլում է՝ հարթակը մաքրված է, թույլտվությունները ստացված: Շինարարությունը պատրաստ է սկսվել:",
+        agclub_note: "Մուտքի տարբերակներ՝ 30% / 70% / 100%: Նախագիծը պատրաստման փուլում է՝ տարածքը մաքրված է, թույլտվությունները ստացված: Շինարարությունը պատրաստ է սկսվել:",
 
         // Services
         services_label: "ՈՒՂՂՈՒԹՅՈՒՆՆԵՐ",
@@ -513,8 +526,8 @@ const translations = {
         service_construction_desc: "Գլխավոր կապալառություն, շինարարության կառավարում, որակի վերահսկողություն, նյութերի մատակարարում և օբյեկտների ապահովում։",
         service_tourism: "Տուրիզմ",
         service_tourism_desc: "Տուրիստական համալիրների ստեղծում, օպերացիոն մեկնարկ, հյուրանոցների և ռեկրեացիոն օբյեկտների կառավարում։",
-        service_design: "Դիզայն և ավարտ",
-        service_design_desc: "Դիզայներական վերանորոգում, ներքին ավարտ, կահույքի և դեկորի համալրում՝ սև աշխատանքից մինչև բանալին ձեռքին հանձնում։",
+        service_design: "Դիզայն և հարդարանք",
+        service_design_desc: "Դիզայներական վերանորոգում, ներքին հարդարանք, կահույքի և դեկորի համալրում՝ սևահարդարումից մինչև բանալին ձեռքին հանձնում։",
         service_land: "Հողամասեր",
         service_land_desc: "Հողամասերի ընտրություն և ձևակերպում շինարարության և տուրիստական բիզնեսի համար՝ վայրերի վերլուծություն, իրավական ուղեկցում, փաստաթղթերի պատրաստում։",
         service_architecture: "Ճարտարապետություն",
@@ -533,7 +546,7 @@ const translations = {
         supply_finish: "Ավարտման նյութեր",
         supply_finish_desc: "Կերամոգրանիտ, պարկետ, ներկեր, ճակտային համակարգեր, պրեմիում դեկորատիվ էլեմենտներ։",
         supply_furniture: "Օբյեկտի համալրում",
-        supply_furniture_desc: "կահույք տեխնիկա դեկոր",
+        supply_furniture_desc: "կահույք, տեխնիկա, դեկոր",
         supply_furniture_desc2: "Կորպուսային և փափուկ կահույքի պատվերային պատրաստում։ Ուղիղ մատակարարումներ Թուրքիայից և Չինաստանից։",
 
         // Advantages
@@ -541,7 +554,7 @@ const translations = {
         advantages_title: "INTEGRA KOTOVA-ի հետ աշխատելու առավելություններ",
         advantages_desc: "Վեց պատճառ՝ ընտրելու մեզ ձեր հաջորդ նախագծի համար",
         adv_team: "Միասնական թիմ",
-        adv_team_desc: "Բոլոր մասնագետները՝ անալիտիկներից մինչև պրորաբներ՝ աշխատում են մեկ կազմակերպությունում՝ առանց միջնորդների։",
+        adv_team_desc: "Բոլոր մասնագետները՝ անալիտիկներից մինչև շինվարպետներ՝ աշխատում են մեկ կազմակերպությունում՝ առանց միջնորդների։",
         adv_deadlines: "Ֆիքսված ժամկետներ",
         adv_deadlines_desc: "Երաշխավորում ենք օրացուցային գրաֆիկների պահպանումը՝ ձգձգման դեպքում ֆինանսական պատասխանատվությամբ։",
         adv_transparency: "Թափանցիկություն",
@@ -556,29 +569,34 @@ const translations = {
         // Tourism
         tourism_label: "ՏՈՒՐԻԶՄ",
         tourism_title: "Տուրիստական բիզնես՝ բանալին ձեռքին",
-        tourism_desc: "Մասնակցությունների ընտրություն, նախագծում և տուրիստական օբյեկտների մեկնարկ՝ հողից մինչև առաջին հյուրերը: Պհուկետի շուկա՝ հող +400% 10 տարում, կղզու միայն 20%-ն է կառուցապատված։",
+        tourism_desc: "Հողամասերի ընտրություն, նախագծում և տուրիստական օբյեկտների մեկնարկ՝ հողից մինչև առաջին հյուրերը: Պհուկետի շուկա՝ հող +400% 10 տարում, կղզու միայն 20%-ն է կառուցապատված։",
         tourism_hotels: "Հյուրանոցներ և ռեզորտներ",
         tourism_hotels_desc: "Տուրիստական համալիրների նախագծում՝ կոնցեպցիայից մինչև ներդրումներ",
         tourism_land: "Կապսուլային տներ",
-        tourism_land_desc: "Մոդուլային լուծումներ գլեմփինգի և էկո-հանգստի համար՝ արագ մոնտաժ, նվազագույն միջամտություն բնությանը",
+        tourism_land_desc: "Մոդուլային լուծումներ գլեմփինգի և էկոլոգիական հանգստի համար՝ արագ մոնտաժ, նվազագույն միջամտություն բնությանը",
         tourism_ops: "Գլեմփինգ-կլաստերներ",
         tourism_ops_desc: "Տուրիստական կլաստերների ստեղծում լիակատար ցիկլով՝ ինֆրակտուրա, դիզայն, մարքեթինգ և կառավարում",
 
         // Partners
         partners_label: "ԳՈՐԾԸՆԿԵՐՆԵՐ",
         partners_title: "Մասնագետները վստահում են մեզ",
-        partners_desc: "Աշխատում ենք շինարարական և ֆինանսական ոլորտի առաջատար ընկերությունների հետ",
-        partner_arch: "Ճարտարապետական բյուրոներ",
-        partner_monolith: "Մոնոլիտային աշխատանքներ",
-        partner_banks: "Բանկեր և ներդրողներ",
-        partner_design: "Դիզայն ստուդիաներ",
-        partner_landscape: "Լանդշաֆտային գործընկերներ",
-        partner_supply: "Մատակարարող ընկերություններ",
+        partners_desc: "Աշխատում ենք շինարարական, տուրիստական և էներգետիկ ոլորտի առաջատար ընկերությունների հետ",
+        partner_1_name: "ՍԿ «23-րդ շրջան»",
+        partner_1_desc: "Կարկասային տներ",
+        partner_2_name: "AG Club Villas",
+        partner_2_desc: "Վիլլաներ Պուկետում",
+        partner_3_name: "Adamantum Group",
+        partner_3_desc: "Շինարարություն Պուկետում",
+        partner_4_name: "Ֆասադ Շին",
+        partner_4_desc: "Ֆասադային աշխատանքներ",
+        partner_5_name: "ECOLIQ",
+        partner_5_desc: "Ջերմային պոմպեր և արևային էներգիա",
+        partner_link_open: "Բացել ↗",
 
         // Contacts / CTA
         contacts_label: "ԿՈՆՏԱԿՏՆԵՐ",
         contacts_title: "Քննարկենք ձեր նախագիծը",
-        contacts_desc: "Թողեք հայտ՝ մենք կկապվենք 24 ժամվա ընթացքում և կպատրաստենք անհատական առաջարկ՝ ձեր խնդիրների համար։",
+        contacts_desc: "Թողեք հայտ՝ մենք կկապվենք 24 ժամվա ընթացքում և կպատրաստենք անհատական առաջարկ՝ ըստ ձեր խնդիրների։",
         contacts_fast: "Արագ կապ",
         contacts_whatsapp: "WhatsApp",
         contacts_telegram: "Telegram",
@@ -594,12 +612,12 @@ const translations = {
         form_service: "Հետաքրքիր ուղղություն",
         form_service_placeholder: "Ընտրեք ուղղությունը",
         form_service_construction: "Շինարարություն",
-        form_service_design: "Դիզայն և ավարտ",
+        form_service_design: "Դիզայն և հարդարանք",
         form_service_land: "Հողամասեր",
         form_service_tourism: "Տուրիզմ",
         form_service_architecture: "Ճարտարապետություն",
         form_service_investments: "Ներդրումներ",
-        form_service_complex: "Բարդ նախագիծ",
+        form_service_complex: "Համալիր նախագիծ",
         form_message: "Նախագծի մասին",
         form_message_placeholder: "Կարճ պատմեք ձեր նախագծի կամ խնդրի մասին...",
         form_submit: "ՈՒՂԱՐԿԵԼ ՀԱՅՏ",
@@ -671,6 +689,8 @@ function applyTranslations() {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === currentLang);
     });
+
+    shrinkDashes();
 }
 
 function updateLangSwitcher() {
@@ -679,8 +699,44 @@ function updateLangSwitcher() {
     });
 }
 
+function shrinkDashes() {
+    const skipTags = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'OPTION', 'CODE', 'PRE']);
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+            if (skipTags.has(node.parentElement?.tagName)) return NodeFilter.FILTER_REJECT;
+            if (node.parentElement?.closest('.small-dash')) return NodeFilter.FILTER_REJECT;
+            if (/[-–—]/.test(node.nodeValue)) return NodeFilter.FILTER_ACCEPT;
+            return NodeFilter.FILTER_REJECT;
+        }
+    });
+
+    const nodes = [];
+    let node;
+    while (node = walker.nextNode()) nodes.push(node);
+
+    nodes.forEach(node => {
+        const parent = node.parentNode;
+        if (!parent) return;
+        const text = node.nodeValue;
+        const parts = text.split(/([-–—])/);
+        const fragment = document.createDocumentFragment();
+        parts.forEach((part, i) => {
+            if (i % 2 === 1 && part) {
+                const span = document.createElement('span');
+                span.className = 'small-dash';
+                span.textContent = part;
+                fragment.appendChild(span);
+            } else if (part) {
+                fragment.appendChild(document.createTextNode(part));
+            }
+        });
+        parent.replaceChild(fragment, node);
+    });
+}
+
 function initI18n() {
     applyTranslations();
+    shrinkDashes();
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
