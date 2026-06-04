@@ -2535,6 +2535,69 @@ body.loading .footer {
 }
 
 /* ========================================
+   FOOTER PARTNERS
+======================================== */
+.cta-footer-partners {
+    max-width: 1280px;
+    margin: 80px auto 0;
+    padding: 40px 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cta-footer-partners h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #c9a962;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer-partners-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.footer-partner-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(10, 15, 30, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-partner-item:hover {
+    background: rgba(10, 15, 30, 0.6);
+    border-color: rgba(100, 200, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.footer-partner-icon {
+    color: #64c8ff;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.footer-partner-item:hover .footer-partner-icon {
+    color: #c9a962;
+    opacity: 1;
+}
+
+.footer-partner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* ========================================
    CTA FOOTER BAR
 ======================================== */
 .cta-footer-bar {
@@ -2734,6 +2797,15 @@ body.loading .footer {
     .cta-grid {
         gap: 48px;
         padding: 0 32px;
+    }
+
+    .cta-footer-partners {
+        padding: 32px 32px 0;
+        margin-top: 60px;
+    }
+
+    .footer-partners-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .cta-footer-bar {
@@ -3039,6 +3111,24 @@ body.loading .footer {
         grid-template-columns: 1fr;
         gap: 48px;
         padding: 0 24px;
+    }
+
+    .cta-footer-partners {
+        padding: 24px 24px 0;
+        margin-top: 48px;
+    }
+
+    .footer-partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .footer-partner-item {
+        padding: 10px 12px;
+    }
+
+    .footer-partner-name {
+        font-size: 14px;
     }
 
     .cta-footer-bar {

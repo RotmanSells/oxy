@@ -11,7 +11,6 @@ const translations = {
         nav_supply: "Снабжение",
         nav_advantages: "Преимущества",
         nav_tourism: "Туризм",
-        nav_partners: "Партнеры",
         nav_contacts: "Контакты",
 
         // Hero
@@ -150,9 +149,7 @@ const translations = {
         tourism_ops_desc: "Создание туристических кластеров с полным циклом: инфраструктура, дизайн, маркетинг и управление",
 
         // Partners
-        partners_label: "ПАРТНЁРЫ",
-        partners_title: "Нам доверяют профессионалы",
-        partners_desc: "Работаем с ведущими компаниями строительного и туристического секторов",
+        footer_partners_title: "Партнеры",
         partner_1_name: "СК «23-й РФ»",
         partner_1_desc: "Каркасные дома",
         partner_3_name: "Adamantum Group",
@@ -223,7 +220,6 @@ const translations = {
         nav_supply: "Supply",
         nav_advantages: "Why Us",
         nav_tourism: "Tourism",
-        nav_partners: "Partners",
         nav_contacts: "Contacts",
 
         // Hero
@@ -362,9 +358,7 @@ const translations = {
         tourism_ops_desc: "Creating tourist clusters with full cycle: infrastructure, design, marketing and management",
 
         // Partners
-        partners_label: "PARTNERS",
-        partners_title: "Trusted by Professionals",
-        partners_desc: "Working with leading companies in construction, tourism and energy",
+        footer_partners_title: "Partners",
         partner_1_name: "SK «23rd RF»",
         partner_1_desc: "Frame Houses",
         partner_3_name: "Adamantum Group",
@@ -435,7 +429,6 @@ const translations = {
         nav_supply: "Մատակարարում",
         nav_advantages: "Առավելություններ",
         nav_tourism: "Տուրիզմ",
-        nav_partners: "Գործընկերներ",
         nav_contacts: "Կոնտակտներ",
 
         // Hero
@@ -574,9 +567,7 @@ const translations = {
         tourism_ops_desc: "Տուրիստական կլաստերների ստեղծում լիակատար ցիկլով՝ ինֆրակտուրա, դիզայն, մարքեթինգ և կառավարում",
 
         // Partners
-        partners_label: "ԳՈՐԾԸՆԿԵՐՆԵՐ",
-        partners_title: "Մասնագետները վստահում են մեզ",
-        partners_desc: "Աշխատում ենք շինարարական, տուրիստական և էներգետիկ ոլորտի առաջատար ընկերությունների հետ",
+        footer_partners_title: "Գործընկերներ",
         partner_1_name: "ՍԿ «23-րդ ՌԴ»",
         partner_1_desc: "Կարկասային տներ",
         partner_3_name: "Adamantum Group",
