@@ -1,0 +1,26 @@
+{
+  "name": "integra-api",
+  "version": "1.0.0",
+  "description": "Backend API for INTEGRA KOTOVA leads & admin",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:push": "tsx src/db.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.8.2",
+    "better-sqlite3": "^9.4.3",
+    "dotenv": "^16.4.5",
+    "hono": "^4.0.8",
+    "node-telegram-bot-api": "^0.64.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/node": "^20.11.24",
+    "@types/node-telegram-bot-api": "^0.64.3",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

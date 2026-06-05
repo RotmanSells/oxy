@@ -643,7 +643,7 @@ class ContactForm {
         return isValid;
     }
     
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         
         if (!this.validate()) {
@@ -651,21 +651,59 @@ class ContactForm {
             return;
         }
         
+        const apiUrl = window.API_URL || 'http://localhost:3000/api/contact';
+        const formData = new FormData(this.form);
+        const payload = {
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            email: formData.get('email') || undefined,
+            service: formData.get('service') || undefined,
+            message: formData.get('message') || undefined,
+        };
+        
         const originalText = this.submitBtn.innerHTML;
-        this.submitBtn.innerHTML = '<span>ОТПРАВЛЕНО!</span>';
-        this.submitBtn.style.background = '#4ade80';
-        this.submitBtn.style.borderColor = '#4ade80';
-        this.submitBtn.style.color = '#0a0a0a';
+        this.submitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
         this.submitBtn.disabled = true;
         
-        setTimeout(() => {
-            this.submitBtn.innerHTML = originalText;
-            this.submitBtn.style.background = '';
-            this.submitBtn.style.borderColor = '';
-            this.submitBtn.style.color = '';
-            this.submitBtn.disabled = false;
-            this.form.reset();
-        }, 2500);
+        try {
+            const res = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            
+            const data = await res.json();
+            
+            if (data.ok) {
+                this.submitBtn.innerHTML = '<span>ОТПРАВЛЕНО!</span>';
+                this.submitBtn.style.background = '#4ade80';
+                this.submitBtn.style.borderColor = '#4ade80';
+                this.submitBtn.style.color = '#0a0a0a';
+                this.form.reset();
+                
+                setTimeout(() => {
+                    this.submitBtn.innerHTML = originalText;
+                    this.submitBtn.style.background = '';
+                    this.submitBtn.style.borderColor = '';
+                    this.submitBtn.style.color = '';
+                    this.submitBtn.disabled = false;
+                }, 3000);
+            } else {
+                throw new Error(data.error || 'Server error');
+            }
+        } catch (err) {
+            console.error('Submit error:', err);
+            this.submitBtn.innerHTML = '<span>ОШИБКА, ПОПРОБУЙТЕ ПОЗЖЕ</span>';
+            this.submitBtn.style.background = '#ef4444';
+            this.submitBtn.style.borderColor = '#ef4444';
+            
+            setTimeout(() => {
+                this.submitBtn.innerHTML = originalText;
+                this.submitBtn.style.background = '';
+                this.submitBtn.style.borderColor = '';
+                this.submitBtn.disabled = false;
+            }, 3000);
+        }
     }
 }
 
