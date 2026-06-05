@@ -48,7 +48,7 @@ const translations = {
         stat_experience: "лет опыта",
         stat_projects: "проектов",
         stat_countries: "стран",
-        stat_satisfied: "довольных",
+        stat_satisfied: "довольных клиентов",
 
         // Projects
         projects_label: "ПОРТФОЛИО",

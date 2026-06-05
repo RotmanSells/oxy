@@ -192,7 +192,7 @@ class Preloader {
 // ========================================
 class HeroFacts {
     constructor() {
-        this.numbers = Utils.qsa('.fact-number[data-count]');
+        this.numbers = Utils.qsa('.stat-number[data-count]');
         this.observer = null;
         this.init();
     }
@@ -279,7 +279,7 @@ class SectionImagesSlider {
         
         this.sections.forEach(section => this.observer.observe(section));
     }
-    
+
     goToImage(index) {
         if (index === this.currentImage || !this.images[index]) return;
         
@@ -330,7 +330,7 @@ class BackgroundSlider {
         
         this.sections.forEach(section => this.observer.observe(section));
     }
-    
+
     goToSlide(index) {
         if (index === this.currentSlide || !this.slides[index]) return;
         
@@ -1270,8 +1270,9 @@ class App {
     }
     
     init() {
-        this.components.backgroundSlider = new BackgroundSlider();
-        this.components.sectionImagesSlider = new SectionImagesSlider();
+        // Background sliders disabled — hero image stays fixed for all sections
+        // this.components.backgroundSlider = new BackgroundSlider();
+        // this.components.sectionImagesSlider = new SectionImagesSlider();
         this.components.headerScroll = new HeaderScroll();
         this.components.mobileMenu = new MobileMenu();
         this.components.smoothScroll = new SmoothScroll();

@@ -576,7 +576,7 @@ body.loading .footer {
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 140px 0 0;
+    padding: 160px 0 0;
 }
 
 .hero > .container {
@@ -591,7 +591,17 @@ body.loading .footer {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 24px;
     max-width: 520px;
+}
+
+.hero-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
 }
 
 .main-title {
@@ -599,7 +609,7 @@ body.loading .footer {
     font-size: clamp(36px, 4.5vw, 64px);
     font-weight: 400;
     line-height: 1.1;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     color: #ffffff;
     text-shadow:
         0 1px 3px rgba(0,0,0,0.9),
@@ -624,11 +634,77 @@ body.loading .footer {
 
 .cta-wrapper {
     margin-top: 0;
-    margin-bottom: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
     align-items: center;
+}
+
+/* Hero Tags & Locations */
+.hero-tags {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    animation: fadeInUp 1s ease both;
+    animation-delay: 0.45s;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag-pill {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    text-shadow: 0 0.5px 2px rgba(0,0,0,0.8);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.tag-pill:hover {
+    background: rgba(201, 169, 98, 0.12);
+    border-color: rgba(201, 169, 98, 0.35);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.hero-locations {
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease both;
+    animation-delay: 0.25s;
+}
+
+.loc-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    text-shadow: 0 0.5px 2px rgba(0,0,0,0.8);
+}
+
+.loc-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(201, 169, 98, 0.5);
+    flex-shrink: 0;
 }
 
 /* Pill button: white capsule with black arrow */
@@ -719,7 +795,7 @@ body.loading .footer {
     background: linear-gradient(180deg, rgba(10, 15, 30, 0.3) 0%, rgba(10, 15, 30, 0.7) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 32px 40px;
+    padding: 40px 40px 60px;
     border-radius: 24px 24px 0 0;
     margin: 0 -40px;
 }
@@ -765,6 +841,7 @@ body.loading .footer {
     color: #c9a962;
     line-height: 1;
     margin-bottom: 6px;
+    display: block;
     text-shadow:
         0 0.5px 1px rgba(0,0,0,0.9),
         0 1px 3px rgba(0,0,0,0.6);
@@ -776,6 +853,7 @@ body.loading .footer {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
     letter-spacing: 0.3px;
+    display: block;
 }
 
 /* Legacy button styles (keep for other sections) */
@@ -844,18 +922,18 @@ body.loading .footer {
 .scroll-indicator {
     position: absolute;
     right: 40px;
-    bottom: 40px;
+    bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     z-index: 10;
     cursor: pointer;
 }
 
 .scroll-text {
-    font-size: 11px;
-    letter-spacing: 3px;
+    font-size: 12px;
+    letter-spacing: 4px;
     color: rgba(255, 255, 255, 0.6);
     writing-mode: vertical-rl;
     text-orientation: mixed;
@@ -863,7 +941,7 @@ body.loading .footer {
 
 .scroll-line {
     width: 1px;
-    height: 50px;
+    height: 80px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
     animation: scrollPulse 2.5s ease-in-out infinite;
 }
@@ -2719,10 +2797,10 @@ body.loading .footer {
     animation: fadeInUp 1s ease both;
 }
 
-.hero .title-line:nth-child(1) { animation-delay: 0.25s; }
-.hero .title-line:nth-child(2) { animation-delay: 0.35s; }
-.hero .description { animation-delay: 0.5s; }
-.hero .cta-wrapper { animation: fadeInUp 0.8s ease both; animation-delay: 0.75s; }
+.hero .title-line:nth-child(1) { animation-delay: 0.35s; }
+.hero .title-line:nth-child(2) { animation-delay: 0.45s; }
+.hero .description { animation-delay: 0.55s; }
+.hero .cta-wrapper { animation: fadeInUp 0.8s ease both; animation-delay: 0.65s; }
 .hero .stats-section { animation: fadeInUp 0.8s ease both; animation-delay: 0.95s; }
 
 /* Scroll reveal for sections */
@@ -2937,7 +3015,11 @@ body.loading .footer {
     }
 
     .hero {
-        padding: 100px 0 60px;
+        padding: 120px 0 0;
+    }
+
+    .hero-content {
+        padding-bottom: 16px;
     }
 
     /* .section-img[data-section="hero"]::after,
@@ -2951,7 +3033,31 @@ body.loading .footer {
 
     .description {
         font-size: 15px;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
+    }
+
+    .hero-locations {
+        margin-bottom: 16px;
+    }
+
+    .loc-list {
+        font-size: 11px;
+        gap: 8px 10px;
+    }
+
+    .hero-tags {
+        margin-top: auto;
+        padding-top: 16px;
+    }
+
+    .tag-list {
+        gap: 5px;
+    }
+
+    .tag-pill {
+        padding: 5px 12px;
+        font-size: 9px;
+        letter-spacing: 1px;
     }
 
     .section {
@@ -3153,8 +3259,12 @@ body.loading .footer {
     }
 
     .hero {
-        padding: 90px 0 40px;
-        min-height: auto;
+        padding: 90px 0 0;
+        min-height: 100vh;
+    }
+
+    .hero-content {
+        padding-bottom: 12px;
     }
 
     .content-wrapper {
@@ -3192,7 +3302,7 @@ body.loading .footer {
     }
 
     .stats-section {
-        padding: 24px 24px;
+        padding: 24px 24px 40px;
         margin: 0 -24px;
         border-radius: 16px 16px 0 0;
     }
