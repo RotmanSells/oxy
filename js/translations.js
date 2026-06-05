@@ -158,6 +158,8 @@ const translations = {
         partner_4_desc: "Фасадные работы",
         partner_5_name: "ECOLIQ",
         partner_5_desc: "Тепловые насосы и солнечная энергия",
+        partner_6_name: "Alina Moon",
+        partner_6_desc: "Дизайн и архитектура",
         partner_link_open: "Открыть ↗",
 
         // Contacts / CTA
@@ -367,6 +369,8 @@ const translations = {
         partner_4_desc: "Facade Works",
         partner_5_name: "ECOLIQ",
         partner_5_desc: "Heat Pumps & Solar Energy",
+        partner_6_name: "Alina Moon",
+        partner_6_desc: "Design & Architecture",
         partner_link_open: "Open ↗",
 
         // Contacts / CTA
@@ -576,6 +580,8 @@ const translations = {
         partner_4_desc: "Ֆասադային աշխատանքներ",
         partner_5_name: "ECOLIQ",
         partner_5_desc: "Ջերմային պոմպեր և արևային էներգիա",
+        partner_6_name: "Alina Moon",
+        partner_6_desc: "Դիզայն և ճարտարապետություն",
         partner_link_open: "Բացել ↗",
 
         // Contacts / CTA
