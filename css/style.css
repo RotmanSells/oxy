@@ -2708,7 +2708,7 @@ body.loading .footer {
     font-weight: 400;
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.5px;
-    white-space: nowrap;
+    overflow-wrap: break-word;
 }
 
 .footer-partner-desc {
@@ -2716,7 +2716,7 @@ body.loading .footer {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.3px;
-    white-space: nowrap;
+    overflow-wrap: break-word;
 }
 
 /* ========================================
@@ -2924,7 +2924,8 @@ body.loading .footer {
     }
 
     .footer-partners-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
     .cta-footer-bar {
@@ -3232,16 +3233,21 @@ body.loading .footer {
     }
 
     .footer-partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
 
     .footer-partner-item {
-        padding: 10px 12px;
+        padding: 10px 14px;
+        gap: 10px;
     }
 
     .footer-partner-name {
-        font-size: 14px;
+        font-size: 15px;
+    }
+
+    .footer-partner-desc {
+        font-size: 10px;
     }
 
     .cta-footer-bar {
