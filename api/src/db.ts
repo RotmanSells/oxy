@@ -22,6 +22,13 @@ db.exec(`
     value TEXT NOT NULL,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS admins (
+    chat_id INTEGER PRIMARY KEY,
+    username TEXT,
+    first_name TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 `);
 
 export interface LeadInput {
@@ -75,6 +82,22 @@ export function setContent(key: string, value: string) {
      ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=CURRENT_TIMESTAMP`
   );
   stmt.run(key, value);
+}
+
+export function addAdmin(chatId: number, username?: string, firstName?: string) {
+  const stmt = db.prepare(
+    `INSERT INTO admins (chat_id, username, first_name) VALUES (?, ?, ?)
+     ON CONFLICT(chat_id) DO UPDATE SET username=excluded.username, first_name=excluded.first_name`
+  );
+  stmt.run(chatId, username || null, firstName || null);
+}
+
+export function getAdmins() {
+  return db.prepare('SELECT chat_id FROM admins').all() as { chat_id: number }[];
+}
+
+export function removeAdmin(chatId: number) {
+  db.prepare('DELETE FROM admins WHERE chat_id = ?').run(chatId);
 }
 
 export { db };
