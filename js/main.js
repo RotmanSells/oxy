@@ -1270,9 +1270,8 @@ class App {
     }
     
     init() {
-        // Background sliders disabled — hero image stays fixed for all sections
-        // this.components.backgroundSlider = new BackgroundSlider();
-        // this.components.sectionImagesSlider = new SectionImagesSlider();
+        this.components.backgroundSlider = new BackgroundSlider();
+        this.components.sectionImagesSlider = new SectionImagesSlider();
         this.components.headerScroll = new HeaderScroll();
         this.components.mobileMenu = new MobileMenu();
         this.components.smoothScroll = new SmoothScroll();
