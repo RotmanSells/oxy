@@ -625,13 +625,13 @@ body.loading .footer {
 .cta-button.pill {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 20px 14px 28px;
+    gap: 10px;
+    padding: 10px 16px 10px 22px;
     border-radius: 50px;
     background: #ffffff;
     color: #1a1a1a;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0;
     transition: all 0.3s ease;
@@ -650,8 +650,8 @@ body.loading .footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     background: #1a1a1a;
     border-radius: 50%;
     color: #ffffff;
@@ -662,26 +662,24 @@ body.loading .footer {
     transform: translateX(3px);
 }
 
-/* About button: transparent with play icon */
+/* About button: circle play icon + text */
 .cta-button.about-btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 24px;
+    padding: 0;
     border-radius: 50px;
     background: transparent;
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: none;
 }
 
 .cta-button.about-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.4);
     color: #ffffff;
 }
 
@@ -689,18 +687,65 @@ body.loading .footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
     color: rgba(255, 255, 255, 0.9);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .cta-button.about-btn:hover .about-play {
     border-color: #ffffff;
     color: #ffffff;
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero Facts */
+.hero-facts {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-top: 48px;
+    padding-top: 28px;
+    position: relative;
+    z-index: 3;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    flex-wrap: wrap;
+}
+
+.fact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fact-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #c9a962;
+    line-height: 1;
+    text-shadow:
+        0 0.5px 1px rgba(0,0,0,0.9),
+        0 1px 3px rgba(0,0,0,0.6);
+}
+
+.fact-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.5px;
+    text-shadow:
+        0 0.5px 1px rgba(0,0,0,0.9),
+        0 1px 3px rgba(0,0,0,0.6);
+}
+
+.fact-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Legacy button styles (keep for other sections) */
@@ -2648,6 +2693,7 @@ body.loading .footer {
 .hero .title-line:nth-child(2) { animation-delay: 0.35s; }
 .hero .description { animation-delay: 0.5s; }
 .hero .cta-wrapper { animation: fadeInUp 0.8s ease both; animation-delay: 0.75s; }
+.hero .hero-facts { animation: fadeInUp 0.8s ease both; animation-delay: 0.95s; }
 
 /* Scroll reveal for sections */
 .reveal {
@@ -3095,9 +3141,38 @@ body.loading .footer {
     } */
 
     .cta-wrapper {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
         gap: 12px;
+    }
+
+    .cta-button.pill {
+        padding: 8px 14px 8px 18px;
+        font-size: 12px;
+    }
+
+    .pill-arrow {
+        width: 24px;
+        height: 24px;
+    }
+
+    .about-play {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hero-facts {
+        gap: 16px;
+        margin-top: 36px;
+        padding-top: 20px;
+    }
+
+    .fact-number {
+        font-size: 22px;
+    }
+
+    .fact-divider {
+        height: 24px;
     }
 
     .cta-button {
