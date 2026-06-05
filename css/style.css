@@ -576,20 +576,20 @@ body.loading .footer {
     display: flex;
     align-items: flex-end;
     position: relative;
-    padding: 140px 0 15vh;
+    padding: 140px 0 28vh;
 }
 
 .content-wrapper {
-    max-width: 900px;
+    max-width: 520px;
     position: relative;
     z-index: 3;
 }
 
 .main-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 5.5vw, 76px);
+    font-size: clamp(36px, 4.5vw, 64px);
     font-weight: 400;
-    line-height: 1.08;
+    line-height: 1.1;
     margin-bottom: 20px;
     color: #ffffff;
     text-shadow:
@@ -602,12 +602,12 @@ body.loading .footer {
 }
 
 .description {
-    font-size: clamp(15px, 1.5vw, 18px);
+    font-size: clamp(14px, 1.3vw, 16px);
     line-height: 1.6;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.75);
-    max-width: 460px;
-    margin-bottom: 36px;
+    max-width: 360px;
+    margin-bottom: 32px;
     text-shadow:
         0 0.5px 1px rgba(0,0,0,0.9),
         0 1px 3px rgba(0,0,0,0.7);
