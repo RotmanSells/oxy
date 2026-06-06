@@ -2147,7 +2147,8 @@ body.loading .footer {
     z-index: 3;
 }
 
-.tourism-visual img {
+.tourism-visual img,
+.tourism-visual video {
     position: absolute;
     top: 0;
     left: 0;
@@ -2159,7 +2160,8 @@ body.loading .footer {
     z-index: 1;
 }
 
-.tourism-visual img.active {
+.tourism-visual img.active,
+.tourism-visual video.active {
     opacity: 1;
     z-index: 2;
 }
