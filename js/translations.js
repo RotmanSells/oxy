@@ -132,8 +132,8 @@ const translations = {
         tourism_hotels_desc: "Проектирование туристических комплексов: от концепции до инвестиций",
         tourism_land: "Капсульные дома",
         tourism_land_desc: "Модульные решения для глэмпинга и экологичного отдыха: быстрый монтаж, минимальное вмешательство в природу",
-        tourism_ops: "Глэмпинг-кластеры",
-        tourism_ops_desc: "Создание туристических кластеров с полным циклом: инфраструктура, дизайн, маркетинг и управление",
+        tourism_ops: "Глэмпинги под ключ",
+        tourism_ops_desc: "Глэмпинги под ключ: проектирование, строительство, интерьер и запуск",
 
         // Partners
         footer_partners_title: "Партнеры",
@@ -330,8 +330,8 @@ const translations = {
         tourism_hotels_desc: "Design of tourist complexes: from concept to investments",
         tourism_land: "Capsule Houses",
         tourism_land_desc: "Modular solutions for glamping and eco-tourism: fast installation, minimal environmental impact",
-        tourism_ops: "Glamping Clusters",
-        tourism_ops_desc: "Creating tourist clusters with full cycle: infrastructure, design, marketing and management",
+        tourism_ops: "Turnkey Glamping",
+        tourism_ops_desc: "Turnkey glamping: design, construction, interior and launch",
 
         // Partners
         footer_partners_title: "Partners",
@@ -528,8 +528,8 @@ const translations = {
         tourism_hotels_desc: "Տուրիստական համալիրների նախագծում՝ կոնցեպցիայից մինչև ներդրումներ",
         tourism_land: "Կապսուլային տներ",
         tourism_land_desc: "Մոդուլային լուծումներ գլեմփինգի և էկոլոգիական հանգստի համար՝ արագ մոնտաժ, նվազագույն միջամտություն բնությանը",
-        tourism_ops: "Գլեմփինգ-կլաստերներ",
-        tourism_ops_desc: "Տուրիստական կլաստերների ստեղծում լիակատար ցիկլով՝ ինֆրակտուրա, դիզայն, մարքեթինգ և կառավարում",
+        tourism_ops: "Գլեմփինգ բանալիով",
+        tourism_ops_desc: "Գլեմփինգ բանալիով՝ նախագծում, շինարարություն, ինտերիեր և գործարկում",
 
         // Partners
         footer_partners_title: "Գործընկերներ",
