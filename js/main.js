@@ -885,10 +885,10 @@ class Carousel {
     handleClick() {
         this.stopAutoPlay();
 
-        const card = this.visual.closest('.supply-card, .tourism-card, .service-card');
+        const card = this.visual.closest('.tourism-card, .service-card');
         if (!card) return;
 
-        const cardImages = Array.from(card.querySelectorAll('.supply-visual img, .tourism-visual img, .service-visual.carousel img'));
+        const cardImages = Array.from(card.querySelectorAll('.tourism-visual img, .service-visual.carousel img'));
         if (cardImages.length === 0) return;
 
         let imgIndex = 0;
@@ -914,9 +914,9 @@ class Carousel {
     }
 }
 
-class SupplyCarousel {
+class CardCarousel {
     constructor() {
-        this.selectors = ['.supply-visual', '.tourism-visual', '.service-visual.carousel'];
+        this.selectors = ['.tourism-visual', '.service-visual.carousel'];
         this.carousels = [];
         this.init();
     }
@@ -1320,7 +1320,7 @@ class App {
         this.components.scrollIndicator = new ScrollIndicator();
         this.components.contactForm = new ContactForm();
         this.components.phoneToggle = new PhoneToggle();
-        this.components.supplyCarousel = new SupplyCarousel();
+        this.components.cardCarousel = new CardCarousel();
         this.components.lightbox = new Lightbox();
         this.components.projectsSlider = new ProjectsSlider();
         this.components.fullscreenSections = new FullscreenSections();
