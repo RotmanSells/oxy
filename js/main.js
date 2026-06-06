@@ -55,6 +55,20 @@ const Utils = {
             img.onerror = reject;
             img.src = src;
         });
+    },
+
+    t(key, fallback = '') {
+        const lang = document.documentElement.lang || 'ru';
+        try {
+            if (typeof translations !== 'undefined' && translations[lang]?.[key] !== undefined) {
+                return translations[lang][key];
+            }
+            if (typeof translations !== 'undefined' && translations.ru?.[key] !== undefined) {
+                return translations.ru[key];
+            }
+        } catch (err) {
+        }
+        return fallback || key;
     }
 };
 
@@ -80,13 +94,21 @@ class Preloader {
             'Добро пожаловать'
         ];
         
-        this.minDuration = 5200;
+        this.hasSeenPreloader = false;
+        try {
+            this.hasSeenPreloader = sessionStorage.getItem('preloaderSeen') === '1';
+        } catch (err) {
+            this.hasSeenPreloader = false;
+        }
+
+        this.minDuration = Utils.prefersReducedMotion() ? 350 : (this.hasSeenPreloader ? 900 : 2400);
         this.phraseDuration = this.minDuration / this.phrases.length;
         this.progress = 0;
         this.resourcesLoaded = false;
-        this.startTime = performance.now();
+        this.startTime = null;
         this.animationFrame = null;
         this.currentPhraseIndex = -1;
+        this.fallbackTimeout = null;
         
         this.init();
     }
@@ -96,15 +118,16 @@ class Preloader {
         this.trackResources();
         this.startAnimation();
         
-        setTimeout(() => {
+        // Fallback to prevent infinite loading if resources hang
+        this.fallbackTimeout = setTimeout(() => {
             this.resourcesLoaded = true;
-        }, 8000);
+        }, 3500);
     }
     
     trackResources() {
         const resources = [];
         
-        Utils.qsa('img').forEach(img => {
+        Utils.qsa('img[loading="eager"], img[fetchpriority="high"], .section-img.active img').forEach(img => {
             if (!img.complete) {
                 resources.push(
                     new Promise(resolve => {
@@ -115,7 +138,7 @@ class Preloader {
             }
         });
         
-        Utils.qsa('[style*="background-image"]').forEach(el => {
+        Utils.qsa('[style*="background-image"].active, .hero [style*="background-image"]').forEach(el => {
             const bg = window.getComputedStyle(el).backgroundImage;
             if (bg && bg !== 'none') {
                 const match = bg.match(/url\(["']?([^"')]+)["']?\)/);
@@ -139,8 +162,9 @@ class Preloader {
     }
     
     startAnimation() {
-        const animate = () => {
-            const elapsed = performance.now() - this.startTime;
+        const animate = (timestamp) => {
+            if (!this.startTime) this.startTime = timestamp;
+            const elapsed = timestamp - this.startTime;
             const timeProgress = Math.min(elapsed / this.minDuration, 1);
             
             this.progress = Math.round(timeProgress * 100);
@@ -168,6 +192,9 @@ class Preloader {
         if (this.animationFrame) {
             cancelAnimationFrame(this.animationFrame);
         }
+        if (this.fallbackTimeout) {
+            clearTimeout(this.fallbackTimeout);
+        }
         
         this.progress = 100;
         if (this.bar) this.bar.style.width = '100%';
@@ -179,6 +206,10 @@ class Preloader {
                 this.preloader.classList.add('hidden');
             }
             document.body.classList.remove('loading');
+            try {
+                sessionStorage.setItem('preloaderSeen', '1');
+            } catch (err) {
+            }
             
             if (typeof this.onComplete === 'function') {
                 this.onComplete();
@@ -218,9 +249,10 @@ class HeroFacts {
         
         const suffix = el.dataset.suffix || '';
         const duration = Utils.prefersReducedMotion() ? 0 : 2000;
-        const startTime = performance.now();
+        let startTime = null;
         
         const update = (currentTime) => {
+            if (!startTime) startTime = currentTime;
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             const ease = 1 - Math.pow(1 - progress, 2);
@@ -252,7 +284,7 @@ class SectionImagesSlider {
     constructor() {
         this.images = Utils.qsa('.section-img');
         this.sections = Utils.qsa('section[id]');
-        this.currentImage = 0;
+        this.currentImage = -1; // Changed to -1 to force initial activation
         this.imagesMap = new Map();
         this.observer = null;
         this.init();
@@ -283,7 +315,7 @@ class SectionImagesSlider {
     goToImage(index) {
         if (index === this.currentImage || !this.images[index]) return;
         
-        if (this.images[this.currentImage]) {
+        if (this.currentImage >= 0 && this.images[this.currentImage]) {
             this.images[this.currentImage].classList.remove('active');
         }
         
@@ -303,7 +335,7 @@ class BackgroundSlider {
     constructor() {
         this.slides = Utils.qsa('.slide');
         this.sections = Utils.qsa('section[id]');
-        this.currentSlide = 0;
+        this.currentSlide = -1; // Changed to -1 to force initial activation
         this.slidesMap = new Map();
         this.observer = null;
         this.init();
@@ -334,7 +366,7 @@ class BackgroundSlider {
     goToSlide(index) {
         if (index === this.currentSlide || !this.slides[index]) return;
         
-        if (this.slides[this.currentSlide]) {
+        if (this.currentSlide >= 0 && this.slides[this.currentSlide]) {
             this.slides[this.currentSlide].classList.remove('active');
         }
         
@@ -354,19 +386,27 @@ class HeaderScroll {
     constructor() {
         this.header = Utils.qs('#header');
         this.scrollThreshold = 50;
+        this.abortController = new AbortController();
         this.init();
     }
     
     init() {
         if (!this.header) return;
         
-        window.addEventListener('scroll', Utils.rafThrottle(() => this.update()), { passive: true });
+        window.addEventListener('scroll', Utils.rafThrottle(() => this.update()), { 
+            passive: true, 
+            signal: this.abortController.signal 
+        });
         this.update();
     }
     
     update() {
-        const currentScroll = window.pageYOffset;
+        const currentScroll = window.scrollY;
         this.header.classList.toggle('scrolled', currentScroll > this.scrollThreshold);
+    }
+
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -379,25 +419,27 @@ class MobileMenu {
         this.nav = Utils.qs('.main-nav');
         this.links = this.nav ? Utils.qsa('.nav-link', this.nav) : [];
         this.isOpen = false;
+        this.abortController = new AbortController();
+        this.previouslyFocused = null;
         this.init();
     }
     
     init() {
         if (!this.toggle || !this.nav) return;
         
-        this.toggle.addEventListener('click', () => this.toggleMenu());
+        const signal = this.abortController.signal;
+        
+        this.toggle.addEventListener('click', () => this.toggleMenu(), { signal });
         
         this.links.forEach(link => {
-            link.addEventListener('click', () => this.closeMenu());
+            link.addEventListener('click', () => this.closeMenu(), { signal });
         });
         
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) this.closeMenu();
-        });
+        document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
         
         window.addEventListener('resize', Utils.debounce(() => {
             if (window.innerWidth > 768 && this.isOpen) this.closeMenu();
-        }, 250));
+        }, 250), { signal });
     }
     
     toggleMenu() {
@@ -405,13 +447,61 @@ class MobileMenu {
         this.nav.classList.toggle('active', this.isOpen);
         this.toggle.setAttribute('aria-expanded', String(this.isOpen));
         this.toggle.setAttribute('aria-label', this.isOpen ? 'Закрыть меню' : 'Открыть меню');
+
+        if (this.isOpen) {
+            this.previouslyFocused = document.activeElement;
+            const firstLink = this.links[0];
+            if (firstLink) firstLink.focus({ preventScroll: true });
+        } else {
+            this.returnFocus();
+        }
     }
     
-    closeMenu() {
+    closeMenu({ returnFocus = false } = {}) {
         this.isOpen = false;
         this.nav.classList.remove('active');
         this.toggle.setAttribute('aria-expanded', 'false');
         this.toggle.setAttribute('aria-label', 'Открыть меню');
+        if (returnFocus) this.returnFocus();
+    }
+
+    handleKeydown(e) {
+        if (!this.isOpen) return;
+
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            this.closeMenu({ returnFocus: true });
+            return;
+        }
+
+        if (e.key !== 'Tab') return;
+
+        const focusable = this.getFocusable();
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus({ preventScroll: true });
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus({ preventScroll: true });
+        }
+    }
+
+    getFocusable() {
+        return Utils.qsa('a[href], button:not([disabled])', this.nav).filter(el => el.offsetParent !== null);
+    }
+
+    returnFocus() {
+        const target = this.previouslyFocused instanceof HTMLElement ? this.previouslyFocused : this.toggle;
+        if (target) target.focus({ preventScroll: true });
+    }
+
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -421,12 +511,14 @@ class MobileMenu {
 class SmoothScroll {
     constructor() {
         this.links = Utils.qsa('a[href^="#"]');
+        this.abortController = new AbortController();
         this.init();
     }
     
     init() {
+        const signal = this.abortController.signal;
         this.links.forEach(link => {
-            link.addEventListener('click', (e) => this.handleClick(e, link));
+            link.addEventListener('click', (e) => this.handleClick(e, link), { signal });
         });
     }
     
@@ -442,12 +534,20 @@ class SmoothScroll {
         const header = Utils.qs('#header');
         const offset = header ? header.offsetHeight : 80;
         const elementPosition = target.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const offsetPosition = elementPosition + window.scrollY - offset;
         
         window.scrollTo({
             top: offsetPosition,
             behavior: Utils.prefersReducedMotion() ? 'auto' : 'smooth'
         });
+
+        if (target.hasAttribute('tabindex')) {
+            target.focus({ preventScroll: true });
+        }
+    }
+
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -457,48 +557,28 @@ class SmoothScroll {
 class Parallax {
     constructor() {
         this.bgSlider = Utils.qs('.bg-slider');
+        this.abortController = new AbortController();
         this.init();
     }
     
     init() {
         if (!this.bgSlider || Utils.prefersReducedMotion()) return;
         
-        window.addEventListener('scroll', Utils.rafThrottle(() => this.update()), { passive: true });
+        window.addEventListener('scroll', Utils.rafThrottle(() => this.update()), { 
+            passive: true, 
+            signal: this.abortController.signal 
+        });
     }
     
     update() {
-        const scrolled = window.pageYOffset;
+        const scrolled = window.scrollY;
         if (scrolled < window.innerHeight) {
             this.bgSlider.style.transform = `translateY(${scrolled * 0.4}px)`;
         }
     }
-}
 
-// ========================================
-//   LANGUAGE SWITCHER
-// ========================================
-class LanguageSwitcher {
-    constructor() {
-        this.links = Utils.qsa('.lang-link');
-        this.init();
-    }
-    
-    init() {
-        this.links.forEach(link => {
-            link.addEventListener('click', (e) => this.handleClick(e, link));
-        });
-    }
-    
-    handleClick(e, link) {
-        e.preventDefault();
-        this.links.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
-        const lang = link.dataset.lang;
-        if (lang) {
-            document.documentElement.lang = lang;
-            localStorage.setItem('preferredLanguage', lang);
-        }
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -565,7 +645,13 @@ class ActiveNav {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
                     this.navLinks.forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        const isActive = link.getAttribute('href') === `#${id}`;
+                        link.classList.toggle('active', isActive);
+                        if (isActive) {
+                            link.setAttribute('aria-current', 'page');
+                        } else {
+                            link.removeAttribute('aria-current');
+                        }
                     });
                 }
             });
@@ -585,6 +671,7 @@ class ActiveNav {
 class ScrollIndicator {
     constructor() {
         this.indicator = Utils.qs('.scroll-indicator');
+        this.abortController = new AbortController();
         this.init();
     }
     
@@ -598,7 +685,11 @@ class ScrollIndicator {
                     behavior: Utils.prefersReducedMotion() ? 'auto' : 'smooth' 
                 });
             }
-        });
+        }, { signal: this.abortController.signal });
+    }
+
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -609,14 +700,20 @@ class ContactForm {
     constructor() {
         this.form = Utils.qs('#contactForm');
         this.submitBtn = this.form ? Utils.qs('.form-submit', this.form) : null;
+        this.submitLabel = this.submitBtn ? Utils.qs('span', this.submitBtn) : null;
+        this.status = Utils.qs('#formStatus');
+        this.activeRequest = null;
+        this.abortController = new AbortController();
         this.init();
     }
     
     init() {
         if (!this.form || !this.submitBtn) return;
         
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.form.addEventListener('input', Utils.debounce(() => this.validate(), 300));
+        const signal = this.abortController.signal;
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e), { signal });
+        this.submitBtn.addEventListener('click', (e) => this.handleSubmit(e), { signal });
+        this.form.addEventListener('input', Utils.debounce(() => this.validate(), 300), { signal });
     }
     
     validate() {
@@ -624,34 +721,51 @@ class ContactForm {
         let isValid = true;
         
         inputs.forEach(input => {
-            if (input.required && !input.value.trim()) {
-                isValid = false;
-                input.classList.add('invalid');
-            } else {
-                input.classList.remove('invalid');
-            }
-            
-            if (input.type === 'email' && input.value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(input.value)) {
-                    isValid = false;
-                    input.classList.add('invalid');
-                }
-            }
+            const invalid = this.getFieldError(input);
+            input.classList.toggle('invalid', invalid);
+            input.setAttribute('aria-invalid', String(invalid));
+            this.toggleFieldError(input, invalid);
+            if (invalid) isValid = false;
         });
         
         return isValid;
+    }
+
+    getFieldError(input) {
+        if (input.required && !input.value.trim()) return true;
+        if (input.type === 'email' && input.value.trim()) {
+            return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        }
+        return false;
+    }
+
+    toggleFieldError(input, invalid) {
+        const id = input.getAttribute('aria-describedby');
+        if (!id) return;
+
+        const error = Utils.qs(`#${id}`);
+        if (!error) return;
+
+        error.classList.toggle('active', invalid);
     }
     
     async handleSubmit(e) {
         e.preventDefault();
         
         if (!this.validate()) {
-            console.warn('Пожалуйста, заполните все поля корректно');
+            this.setStatus('form_validation_error', 'error', 'Пожалуйста, заполните обязательные поля корректно.');
+            const firstInvalid = Utils.qs('.invalid', this.form);
+            if (firstInvalid) firstInvalid.focus({ preventScroll: false });
             return;
         }
         
-        const apiUrl = window.API_URL || 'http://localhost:3000/api/contact';
+        const apiUrl = this.getApiUrl();
+
+        if (!this.isApiConfigured(apiUrl)) {
+            this.setStatus('form_fallback', 'info', 'Сейчас форма не подключена к API. Напишите нам в WhatsApp или Telegram — мы быстро ответим.');
+            return;
+        }
+
         const formData = new FormData(this.form);
         const payload = {
             name: formData.get('name'),
@@ -661,49 +775,83 @@ class ContactForm {
             message: formData.get('message') || undefined,
         };
         
-        const originalText = this.submitBtn.innerHTML;
-        this.submitBtn.innerHTML = '<span>ОТПРАВКА...</span>';
-        this.submitBtn.disabled = true;
+        this.setSubmitting(true);
+        this.setStatus('form_sending', 'info', 'Отправляем заявку...');
+        const requestController = new AbortController();
+        const timeoutId = setTimeout(() => requestController.abort(), 10000);
+        this.activeRequest = requestController;
         
         try {
             const res = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
+                signal: requestController.signal
             });
+
+            const contentType = res.headers.get('content-type') || '';
+            const data = contentType.includes('application/json') ? await res.json() : {};
             
-            const data = await res.json();
-            
-            if (data.ok) {
-                this.submitBtn.innerHTML = '<span>ОТПРАВЛЕНО!</span>';
-                this.submitBtn.style.background = '#4ade80';
-                this.submitBtn.style.borderColor = '#4ade80';
-                this.submitBtn.style.color = '#0a0a0a';
-                this.form.reset();
-                
-                setTimeout(() => {
-                    this.submitBtn.innerHTML = originalText;
-                    this.submitBtn.style.background = '';
-                    this.submitBtn.style.borderColor = '';
-                    this.submitBtn.style.color = '';
-                    this.submitBtn.disabled = false;
-                }, 3000);
-            } else {
+            if (!res.ok || !data.ok) {
                 throw new Error(data.error || 'Server error');
             }
+
+            this.form.reset();
+            this.setButtonFeedback('success', 'form_success', 'ОТПРАВЛЕНО!');
+            this.setStatus('form_success_message', 'success', 'Спасибо! Мы свяжемся с вами в течение 24 часов.');
         } catch (err) {
             console.error('Submit error:', err);
-            this.submitBtn.innerHTML = '<span>ОШИБКА, ПОПРОБУЙТЕ ПОЗЖЕ</span>';
-            this.submitBtn.style.background = '#ef4444';
-            this.submitBtn.style.borderColor = '#ef4444';
-            
-            setTimeout(() => {
-                this.submitBtn.innerHTML = originalText;
-                this.submitBtn.style.background = '';
-                this.submitBtn.style.borderColor = '';
-                this.submitBtn.disabled = false;
-            }, 3000);
+            const isTimeout = err.name === 'AbortError';
+            this.setButtonFeedback('error', isTimeout ? 'form_timeout_button' : 'form_error_button', isTimeout ? 'ТАЙМАУТ' : 'ОШИБКА');
+            this.setStatus(isTimeout ? 'form_timeout' : 'form_error', 'error', isTimeout ? 'Сервер не ответил вовремя. Попробуйте ещё раз или напишите в мессенджер.' : 'Не удалось отправить заявку. Попробуйте позже или напишите в мессенджер.');
+        } finally {
+            clearTimeout(timeoutId);
+            this.activeRequest = null;
+            setTimeout(() => this.resetButton(), 3000);
         }
+    }
+
+    getApiUrl() {
+        return String(window.API_URL || '').trim();
+    }
+
+    isApiConfigured(apiUrl) {
+        if (!apiUrl || apiUrl === '#') return false;
+        return !/your-api|example\.com|localhost:3000\/api\/contact/i.test(apiUrl);
+    }
+
+    setSubmitting(isSubmitting) {
+        this.submitBtn.disabled = isSubmitting;
+        this.submitBtn.classList.remove('success', 'error');
+        this.setSubmitText(isSubmitting ? Utils.t('form_sending', 'ОТПРАВКА...') : Utils.t('form_submit', 'ОТПРАВИТЬ ЗАЯВКУ'));
+    }
+
+    setButtonFeedback(className, key, fallback) {
+        this.submitBtn.disabled = true;
+        this.submitBtn.classList.remove('success', 'error');
+        this.submitBtn.classList.add(className);
+        this.setSubmitText(Utils.t(key, fallback));
+    }
+
+    resetButton() {
+        this.submitBtn.disabled = false;
+        this.submitBtn.classList.remove('success', 'error');
+        this.setSubmitText(Utils.t('form_submit', 'ОТПРАВИТЬ ЗАЯВКУ'));
+    }
+
+    setSubmitText(text) {
+        if (this.submitLabel) this.submitLabel.textContent = text;
+    }
+
+    setStatus(key, type, fallback) {
+        if (!this.status) return;
+        this.status.textContent = Utils.t(key, fallback);
+        this.status.className = `form-status ${type || ''}`.trim();
+    }
+
+    destroy() {
+        if (this.activeRequest) this.activeRequest.abort();
+        this.abortController.abort();
     }
 }
 
@@ -715,38 +863,47 @@ class PhoneToggle {
         this.toggle = Utils.qs('.phone-toggle');
         this.dropdown = Utils.qs('.phone-dropdown');
         this.isOpen = false;
+        this.abortController = new AbortController();
         this.init();
     }
     
     init() {
         if (!this.toggle || !this.dropdown) return;
         
+        const signal = this.abortController.signal;
+        
         this.toggle.addEventListener('click', (e) => {
             e.stopPropagation();
             this.toggleDropdown();
-        });
+        }, { signal });
         
         document.addEventListener('click', (e) => {
             if (!this.toggle.contains(e.target) && !this.dropdown.contains(e.target)) {
                 this.closeDropdown();
             }
-        });
+        }, { signal });
         
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isOpen) this.closeDropdown();
-        });
+        }, { signal });
     }
     
     toggleDropdown() {
         this.isOpen = !this.isOpen;
         this.dropdown.classList.toggle('active', this.isOpen);
+        this.dropdown.hidden = !this.isOpen;
         this.toggle.setAttribute('aria-expanded', String(this.isOpen));
     }
     
     closeDropdown() {
         this.isOpen = false;
         this.dropdown.classList.remove('active');
+        this.dropdown.hidden = true;
         this.toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    destroy() {
+        this.abortController.abort();
     }
 }
 
@@ -762,6 +919,8 @@ class Carousel {
         this.isHovering = false;
         this.isVisible = false;
         this.observer = null;
+        this.abortController = new AbortController();
+        this.endedHandler = null;
         this.init();
     }
 
@@ -769,12 +928,14 @@ class Carousel {
         if (this.items.length <= 1) return;
 
         this.showItem(this.currentIndex);
+        if (!Utils.prefersReducedMotion()) {
+            this.setupVisibilityObserver();
+        }
 
-        this.setupVisibilityObserver();
-
-        this.visual.addEventListener('mouseenter', () => this.handleMouseEnter());
-        this.visual.addEventListener('mouseleave', () => this.handleMouseLeave());
-        this.visual.addEventListener('click', () => this.handleClick());
+        const signal = this.abortController.signal;
+        this.visual.addEventListener('mouseenter', () => this.handleMouseEnter(), { signal });
+        this.visual.addEventListener('mouseleave', () => this.handleMouseLeave(), { signal });
+        this.visual.addEventListener('click', () => this.handleClick(), { signal });
     }
 
     setupVisibilityObserver() {
@@ -830,19 +991,25 @@ class Carousel {
     }
 
     scheduleNext() {
-        if (!this.isVisible) return;
+        if (!this.isVisible || Utils.prefersReducedMotion()) return;
 
         if (this.timeoutId) clearTimeout(this.timeoutId);
 
         const item = this.items[this.currentIndex];
 
         if (item.tagName === 'VIDEO') {
-            item.onended = () => {
-                item.onended = null;
+            // Remove previous listener to avoid duplicates
+            if (this.endedHandler) {
+                item.removeEventListener('ended', this.endedHandler);
+            }
+            this.endedHandler = () => {
+                item.removeEventListener('ended', this.endedHandler);
+                this.endedHandler = null;
                 if (!this.isHovering && this.isVisible) {
                     this.nextItem();
                 }
             };
+            item.addEventListener('ended', this.endedHandler);
         } else {
             this.timeoutId = setTimeout(() => {
                 if (!this.isHovering && this.isVisible) {
@@ -859,7 +1026,10 @@ class Carousel {
         }
         const item = this.items[this.currentIndex];
         if (item && item.tagName === 'VIDEO') {
-            item.onended = null;
+            if (this.endedHandler) {
+                item.removeEventListener('ended', this.endedHandler);
+                this.endedHandler = null;
+            }
             item.pause();
         }
     }
@@ -885,10 +1055,10 @@ class Carousel {
     handleClick() {
         this.stopAutoPlay();
 
-        const card = this.visual.closest('.tourism-card, .service-card');
+        const card = this.visual.closest('.tourism-card, .service-card, .supply-card');
         if (!card) return;
 
-        const cardImages = Array.from(card.querySelectorAll('.tourism-visual img, .service-visual.carousel img'));
+        const cardImages = Array.from(card.querySelectorAll('.tourism-visual img, .service-visual.carousel img, .supply-visual img'));
         if (cardImages.length === 0) return;
 
         let imgIndex = 0;
@@ -900,7 +1070,10 @@ class Carousel {
             }
         }
 
-        if (typeof window.openLightbox === 'function') {
+        // Call Lightbox safely through the App instance if available
+        if (window.app?.components?.lightbox) {
+            window.app.components.lightbox.open(cardImages, imgIndex);
+        } else if (typeof window.openLightbox === 'function') {
             window.openLightbox(cardImages, imgIndex);
         }
     }
@@ -911,12 +1084,13 @@ class Carousel {
             this.observer.disconnect();
             this.observer = null;
         }
+        this.abortController.abort();
     }
 }
 
 class CardCarousel {
     constructor() {
-        this.selectors = ['.tourism-visual', '.service-visual.carousel'];
+        this.selectors = ['.tourism-visual', '.service-visual.carousel', '.supply-visual'];
         this.carousels = [];
         this.init();
     }
@@ -952,6 +1126,8 @@ class Lightbox {
         this.currentIndex = 0;
         this.touchStartX = 0;
         this.touchEndX = 0;
+        this.previouslyFocused = null;
+        this.abortController = new AbortController();
         
         this.init();
     }
@@ -959,20 +1135,23 @@ class Lightbox {
     init() {
         if (!this.lightbox || !this.lightboxImg) return;
         
-        window.openLightbox = (images, startIndex) => this.open(images, startIndex);
-        window.closeLightbox = () => this.close();
-        window.nextLightbox = () => this.next();
-        window.prevLightbox = () => this.prev();
+        // Bind global functions safely
+        window.openLightbox = this.open.bind(this);
+        window.closeLightbox = this.close.bind(this);
+        window.nextLightbox = this.next.bind(this);
+        window.prevLightbox = this.prev.bind(this);
         
-        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
-        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prev());
-        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.next());
-        if (this.backdrop) this.backdrop.addEventListener('click', () => this.close());
+        const signal = this.abortController.signal;
         
-        document.addEventListener('keydown', (e) => this.handleKeydown(e));
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close(), { signal });
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prev(), { signal });
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.next(), { signal });
+        if (this.backdrop) this.backdrop.addEventListener('click', () => this.close(), { signal });
         
-        this.lightbox.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-        this.lightbox.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
+        document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
+        
+        this.lightbox.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true, signal });
+        this.lightbox.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true, signal });
     }
     
     open(images, startIndex = 0) {
@@ -982,6 +1161,7 @@ class Lightbox {
         }));
         
         this.currentIndex = startIndex;
+        this.previouslyFocused = document.activeElement;
         
         if (this.totalSpan) {
             this.totalSpan.textContent = this.images.length;
@@ -989,13 +1169,22 @@ class Lightbox {
         
         this.updateImage();
         this.lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        this.lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+
+        const focusTarget = this.closeBtn || this.lightbox;
+        focusTarget.focus({ preventScroll: true });
     }
     
     close() {
         if (this.lightbox) {
             this.lightbox.classList.remove('active');
-            document.body.style.overflow = '';
+            this.lightbox.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('lightbox-open');
+            if (this.lightboxImg) this.lightboxImg.removeAttribute('src');
+            if (this.previouslyFocused instanceof HTMLElement) {
+                this.previouslyFocused.focus({ preventScroll: true });
+            }
         }
     }
     
@@ -1026,9 +1215,37 @@ class Lightbox {
     handleKeydown(e) {
         if (!this.lightbox || !this.lightbox.classList.contains('active')) return;
         
-        if (e.key === 'Escape') this.close();
-        if (e.key === 'ArrowLeft') this.prev();
-        if (e.key === 'ArrowRight') this.next();
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            this.close();
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            this.prev();
+        }
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            this.next();
+        }
+        if (e.key === 'Tab') this.trapFocus(e);
+    }
+
+    trapFocus(e) {
+        const focusable = Utils.qsa('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])', this.lightbox)
+            .filter(el => el.offsetParent !== null);
+
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus({ preventScroll: true });
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus({ preventScroll: true });
+        }
     }
     
     handleTouchStart(e) {
@@ -1049,6 +1266,10 @@ class Lightbox {
             else this.prev();
         }
     }
+
+    destroy() {
+        this.abortController.abort();
+    }
 }
 
 // ========================================
@@ -1066,6 +1287,7 @@ class ProjectsSlider {
         this.autoPlayInterval = null;
         this.userInteracted = false;
         this.touchStartX = 0;
+        this.abortController = new AbortController();
         
         this.init();
     }
@@ -1073,18 +1295,20 @@ class ProjectsSlider {
     init() {
         if (!this.slider || !this.slides.length) return;
         
-        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.handleUserInteraction(() => this.prevSlide()));
-        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.handleUserInteraction(() => this.nextSlide()));
+        const signal = this.abortController.signal;
+        
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.handleUserInteraction(() => this.prevSlide()), { signal });
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.handleUserInteraction(() => this.nextSlide()), { signal });
         
         this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.handleUserInteraction(() => this.goToSlide(index)));
+            dot.addEventListener('click', () => this.handleUserInteraction(() => this.goToSlide(index)), { signal });
         });
         
-        this.slider.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-        this.slider.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
+        this.slider.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true, signal });
+        this.slider.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true, signal });
         
-        this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
-        this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
+        this.slider.addEventListener('mouseenter', () => this.stopAutoPlay(), { signal });
+        this.slider.addEventListener('mouseleave', () => this.startAutoPlay(), { signal });
         
         this.startAutoPlay();
     }
@@ -1149,6 +1373,7 @@ class ProjectsSlider {
     
     destroy() {
         this.stopAutoPlay();
+        this.abortController.abort();
     }
 }
 
@@ -1163,6 +1388,7 @@ class FullscreenSections {
         this.navDotsContainer = Utils.qs('#navDots');
         this.currentIndex = 0;
         this.observer = null;
+        this.abortController = new AbortController();
         
         this.init();
     }
@@ -1173,19 +1399,17 @@ class FullscreenSections {
         this.buildNavDots();
         this.setInitialActive();
         
+        const signal = this.abortController.signal;
+        
         if (this.navUp) {
-            this.navUp.addEventListener('click', () => this.scrollToSection(this.currentIndex - 1));
+            this.navUp.addEventListener('click', () => this.scrollToSection(this.currentIndex - 1), { signal });
         }
         
         if (this.navDown) {
-            this.navDown.addEventListener('click', () => this.scrollToSection(this.currentIndex + 1));
+            this.navDown.addEventListener('click', () => this.scrollToSection(this.currentIndex + 1), { signal });
         }
         
-        Utils.qsa('.nav-link[data-section]').forEach(link => {
-            link.addEventListener('click', (e) => this.handleNavLinkClick(e, link));
-        });
-        
-        document.addEventListener('keydown', (e) => this.handleKeydown(e));
+        document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
         
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1211,7 +1435,7 @@ class FullscreenSections {
         this.sections.forEach((_, i) => {
             const dot = document.createElement('span');
             dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-            dot.addEventListener('click', () => this.scrollToSection(i));
+            dot.addEventListener('click', () => this.scrollToSection(i), { signal: this.abortController.signal });
             this.navDotsContainer.appendChild(dot);
         });
     }
@@ -1231,9 +1455,16 @@ class FullscreenSections {
             dot.classList.toggle('active', i === this.currentIndex);
         });
         
-        Utils.qsa('.nav-link').forEach(link => link.classList.remove('active'));
-        const activeLink = Utils.qs(`.nav-link[data-section="${this.currentIndex}"]`);
-        if (activeLink) activeLink.classList.add('active');
+        const activeId = this.sections[this.currentIndex]?.id;
+        Utils.qsa('.nav-link').forEach(link => {
+            const isActive = activeId && link.getAttribute('href') === `#${activeId}`;
+            link.classList.toggle('active', Boolean(isActive));
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
     }
     
     scrollToSection(index) {
@@ -1246,13 +1477,18 @@ class FullscreenSections {
     
     handleNavLinkClick(e, link) {
         e.preventDefault();
-        const idx = parseInt(link.dataset.section, 10);
-        if (!isNaN(idx) && idx >= 0 && idx < this.sections.length) {
+        const targetId = link.getAttribute('href')?.slice(1);
+        const idx = this.sections.findIndex(section => section.id === targetId);
+        if (idx >= 0) {
             this.scrollToSection(idx);
         }
     }
     
     handleKeydown(e) {
+        // Prevent intercepting keyboard navigation inside form inputs
+        const tag = e.target.tagName.toLowerCase();
+        if (['input', 'textarea', 'select'].includes(tag)) return;
+
         if (e.key === 'ArrowUp') {
             e.preventDefault();
             this.scrollToSection(Math.max(this.currentIndex - 1, 0));
@@ -1265,6 +1501,7 @@ class FullscreenSections {
     
     destroy() {
         if (this.observer) this.observer.disconnect();
+        this.abortController.abort();
     }
 }
 
@@ -1274,7 +1511,7 @@ class FullscreenSections {
 class AutoplayVideoObserver {
     constructor() {
         this.videos = Utils.qsa('video[data-autoplay-when-visible]');
-        if (!this.videos.length) return;
+        if (!this.videos.length || Utils.prefersReducedMotion()) return;
         
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1308,39 +1545,41 @@ class App {
     }
     
     init() {
-        this.components.backgroundSlider = new BackgroundSlider();
-        this.components.sectionImagesSlider = new SectionImagesSlider();
-        this.components.headerScroll = new HeaderScroll();
-        this.components.mobileMenu = new MobileMenu();
-        this.components.smoothScroll = new SmoothScroll();
-        this.components.parallax = new Parallax();
-        this.components.languageSwitcher = new LanguageSwitcher();
-        this.components.scrollAnimations = new ScrollAnimations();
-        this.components.activeNav = new ActiveNav();
-        this.components.scrollIndicator = new ScrollIndicator();
-        this.components.contactForm = new ContactForm();
-        this.components.phoneToggle = new PhoneToggle();
-        this.components.cardCarousel = new CardCarousel();
-        this.components.lightbox = new Lightbox();
-        this.components.projectsSlider = new ProjectsSlider();
-        this.components.fullscreenSections = new FullscreenSections();
-        this.components.heroFacts = new HeroFacts();
-        this.components.autoplayVideo = new AutoplayVideoObserver();
+        this.register('backgroundSlider', () => new BackgroundSlider());
+        this.register('sectionImagesSlider', () => new SectionImagesSlider());
+        this.register('headerScroll', () => new HeaderScroll());
+        this.register('mobileMenu', () => new MobileMenu());
+        this.register('smoothScroll', () => new SmoothScroll());
+        this.register('parallax', () => new Parallax());
+        this.register('scrollAnimations', () => new ScrollAnimations());
+        this.register('activeNav', () => new ActiveNav());
+        this.register('scrollIndicator', () => new ScrollIndicator());
+        this.register('contactForm', () => new ContactForm());
+        this.register('phoneToggle', () => new PhoneToggle());
+        this.register('cardCarousel', () => new CardCarousel());
+        this.register('lightbox', () => new Lightbox());
+        this.register('projectsSlider', () => new ProjectsSlider());
+        this.register('fullscreenSections', () => new FullscreenSections());
+        this.register('heroFacts', () => new HeroFacts());
+        this.register('autoplayVideo', () => new AutoplayVideoObserver());
         
         this.preloadImages();
     }
+
+    register(name, factory) {
+        try {
+            this.components[name] = factory();
+        } catch (err) {
+            console.error(`[INTEGRA] Component failed: ${name}`, err);
+        }
+    }
     
     preloadImages() {
-        const images = [
-            'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920',
-            'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920',
-            'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920',
-            'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1920'
-        ];
-        
-        images.forEach(src => {
-            Utils.loadImage(src).catch(() => {});
-        });
+        const images = Utils.qsa('img[loading="eager"], img[fetchpriority="high"]')
+            .map(img => img.currentSrc || img.src)
+            .filter(Boolean);
+
+        images.forEach(src => Utils.loadImage(src).catch(() => {}));
     }
     
     destroy() {
@@ -1355,6 +1594,21 @@ class App {
 // ========================================
 //   INITIALIZATION
 // ========================================
-const preloader = new Preloader(() => {
-    window.app = new App();
-});
+function bootApp() {
+    if (window.app) return;
+
+    try {
+        window.app = new App();
+        document.documentElement.classList.add('app-ready');
+    } catch (err) {
+        console.error('[INTEGRA] App initialization failed', err);
+    }
+}
+
+try {
+    window.preloader = new Preloader(bootApp);
+} catch (err) {
+    console.error('[INTEGRA] Preloader failed', err);
+    document.body.classList.remove('loading');
+    bootApp();
+}

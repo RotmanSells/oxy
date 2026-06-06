@@ -1,6 +1,7 @@
 const translations = {
     ru: {
         // Preloader
+        skip_to_content: "Перейти к содержанию",
         preloader_text: "Загрузка",
         preloader_tagline: "Строительство. Дизайн. Участки. Туристический бизнес. Инвестиции.",
 
@@ -148,7 +149,7 @@ const translations = {
         partner_6_name: "Alina Moon",
         partner_6_desc: "Дизайн и архитектура",
         partner_7_name: "DIGNISI",
-        partner_7_desc: "Недвижимость Армении и мира",
+        partner_7_desc: "Недвижимость Армении",
         partner_link_open: "Открыть ↗",
 
         // Contacts / CTA
@@ -179,7 +180,18 @@ const translations = {
         form_message: "О проекте",
         form_message_placeholder: "Расскажите кратко о вашем проекте или задаче...",
         form_submit: "ОТПРАВИТЬ ЗАЯВКУ",
+        form_sending: "ОТПРАВКА...",
         form_success: "ОТПРАВЛЕНО!",
+        form_success_message: "Спасибо! Мы свяжемся с вами в течение 24 часов.",
+        form_error: "Не удалось отправить заявку. Попробуйте позже или напишите в мессенджер.",
+        form_error_button: "ОШИБКА",
+        form_timeout: "Сервер не ответил вовремя. Попробуйте ещё раз или напишите в мессенджер.",
+        form_timeout_button: "ТАЙМАУТ",
+        form_fallback: "Сейчас форма не подключена к API. Напишите нам в WhatsApp или Telegram — мы быстро ответим.",
+        form_validation_error: "Пожалуйста, заполните обязательные поля корректно.",
+        form_name_error: "Укажите имя",
+        form_phone_error: "Укажите телефон",
+        form_email_error: "Введите корректный email",
 
         // Footer
         footer_address_title: "Адрес",
@@ -195,12 +207,16 @@ const translations = {
         lang_ru: "RU",
         lang_en: "EN",
 
+        aria_main_nav: "Основная навигация",
+        aria_language: "Выбор языка",
         aria_menu: "Открыть меню",
         aria_close: "Закрыть",
+        aria_lightbox: "Просмотр изображения",
     },
 
     en: {
         // Preloader
+        skip_to_content: "Skip to content",
         preloader_text: "Loading",
         preloader_tagline: "Construction. Design. Land Plots. Tourism Business. Investments.",
 
@@ -348,7 +364,7 @@ const translations = {
         partner_6_name: "Alina Moon",
         partner_6_desc: "Design & Architecture",
         partner_7_name: "DIGNISI",
-        partner_7_desc: "Real Estate in Armenia & Worldwide",
+        partner_7_desc: "Real Estate in Armenia",
         partner_link_open: "Open ↗",
 
         // Contacts / CTA
@@ -379,7 +395,18 @@ const translations = {
         form_message: "About project",
         form_message_placeholder: "Tell us briefly about your project or task...",
         form_submit: "SEND REQUEST",
+        form_sending: "SENDING...",
         form_success: "SENT!",
+        form_success_message: "Thank you! We will contact you within 24 hours.",
+        form_error: "We could not send the request. Please try later or message us directly.",
+        form_error_button: "ERROR",
+        form_timeout: "The server did not respond in time. Please try again or message us directly.",
+        form_timeout_button: "TIMEOUT",
+        form_fallback: "The form is not connected to the API yet. Message us on WhatsApp or Telegram — we will reply quickly.",
+        form_validation_error: "Please fill in the required fields correctly.",
+        form_name_error: "Enter your name",
+        form_phone_error: "Enter your phone number",
+        form_email_error: "Enter a valid email",
 
         // Footer
         footer_address_title: "Address",
@@ -395,12 +422,16 @@ const translations = {
         lang_ru: "RU",
         lang_en: "EN",
 
+        aria_main_nav: "Main navigation",
+        aria_language: "Language selection",
         aria_menu: "Open menu",
         aria_close: "Close",
+        aria_lightbox: "Image preview",
     },
 
     hy: {
         // Preloader
+        skip_to_content: "Անցնել բովանդակությանը",
         preloader_text: "Բեռնում",
         preloader_tagline: "Շինարարություն. Դիզայն. Հողամասեր. Տուրիստական բիզնես. Ներդրումներ.",
 
@@ -548,7 +579,7 @@ const translations = {
         partner_6_name: "Alina Moon",
         partner_6_desc: "Դիզայն և ճարտարապետություն",
         partner_7_name: "DIGNISI",
-        partner_7_desc: "Անշարժ գույն Հայաստանում և աշխարհում",
+        partner_7_desc: "Անշարժ գույն Հայաստանում",
         partner_link_open: "Բացել ↗",
 
         // Contacts / CTA
@@ -579,7 +610,18 @@ const translations = {
         form_message: "Նախագծի մասին",
         form_message_placeholder: "Կարճ պատմեք ձեր նախագծի կամ խնդրի մասին...",
         form_submit: "ՈՒՂԱՐԿԵԼ ՀԱՅՏ",
+        form_sending: "ՈՒՂԱՐԿՎՈՒՄ Է...",
         form_success: "ՈՒՂԱՐԿՎԱԾ!",
+        form_success_message: "Շնորհակալություն։ Մենք կապ կհաստատենք 24 ժամվա ընթացքում։",
+        form_error: "Չհաջողվեց ուղարկել հայտը։ Փորձեք ավելի ուշ կամ գրեք մեսենջերով։",
+        form_error_button: "ՍԽԱԼ",
+        form_timeout: "Սերվերը ժամանակին չպատասխանեց։ Փորձեք կրկին կամ գրեք մեսենջերով։",
+        form_timeout_button: "ԺԱՄԱՆԱԿԸ ՍՊԱՌՎԵՑ",
+        form_fallback: "Ձևը դեռ միացված չէ API-ին։ Գրեք WhatsApp-ով կամ Telegram-ով՝ արագ կպատասխանենք։",
+        form_validation_error: "Խնդրում ենք ճիշտ լրացնել պարտադիր դաշտերը։",
+        form_name_error: "Նշեք անունը",
+        form_phone_error: "Նշեք հեռախոսը",
+        form_email_error: "Մուտքագրեք ճիշտ email",
 
         // Footer
         footer_address_title: "Հասցե",
@@ -595,8 +637,11 @@ const translations = {
         lang_ru: "RU",
         lang_en: "EN",
 
+        aria_main_nav: "Հիմնական նավիգացիա",
+        aria_language: "Լեզվի ընտրություն",
         aria_menu: "Բացել մենյուն",
         aria_close: "Փակել",
+        aria_lightbox: "Պատկերի դիտում",
     }
 };
 

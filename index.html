@@ -3,15 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="INTEGRA KOTOVA — премиальный девелопмент полного цикла: строительство, дизайн, земельные участки, туристические проекты и инвестиционное сопровождение в Армении, России и Таиланде.">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="INTEGRA KOTOVA">
+    <meta property="og:title" content="INTEGRA KOTOVA — Девелопмент полного цикла">
+    <meta property="og:description" content="Строительство, дизайн, земля, туристический бизнес и инвестиции от идеи до управления.">
+    <meta property="og:image" content="imgs/photo_2026-06-04_00-08-30.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="INTEGRA KOTOVA — Девелопмент полного цикла">
+    <meta name="twitter:description" content="Премиальные проекты в недвижимости, туризме и инвестициях от идеи до управления.">
+    <meta name="twitter:image" content="imgs/photo_2026-06-04_00-08-30.webp">
     <title>INTEGRA KOTOVA — Строительство. Дизайн. Земля. Туризм. Инвестиции.</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="">
-    <link rel="preload" as="image" href="imgs/photo_2026-06-04_00-08-30.webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="imgs/photo_2026-06-04_00-08-30.webp" imagesrcset="imgs/photo_2026-06-04_00-08-30.webp" fetchpriority="high">
+    <link rel="stylesheet" href="css/style.css?v=20260606">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "INTEGRA KOTOVA",
+            "email": "Fourgroup456@gmail.com",
+            "telephone": ["+79881590888", "+37494751892"],
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Ереван",
+                "addressCountry": "AM",
+                "streetAddress": "ул. Таманяна, 1"
+            },
+            "sameAs": [
+                "https://www.instagram.com/kotova_kurator?igsh=c3F2ZnRkcWZ0dnI5",
+                "https://vk.ru/id271308283"
+            ]
+        }
+    </script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content" data-i18n="skip_to_content">Перейти к содержанию</a>
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-particles"></div>
@@ -86,21 +116,21 @@
     <header class="header" id="header">
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">INTEGRA KOTOVA</a>
-                <nav class="main-nav">
-                    <a href="#about" class="nav-link" data-section="1" data-i18n="nav_about">О нас</a>
-                    <a href="#projects" class="nav-link" data-section="2" data-i18n="nav_projects">Проекты</a>
-                    <a href="#services" class="nav-link" data-section="3" data-i18n="nav_services">Услуги</a>
-                    <a href="#advantages" class="nav-link" data-section="4" data-i18n="nav_advantages">Преимущества</a>
-                    <a href="#tourism" class="nav-link" data-section="5" data-i18n="nav_tourism">Туризм</a>
-                    <a href="#contacts" class="nav-link" data-section="6" data-i18n="nav_contacts">Контакты</a>
+                <a href="#hero" class="logo">INTEGRA KOTOVA</a>
+                <nav class="main-nav" id="mainNav" aria-label="Основная навигация" data-i18n-aria="aria_main_nav">
+                    <a href="#about" class="nav-link" data-i18n="nav_about">О нас</a>
+                    <a href="#projects" class="nav-link" data-i18n="nav_projects">Проекты</a>
+                    <a href="#services" class="nav-link" data-i18n="nav_services">Услуги</a>
+                    <a href="#advantages" class="nav-link" data-i18n="nav_advantages">Преимущества</a>
+                    <a href="#tourism" class="nav-link" data-i18n="nav_tourism">Туризм</a>
+                    <a href="#contacts" class="nav-link" data-i18n="nav_contacts">Контакты</a>
                 </nav>
-                <nav class="lang-switcher">
-                    <button class="lang-btn active" data-lang="ru" data-i18n="lang_ru">RU</button>
-                    <button class="lang-btn" data-lang="en" data-i18n="lang_en">EN</button>
-                    <button class="lang-btn" data-lang="hy">HY</button>
+                <nav class="lang-switcher" aria-label="Выбор языка" data-i18n-aria="aria_language">
+                    <button class="lang-btn active" type="button" data-lang="ru" data-i18n="lang_ru">RU</button>
+                    <button class="lang-btn" type="button" data-lang="en" data-i18n="lang_en">EN</button>
+                    <button class="lang-btn" type="button" data-lang="hy">HY</button>
                 </nav>
-                <button class="menu-toggle" data-i18n-aria="aria_menu" aria-label="Открыть меню">
+                <button class="menu-toggle" type="button" data-i18n-aria="aria_menu" aria-label="Открыть меню" aria-controls="mainNav" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -109,8 +139,9 @@
         </div>
     </header>
 
+    <main id="main-content" tabindex="-1">
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" tabindex="-1">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-locations">
@@ -326,7 +357,7 @@
                     </div>
                 </div>
                 <div class="projects-slider-nav">
-                    <button class="project-slider-btn prev" aria-label="Previous">
+                    <button class="project-slider-btn prev" type="button" data-i18n-aria="slider_prev" aria-label="Предыдущий">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
                     <div class="project-slider-dots">
@@ -339,7 +370,7 @@
                         <span class="dot"></span>
                         <span class="dot"></span>
                     </div>
-                    <button class="project-slider-btn next" aria-label="Next">
+                    <button class="project-slider-btn next" type="button" data-i18n-aria="slider_next" aria-label="Следующий">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                     </button>
                 </div>
@@ -392,7 +423,7 @@
                     <div class="service-glass">
                         <div class="service-visual carousel">
                             <img class="active" src="imgs/construction_01.webp" alt="Строительство" loading="lazy" decoding="async">
-                            <video src="imgs/construction_04.mp4" muted playsinline preload="auto"></video>
+                            <video src="imgs/construction_04.mp4" muted playsinline preload="metadata"></video>
                             <img src="imgs/construction_02.webp" alt="Строительство" loading="lazy" decoding="async">
                             <img src="imgs/construction_03.webp" alt="Строительство" loading="lazy" decoding="async">
                         </div>
@@ -484,7 +515,7 @@
                     <div class="service-glass">
                         <div class="service-visual carousel">
                             <img class="active" src="imgs/land_01.webp" alt="Земельные участки" loading="lazy" decoding="async">
-                            <video src="imgs/land_03.mp4" muted playsinline preload="auto"></video>
+                            <video src="imgs/land_03.mp4" muted playsinline preload="metadata"></video>
                             <img src="imgs/land_02.webp" alt="Земельные участки" loading="lazy" decoding="async">
                         </div>
                         <h3 class="service-title" data-i18n="service_land">Земельные участки</h3>
@@ -551,7 +582,7 @@
                 <div class="advantage-item">
                     <div class="advantage-glass">
                         <div class="advantage-visual">
-                            <video src="imgs/advantage_team.mp4" muted playsinline loop data-autoplay-when-visible></video>
+                            <video src="imgs/advantage_team.mp4" muted playsinline loop preload="metadata" data-autoplay-when-visible></video>
                         </div>
                         <div class="advantage-body">
                             <h3 class="advantage-title" data-i18n="adv_team">Единая команда</h3>
@@ -652,7 +683,7 @@
                 <div class="tourism-card" data-lightbox-group="glamping">
                     <div class="tourism-visual">
                         <img class="active" src="imgs/glamping_01.webp" alt="Глэмпинг" loading="lazy" decoding="async">
-                        <video src="IMG_7070_compressed.mp4" muted playsinline preload="auto"></video>
+                        <video src="IMG_7070_compressed.mp4" muted playsinline preload="metadata"></video>
                         <img src="photo_2026-06-06_12-07-33.webp" alt="Глэмпинг под ключ" loading="lazy" decoding="async">
                         <img src="photo_2026-06-06_12-07-37.webp" alt="Глэмпинг под ключ" loading="lazy" decoding="async">
                         <img src="photo_2026-06-06_12-07-38.webp" alt="Глэмпинг под ключ" loading="lazy" decoding="async">
@@ -694,11 +725,11 @@
                         </a>
                     </div>
                     <div class="phone-toggle-wrap">
-                        <button class="messenger-btn phone-toggle" type="button" aria-expanded="false">
+                        <button class="messenger-btn phone-toggle" type="button" aria-controls="phoneDropdown" aria-expanded="false">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
                             <span data-i18n="contacts_call">Позвонить</span>
                         </button>
-                        <div class="phone-dropdown" hidden>
+                        <div class="phone-dropdown" id="phoneDropdown" hidden>
                             <a href="tel:+79881590888" class="messenger-btn phone">Россия</a>
                             <a href="tel:+37494751892" class="messenger-btn phone">Армения</a>
                         </div>
@@ -706,20 +737,23 @@
                 </div>
             </div>
             <div class="cta-form-wrapper">
-                <form class="cta-form" id="contactForm" action="#" method="POST">
+                <form class="cta-form" id="contactForm" action="#" method="POST" novalidate>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name" data-i18n="form_name">Имя</label>
-                            <input type="text" id="name" name="name" placeholder="Ваше имя" data-i18n-placeholder="form_name_placeholder" required>
+                            <input type="text" id="name" name="name" placeholder="Ваше имя" data-i18n-placeholder="form_name_placeholder" autocomplete="name" aria-describedby="nameError" required>
+                            <span class="field-error" id="nameError" data-i18n="form_name_error">Укажите имя</span>
                         </div>
                         <div class="form-group">
                             <label for="phone" data-i18n="form_phone">Телефон</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+374 ..." required>
+                            <input type="tel" id="phone" name="phone" placeholder="+374 ..." data-i18n-placeholder="form_phone_placeholder" autocomplete="tel" inputmode="tel" aria-describedby="phoneError" required>
+                            <span class="field-error" id="phoneError" data-i18n="form_phone_error">Укажите телефон</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email" data-i18n="form_email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" data-i18n-placeholder="form_email_placeholder">
+                        <input type="email" id="email" name="email" placeholder="your@email.com" data-i18n-placeholder="form_email_placeholder" autocomplete="email" inputmode="email" aria-describedby="emailError">
+                        <span class="field-error" id="emailError" data-i18n="form_email_error">Введите корректный email</span>
                     </div>
                     <div class="form-group">
                         <label for="service" data-i18n="form_service">Интересующее направление</label>
@@ -736,9 +770,10 @@
                     </div>
                     <div class="form-group">
                         <label for="message" data-i18n="form_message">О проекте</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Расскажите кратко о вашем проекте или задаче..." data-i18n-placeholder="form_message_placeholder"></textarea>
+                        <textarea id="message" name="message" rows="4" placeholder="Расскажите кратко о вашем проекте или задаче..." data-i18n-placeholder="form_message_placeholder" autocomplete="off"></textarea>
                     </div>
-                    <button type="submit" class="form-submit">
+                    <p class="form-status" id="formStatus" aria-live="polite" aria-atomic="true"></p>
+                    <button type="submit" class="form-submit" data-default-i18n="form_submit">
                         <span data-i18n="form_submit">ОТПРАВИТЬ ЗАЯВКУ</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -801,12 +836,12 @@
                     </div>
                     <div class="footer-partner-text">
                         <span class="footer-partner-name" data-i18n="partner_7_name">DIGNISI</span>
-                        <span class="footer-partner-desc" data-i18n="partner_7_desc">Недвижимость Армении и мира</span>
+                        <span class="footer-partner-desc" data-i18n="partner_7_desc">Недвижимость Армении</span>
                     </div>
                 </a>
             </div>
         </div>
-        <div class="cta-footer-bar">
+        <footer class="cta-footer-bar">
             <div class="cta-footer-brand">
                 <span class="cta-footer-logo">INTEGRA KOTOVA</span>
                 <p data-i18n="preloader_tagline">Строительство. Дизайн. Земля. Туризм. Инвестиции.</p>
@@ -826,23 +861,24 @@
                 <p><a href="https://www.instagram.com/kotova_kurator?igsh=c3F2ZnRkcWZ0dnI5" target="_blank" rel="noopener" data-i18n="footer_instagram">Instagram</a></p>
                 <p><a href="https://vk.ru/id271308283" target="_blank" rel="noopener" data-i18n="footer_vk">VK</a></p>
             </div>
-        </div>
+        </footer>
     </section>
+    </main>
 
     <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Просмотр изображения" data-i18n-aria="aria_lightbox" tabindex="-1">
         <div class="lightbox-backdrop"></div>
-        <button class="lightbox-close" data-i18n-aria="aria_close" aria-label="Закрыть">
+        <button class="lightbox-close" type="button" data-i18n-aria="aria_close" aria-label="Закрыть">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
-        <button class="lightbox-nav prev" aria-label="Previous">
+        <button class="lightbox-nav prev" type="button" data-i18n-aria="slider_prev" aria-label="Предыдущий">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <button class="lightbox-nav next" aria-label="Next">
+        <button class="lightbox-nav next" type="button" data-i18n-aria="slider_next" aria-label="Следующий">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
         <div class="lightbox-content">
-            <img src="" alt="" id="lightboxImg" loading="lazy" decoding="async">
+            <img alt="" id="lightboxImg" loading="lazy" decoding="async">
         </div>
         <div class="lightbox-counter">
             <span id="lightboxCurrent">1</span> / <span id="lightboxTotal">3</span>
@@ -850,10 +886,9 @@
     </div>
 
     <script>
-        // API endpoint для отправки заявок (замените на ваш бекенд при деплое)
-        window.API_URL = 'https://your-api.onrender.com/api/contact';
+        window.API_URL = window.API_URL || '';
     </script>
-    <script src="js/translations.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/translations.js?v=20260606"></script>
+    <script src="js/main.js?v=20260606"></script>
 </body>
 </html>

@@ -25,6 +25,30 @@ body {
     vertical-align: 0.15em;
 }
 
+.skip-link {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 10001;
+    transform: translateY(-140%);
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #c9a962;
+    color: #0f0f0f;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.25s ease;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+}
+
+main {
+    display: block;
+}
+
 /* ========================================
    PRELOADER
 ======================================== */
@@ -1779,6 +1803,10 @@ body.loading .footer {
     visibility: visible;
 }
 
+body.lightbox-open {
+    overflow: hidden;
+}
+
 .lightbox-backdrop {
     position: absolute;
     inset: 0;
@@ -2291,6 +2319,27 @@ body.loading .footer {
     box-shadow: 0 0 20px rgba(201, 169, 98, 0.1);
 }
 
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+    border-color: rgba(239, 68, 68, 0.75);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.field-error {
+    display: none;
+    color: #fca5a5;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.field-error.active,
+.form-group input.invalid + .field-error,
+.form-group select.invalid + .field-error,
+.form-group textarea.invalid + .field-error {
+    display: block;
+}
+
 .form-group select {
     cursor: pointer;
     -webkit-appearance: none;
@@ -2336,6 +2385,44 @@ body.loading .footer {
     border-color: #d4b876;
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(201, 169, 98, 0.3);
+}
+
+.form-submit:disabled {
+    cursor: wait;
+    opacity: 0.78;
+    transform: none;
+    box-shadow: none;
+}
+
+.form-submit.success {
+    background: #4ade80;
+    border-color: #4ade80;
+    color: #0a0a0a;
+}
+
+.form-submit.error {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #ffffff;
+}
+
+.form-status {
+    min-height: 1.4em;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.form-status.success {
+    color: #86efac;
+}
+
+.form-status.error {
+    color: #fca5a5;
+}
+
+.form-status.info {
+    color: #e8d5a3;
 }
 
 .form-submit svg {
@@ -2609,10 +2696,26 @@ body.loading .footer {
 .form-submit:focus-visible,
 .project-slider-btn:focus-visible,
 .lightbox-close:focus-visible,
-.lightbox-nav:focus-visible {
+.lightbox-nav:focus-visible,
+.menu-toggle:focus-visible,
+.skip-link:focus-visible {
     outline: 2px solid #c9a962;
     outline-offset: 4px;
     border-radius: 4px;
+}
+
+@media (min-width: 769px) {
+    .section,
+    .cta-section,
+    .tourism,
+    .services,
+    .projects,
+    .advantages,
+    .agclub,
+    .about {
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+    }
 }
 
 /* ========================================
@@ -3276,5 +3379,26 @@ body.loading .footer {
     .advantages::before,
     .advantages::after {
         animation: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .bg-slider,
+    .section-img img,
+    .hero,
+    .section,
+    .cta-section {
+        transform: none !important;
     }
 }
