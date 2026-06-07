@@ -76,3 +76,13 @@ curl -X POST http://localhost:3000/api/events \
   -d '{"sessionId":"test-session","eventType":"cta_click","label":"test"}'
 curl 'http://localhost:3000/api/stats?period=today'
 ```
+
+## VPS / один сервер
+
+Для размещения сайта и API на одном Ubuntu VPS используйте готовые файлы из `deploy/`:
+
+```bash
+bash deploy/bootstrap-ubuntu.sh example.com
+```
+
+После этого заполните секреты в `/opt/oxy/api/.env`, перезапустите `oxy-api` и выпустите SSL через Certbot. Подробная инструкция: `deploy/README.md`.

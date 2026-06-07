@@ -888,10 +888,12 @@
     </div>
 
     <script>
-        window.API_BASE = window.API_BASE || '';
+        const isGithubPages = window.location.hostname.endsWith('github.io');
+        const isHttpPage = /^https?:$/.test(window.location.protocol);
+        window.API_BASE = window.API_BASE || (isHttpPage && !isGithubPages ? window.location.origin : '');
         window.API_URL = window.API_URL || (window.API_BASE ? window.API_BASE.replace(/\/$/, '') + '/api/contact' : '');
     </script>
     <script src="js/translations.js?v=20260607"></script>
-    <script src="js/main.js?v=20260607"></script>
+    <script src="js/main.js?v=20260608"></script>
 </body>
 </html>
