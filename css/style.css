@@ -1427,6 +1427,14 @@ body.loading .footer {
     filter: blur(40px);
 }
 
+@media (max-width: 1200px) {
+    .service-glow,
+    .advantages::before,
+    .advantages::after {
+        filter: none;
+    }
+}
+
 .service-card:hover .service-glow {
     opacity: 1;
 }
@@ -1619,9 +1627,7 @@ body.loading .footer {
     position: relative;
     z-index: 2;
     padding: 0;
-    background: linear-gradient(180deg, rgba(10,15,30,0.6) 0%, rgba(10,15,30,0.45) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: linear-gradient(180deg, rgba(10,15,30,0.82) 0%, rgba(10,15,30,0.68) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     box-shadow:
@@ -1635,7 +1641,7 @@ body.loading .footer {
 }
 
 .advantage-item:hover .advantage-glass {
-    background: linear-gradient(180deg, rgba(10,15,30,0.75) 0%, rgba(10,15,30,0.55) 100%);
+    background: linear-gradient(180deg, rgba(10,15,30,0.88) 0%, rgba(10,15,30,0.72) 100%);
     border-color: rgba(100, 200, 255, 0.2);
     box-shadow:
         0 24px 60px rgba(0, 0, 0, 0.35),
@@ -3381,6 +3387,7 @@ body.lightbox-open {
     .lightbox-backdrop,
     .project-slider-btn,
     .main-nav,
+    .service-card,
     .advantage-glass,
     .cta-bg-overlay {
         -webkit-backdrop-filter: none !important;
@@ -3392,6 +3399,7 @@ body.lightbox-open {
     .competency-item { background: rgba(255, 255, 255, 0.12); }
     .cta-form-wrapper { background: rgba(18, 22, 32, 0.85); }
     .lightbox-backdrop { background: rgba(0, 0, 0, 0.97); }
+    .service-card { background: rgba(10, 15, 30, 0.72); }
     .advantage-glass { background: linear-gradient(180deg, rgba(10,15,30,0.85) 0%, rgba(10,15,30,0.75) 100%); }
 }
 

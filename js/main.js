@@ -1135,8 +1135,8 @@ class Carousel {
                 }
             });
         }, {
-            rootMargin: '100px',
-            threshold: 0.1
+            rootMargin: '0px',
+            threshold: 0.35
         });
 
         this.observer.observe(this.visual);
