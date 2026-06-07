@@ -1,7 +1,9 @@
 import Database from 'better-sqlite3';
-import { join } from 'path';
+import { mkdirSync } from 'fs';
+import { dirname, join } from 'path';
 
 const dbPath = process.env.DB_PATH || join(process.cwd(), 'data', 'leads.db');
+mkdirSync(dirname(dbPath), { recursive: true });
 const db = new Database(dbPath);
 
 // Миграции
@@ -16,6 +18,49 @@ db.exec(`
     source TEXT DEFAULT 'website',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS visits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT NOT NULL,
+    path TEXT,
+    referrer TEXT,
+    language TEXT,
+    user_agent TEXT,
+    screen_width INTEGER,
+    screen_height INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_visits_session_id ON visits(session_id);
+  CREATE INDEX IF NOT EXISTS idx_visits_created_at ON visits(created_at);
+
+  CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    event_name TEXT,
+    path TEXT,
+    section TEXT,
+    label TEXT,
+    value TEXT,
+    metadata TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_events_session_id ON events(session_id);
+  CREATE INDEX IF NOT EXISTS idx_events_event_type ON events(event_type);
+  CREATE INDEX IF NOT EXISTS idx_events_created_at ON events(created_at);
+
+  CREATE TABLE IF NOT EXISTS ai_reports (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    period TEXT NOT NULL,
+    summary_json TEXT NOT NULL,
+    report_text TEXT NOT NULL,
+    model TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_ai_reports_created_at ON ai_reports(created_at);
 
   CREATE TABLE IF NOT EXISTS site_content (
     key TEXT PRIMARY KEY,
@@ -40,12 +85,42 @@ export interface LeadInput {
   source?: string;
 }
 
+export interface VisitInput {
+  sessionId: string;
+  path?: string;
+  referrer?: string;
+  language?: string;
+  userAgent?: string;
+  screenWidth?: number;
+  screenHeight?: number;
+}
+
+export interface EventInput {
+  sessionId: string;
+  eventType: string;
+  eventName?: string;
+  path?: string;
+  section?: string;
+  label?: string;
+  value?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export type StatsPeriod = 'today' | 'week' | 'month';
+
 export function createLead(input: LeadInput) {
   const stmt = db.prepare(
     `INSERT INTO leads (name, phone, email, service, message, source)
      VALUES (@name, @phone, @email, @service, @message, @source)`
   );
-  return stmt.run(input);
+  return stmt.run({
+    name: input.name,
+    phone: input.phone,
+    email: input.email || null,
+    service: input.service || null,
+    message: input.message || null,
+    source: input.source || 'website',
+  });
 }
 
 export function getLeads(limit = 100, offset = 0) {
@@ -55,19 +130,132 @@ export function getLeads(limit = 100, offset = 0) {
   return stmt.all({ limit, offset }) as any[];
 }
 
-export function getStats() {
-  const total = db.prepare('SELECT COUNT(*) as count FROM leads').get() as { count: number };
-  const today = db.prepare(
-    `SELECT COUNT(*) as count FROM leads WHERE date(created_at) = date('now')`
-  ).get() as { count: number };
-  const week = db.prepare(
-    `SELECT COUNT(*) as count FROM leads WHERE created_at >= date('now', '-7 days')`
-  ).get() as { count: number };
-  const byService = db.prepare(
-    `SELECT service, COUNT(*) as count FROM leads GROUP BY service ORDER BY count DESC`
-  ).all() as { service: string; count: number }[];
+export function createVisit(input: VisitInput) {
+  const stmt = db.prepare(
+    `INSERT INTO visits (session_id, path, referrer, language, user_agent, screen_width, screen_height)
+     VALUES (@sessionId, @path, @referrer, @language, @userAgent, @screenWidth, @screenHeight)`
+  );
+  return stmt.run({
+    sessionId: input.sessionId,
+    path: input.path || null,
+    referrer: input.referrer || null,
+    language: input.language || null,
+    userAgent: input.userAgent || null,
+    screenWidth: input.screenWidth || null,
+    screenHeight: input.screenHeight || null,
+  });
+}
 
-  return { total: total.count, today: today.count, week: week.count, byService };
+export function createEvent(input: EventInput) {
+  const stmt = db.prepare(
+    `INSERT INTO events (session_id, event_type, event_name, path, section, label, value, metadata)
+     VALUES (@sessionId, @eventType, @eventName, @path, @section, @label, @value, @metadata)`
+  );
+  return stmt.run({
+    sessionId: input.sessionId,
+    eventType: input.eventType,
+    eventName: input.eventName || null,
+    path: input.path || null,
+    section: input.section || null,
+    label: input.label || null,
+    value: input.value || null,
+    metadata: input.metadata ? JSON.stringify(input.metadata) : null,
+  });
+}
+
+function periodCondition(period: StatsPeriod, column = 'created_at') {
+  if (period === 'month') return `${column} >= datetime('now', '-30 days')`;
+  if (period === 'week') return `${column} >= datetime('now', '-7 days')`;
+  return `date(${column}) = date('now')`;
+}
+
+function countWhere(table: string, condition: string) {
+  const row = db.prepare(`SELECT COUNT(*) as count FROM ${table} WHERE ${condition}`).get() as { count: number };
+  return row.count;
+}
+
+export function getStats(period: StatsPeriod = 'today') {
+  const condition = periodCondition(period);
+  const totalLeads = db.prepare('SELECT COUNT(*) as count FROM leads').get() as { count: number };
+  const periodLeads = countWhere('leads', condition);
+  const visits = countWhere('visits', condition);
+  const uniqueVisitors = db.prepare(
+    `SELECT COUNT(DISTINCT session_id) as count FROM visits WHERE ${condition}`
+  ).get() as { count: number };
+  const events = countWhere('events', condition);
+  const formStarts = db.prepare(
+    `SELECT COUNT(DISTINCT session_id) as count FROM events WHERE ${condition} AND event_type = 'form_start'`
+  ).get() as { count: number };
+  const formSubmits = db.prepare(
+    `SELECT COUNT(*) as count FROM events WHERE ${condition} AND event_type = 'form_submit_success'`
+  ).get() as { count: number };
+  const ctaClicks = db.prepare(
+    `SELECT COUNT(*) as count FROM events WHERE ${condition} AND event_type IN ('cta_click', 'messenger_click', 'phone_click')`
+  ).get() as { count: number };
+  const maxScroll = db.prepare(
+    `SELECT AVG(CAST(value AS INTEGER)) as average, MAX(CAST(value AS INTEGER)) as max
+     FROM events WHERE ${condition} AND event_type = 'scroll_depth'`
+  ).get() as { average: number | null; max: number | null };
+  const byService = db.prepare(
+    `SELECT COALESCE(service, 'Не указано') as service, COUNT(*) as count
+     FROM leads WHERE ${condition} GROUP BY COALESCE(service, 'Не указано') ORDER BY count DESC LIMIT 10`
+  ).all() as { service: string; count: number }[];
+  const topEvents = db.prepare(
+    `SELECT event_type as type, COALESCE(event_name, label, section, '') as name, COUNT(*) as count
+     FROM events WHERE ${condition}
+     GROUP BY event_type, COALESCE(event_name, label, section, '')
+     ORDER BY count DESC LIMIT 15`
+  ).all() as { type: string; name: string; count: number }[];
+  const topSections = db.prepare(
+    `SELECT section, COUNT(*) as count FROM events
+     WHERE ${condition} AND section IS NOT NULL AND section != ''
+     GROUP BY section ORDER BY count DESC LIMIT 10`
+  ).all() as { section: string; count: number }[];
+  const languages = db.prepare(
+    `SELECT language, COUNT(*) as count FROM visits
+     WHERE ${condition} AND language IS NOT NULL AND language != ''
+     GROUP BY language ORDER BY count DESC LIMIT 10`
+  ).all() as { language: string; count: number }[];
+
+  return {
+    period,
+    leads: {
+      total: totalLeads.count,
+      period: periodLeads,
+      byService,
+    },
+    traffic: {
+      visits,
+      uniqueVisitors: uniqueVisitors.count,
+      events,
+      languages,
+    },
+    engagement: {
+      formStarts: formStarts.count,
+      formSubmits: formSubmits.count,
+      ctaClicks: ctaClicks.count,
+      averageScrollDepth: Math.round(maxScroll.average || 0),
+      maxScrollDepth: maxScroll.max || 0,
+      conversionRate: visits > 0 ? Number(((periodLeads / visits) * 100).toFixed(1)) : 0,
+    },
+    topEvents,
+    topSections,
+  };
+}
+
+export function createAiReport(period: StatsPeriod, summary: unknown, reportText: string, model?: string) {
+  const stmt = db.prepare(
+    `INSERT INTO ai_reports (period, summary_json, report_text, model)
+     VALUES (?, ?, ?, ?)`
+  );
+  return stmt.run(period, JSON.stringify(summary), reportText, model || null);
+}
+
+export function getAiReports(limit = 10) {
+  const safeLimit = Math.min(Math.max(limit, 1), 50);
+  return db.prepare(
+    `SELECT id, period, report_text, model, created_at FROM ai_reports ORDER BY created_at DESC LIMIT ?`
+  ).all(safeLimit) as { id: number; period: string; report_text: string; model: string | null; created_at: string }[];
 }
 
 export function getContent(key: string) {
@@ -100,4 +288,3 @@ export function removeAdmin(chatId: number) {
   db.prepare('DELETE FROM admins WHERE chat_id = ?').run(chatId);
 }
 
-export { db };

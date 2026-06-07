@@ -693,6 +693,167 @@ class ScrollIndicator {
     }
 }
 
+
+// ========================================
+//   SITE ANALYTICS
+// ========================================
+class SiteAnalytics {
+    constructor() {
+        this.apiBase = this.getApiBase();
+        this.sessionId = this.getSessionId();
+        this.abortController = new AbortController();
+        this.maxScrollDepth = 0;
+        this.sentScrollDepths = new Set();
+        this.sectionObserver = null;
+        window.siteAnalytics = this;
+        this.init();
+    }
+
+    init() {
+        if (!this.apiBase) return;
+
+        this.sendVisit();
+        this.bindClicks();
+        this.bindLanguageChanges();
+        this.trackSections();
+        this.trackScrollDepth();
+    }
+
+    getApiBase() {
+        const explicitBase = String(window.API_BASE || '').trim();
+        if (explicitBase) return explicitBase.replace(/\/$/, '');
+
+        const apiUrl = String(window.API_URL || '').trim();
+        if (!apiUrl || apiUrl === '#' || /your-api|example\.com/i.test(apiUrl)) return '';
+        return apiUrl.replace(/\/api\/contact\/?$/, '').replace(/\/$/, '');
+    }
+
+    getSessionId() {
+        try {
+            const key = 'integra_session_id';
+            const existing = sessionStorage.getItem(key);
+            if (existing) return existing;
+            const next = (crypto.randomUUID && crypto.randomUUID()) || `s_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+            sessionStorage.setItem(key, next);
+            return next;
+        } catch (err) {
+            return `s_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        }
+    }
+
+    sendVisit() {
+        this.post('/api/visit', {
+            sessionId: this.sessionId,
+            path: location.pathname + location.search,
+            referrer: document.referrer,
+            language: document.documentElement.lang || navigator.language || 'ru',
+            screenWidth: window.screen && window.screen.width,
+            screenHeight: window.screen && window.screen.height,
+        });
+    }
+
+    track(eventType, data = {}) {
+        if (!this.apiBase) return;
+        this.post('/api/events', {
+            sessionId: this.sessionId,
+            eventType,
+            path: location.pathname + location.search,
+            ...data,
+        });
+    }
+
+    post(endpoint, payload) {
+        const url = `${this.apiBase}${endpoint}`;
+        const body = JSON.stringify(payload);
+
+        if (navigator.sendBeacon) {
+            try {
+                const blob = new Blob([body], { type: 'application/json' });
+                if (navigator.sendBeacon(url, blob)) return;
+            } catch (err) {
+            }
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+            keepalive: true,
+            signal: this.abortController.signal,
+        }).catch(() => {});
+    }
+
+    bindClicks() {
+        document.addEventListener('click', (event) => {
+            const link = event.target.closest && event.target.closest('a, button');
+            if (!link) return;
+
+            const href = link.getAttribute('href') || '';
+            const label = (link.innerText || link.getAttribute('aria-label') || href || link.className || 'click').trim().slice(0, 120);
+            const section = link.closest('section')?.id || '';
+
+            if (/t\.me|telegram/i.test(href) || link.classList.contains('telegram')) {
+                this.track('messenger_click', { eventName: 'telegram', section, label, value: href });
+            } else if (/wa\.me|whatsapp/i.test(href) || link.classList.contains('whatsapp')) {
+                this.track('messenger_click', { eventName: 'whatsapp', section, label, value: href });
+            } else if (/^tel:/i.test(href)) {
+                this.track('phone_click', { eventName: 'phone', section, label, value: href });
+            } else if (link.matches('a[href^="#"], .cta-button, .form-submit, button')) {
+                this.track('cta_click', { eventName: 'cta', section, label, value: href });
+            }
+        }, { signal: this.abortController.signal });
+    }
+
+    bindLanguageChanges() {
+        document.addEventListener('click', (event) => {
+            const button = event.target.closest && event.target.closest('[data-lang]');
+            if (!button) return;
+            this.track('language_change', {
+                eventName: 'language',
+                label: button.getAttribute('data-lang') || '',
+            });
+        }, { signal: this.abortController.signal });
+    }
+
+    trackSections() {
+        if (!('IntersectionObserver' in window)) return;
+
+        this.sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting || entry.intersectionRatio < 0.45) return;
+                const section = entry.target.id || entry.target.getAttribute('data-section') || '';
+                if (!section) return;
+                this.track('section_view', { eventName: 'section', section, label: section });
+            });
+        }, { threshold: 0.45 });
+
+        Utils.qsa('section[id]').forEach(section => this.sectionObserver.observe(section));
+    }
+
+    trackScrollDepth() {
+        const handler = Utils.throttle(() => {
+            const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+            const depth = Math.min(100, Math.round((window.scrollY / scrollable) * 100));
+            this.maxScrollDepth = Math.max(this.maxScrollDepth, depth);
+
+            [25, 50, 75, 90, 100].forEach(mark => {
+                if (this.maxScrollDepth >= mark && !this.sentScrollDepths.has(mark)) {
+                    this.sentScrollDepths.add(mark);
+                    this.track('scroll_depth', { eventName: 'scroll', value: String(mark) });
+                }
+            });
+        }, 1000);
+
+        window.addEventListener('scroll', handler, { passive: true, signal: this.abortController.signal });
+        handler();
+    }
+
+    destroy() {
+        if (this.sectionObserver) this.sectionObserver.disconnect();
+        this.abortController.abort();
+    }
+}
+
 // ========================================
 //   CONTACT FORM
 // ========================================
@@ -773,7 +934,15 @@ class ContactForm {
             email: formData.get('email') || undefined,
             service: formData.get('service') || undefined,
             message: formData.get('message') || undefined,
+            sessionId: window.siteAnalytics?.sessionId,
+            path: location.pathname + location.search,
         };
+
+        window.siteAnalytics?.track('form_submit_attempt', {
+            eventName: 'contact_form',
+            section: 'contact',
+            label: payload.service || 'contact',
+        });
         
         this.setSubmitting(true);
         this.setStatus('form_sending', 'info', 'Отправляем заявку...');
@@ -796,11 +965,21 @@ class ContactForm {
                 throw new Error(data.error || 'Server error');
             }
 
+            window.siteAnalytics?.track('form_submit_success', {
+                eventName: 'contact_form',
+                section: 'contact',
+                label: payload.service || 'contact',
+            });
             this.form.reset();
             this.setButtonFeedback('success', 'form_success', 'ОТПРАВЛЕНО!');
             this.setStatus('form_success_message', 'success', 'Спасибо! Мы свяжемся с вами в течение 24 часов.');
         } catch (err) {
             console.error('Submit error:', err);
+            window.siteAnalytics?.track('form_submit_error', {
+                eventName: 'contact_form',
+                section: 'contact',
+                label: err.message || 'error',
+            });
             const isTimeout = err.name === 'AbortError';
             this.setButtonFeedback('error', isTimeout ? 'form_timeout_button' : 'form_error_button', isTimeout ? 'ТАЙМАУТ' : 'ОШИБКА');
             this.setStatus(isTimeout ? 'form_timeout' : 'form_error', 'error', isTimeout ? 'Сервер не ответил вовремя. Попробуйте ещё раз или напишите в мессенджер.' : 'Не удалось отправить заявку. Попробуйте позже или напишите в мессенджер.');
@@ -1545,6 +1724,7 @@ class App {
     }
     
     init() {
+        this.register('analytics', () => new SiteAnalytics());
         this.register('backgroundSlider', () => new BackgroundSlider());
         this.register('sectionImagesSlider', () => new SectionImagesSlider());
         this.register('headerScroll', () => new HeaderScroll());

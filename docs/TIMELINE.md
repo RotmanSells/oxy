@@ -222,16 +222,16 @@ CSS: flex-контейнер с золотыми точками-разделит
 
 ### 8.3 Фото капсульных домов
 Добавлены реальные фото продукта:
-- `imgs/product_photo_01.jpg`
-- `imgs/product_photo_02.jpg`
-- `imgs/product_photo_03.jpg`
+- `assets/images/site/product_photo_01.webp`
+- `assets/images/site/product_photo_02.webp`
+- `assets/images/site/product_photo_03.webp`
 
 ### 8.4 Фото глэмпинга
 Добавлены 4 AI-генерированных фото:
-- `imgs/glamping_01.png`
-- `imgs/glamping_02.png`
-- `imgs/glamping_03.png`
-- `imgs/glamping_04.png`
+- `assets/images/site/glamping_01.webp`
+- `assets/images/site/glamping_02.webp`
+- `assets/images/site/glamping_03.webp`
+- `assets/images/site/glamping_04.webp`
 
 ### 8.5 Фикс карусели
 - Убран `loading="lazy"` со всех tourism/supply-каруселей (чинит автолистание)
@@ -352,12 +352,12 @@ CSS: flex-контейнер с золотыми точками-разделит
 
 ### 13.1 Замена всех фоновых фото
 **Было:** 27 ссылок на Unsplash
-**Стало:** все фото из папки `imgs/`
+**Стало:** все фото из папки `assets/images/site/`
 
 | Секция | Файл |
 |--------|------|
-| Hero bg-slider | `photo_2026-06-04_00-08-30.jpg` |
-| Hero section-img | `photo_2026-06-04_00-08-30.jpg` |
+| Hero bg-slider | `assets/images/site/photo_2026-06-04_00-08-30.webp` |
+| Hero section-img | `assets/images/site/photo_2026-06-04_00-08-30.webp` |
 | About bg-slider | `photo_2026-06-04_00-08-33.jpg` |
 | About section-img | `photo_2026-06-04_00-08-33.jpg` |
 | Projects bg-slider | `photo_2026-06-04_00-08-34.jpg` |
@@ -384,7 +384,7 @@ CSS: flex-контейнер с золотыми точками-разделит
 | Neva Premium | `photo_2026-06-04_00-08-24.jpg` |
 | Villa Collection | `photo_2026-06-04_00-08-34.jpg` |
 | Monolith Plus | `photo_2026-06-04_00-08-26.jpg` |
-| Yerevan Tourism | `photo_2026-06-04_00-08-30.jpg` |
+| Yerevan Tourism | `assets/images/site/photo_2026-06-04_00-08-30.webp` |
 
 ---
 
@@ -464,9 +464,9 @@ CSS: flex-контейнер с золотыми точками-разделит
 | Языков | 3 (RU/EN/HY) |
 | Секций | 10 |
 | Фото локальных | 25+ |
-| Файлов в `imgs/` | 25+ |
+| Файлов в `assets/images/site/` | 25+ |
 | Коммитов в Git | 30+ |
-| Документов | 3 (TIMELINE, ADMIN_SETUP, PROMPTS) |
+| Документов | 5 (`docs/`) |
 
 ---
 

@@ -1318,6 +1318,29 @@ body.loading .footer {
     transform: translateY(-8px);
 }
 
+.service-card.featured {
+    border-color: rgba(201, 169, 98, 0.4);
+    background: rgba(10, 15, 30, 0.7);
+    box-shadow: 0 0 40px rgba(201, 169, 98, 0.08);
+}
+
+.service-card.featured .service-glow {
+    opacity: 0.6;
+}
+
+.service-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #0a0f1e;
+    background: #c9a962;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
 /* Glass card face */
 .service-glass {
     position: relative;
