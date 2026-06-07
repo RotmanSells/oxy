@@ -3,20 +3,28 @@ import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import dotenv from 'dotenv';
+import { readFile } from 'fs/promises';
+import { basename, extname, join } from 'path';
 import {
   createEvent,
   createLead,
   createVisit,
   getAiReports,
   getContent,
+  getMedia,
   getLeads,
   getStats,
+  listContent,
+  listMedia,
   setContent,
+  setMedia,
   type EventInput,
   type StatsPeriod,
 } from './db.js';
 import { notifyTelegram } from './bot.js';
 import { generateAiReport } from './ai.js';
+import { getUploadDir, maxImageBytes, saveImageUpload } from './uploads.js';
+import type { ContentType } from './contentKeys.js';
 
 dotenv.config();
 
@@ -24,11 +32,34 @@ const app = new Hono();
 const port = Number(process.env.PORT) || 3000;
 const corsOrigin = process.env.CORS_ORIGIN || '*';
 const maxBodyLength = 3000;
+const adminSecret = process.env.ADMIN_SECRET || '';
 
 app.use(logger());
 app.use(cors({ origin: corsOrigin, allowMethods: ['POST', 'GET', 'OPTIONS'], allowHeaders: ['Content-Type', 'Authorization', 'X-Admin-Secret'] }));
 
 app.get('/', (c) => c.json({ ok: true, service: 'integra-kotova-api' }));
+
+app.get('/uploads/*', async (c) => {
+  try {
+    const requestedPath = decodeURIComponent(new URL(c.req.url).pathname.replace(/^\/uploads\//, ''));
+    const fileName = basename(requestedPath);
+
+    if (!fileName || fileName !== requestedPath) {
+      return c.json({ ok: false, error: 'Invalid file path' }, 400);
+    }
+
+    const filePath = join(getUploadDir(), fileName);
+    const bytes = await readFile(filePath);
+    return new Response(bytes, {
+      headers: {
+        'Content-Type': mimeTypeFromFile(fileName),
+        'Cache-Control': 'public, max-age=2592000',
+      },
+    });
+  } catch {
+    return c.json({ ok: false, error: 'File not found' }, 404);
+  }
+});
 
 app.post('/api/contact', async (c) => {
   try {
@@ -143,17 +174,95 @@ app.get('/api/ai/reports', (c) => {
   }
 });
 
+app.get('/api/content', (c) => {
+  try {
+    return c.json({
+      ok: true,
+      content: formatContentMap(listContent()),
+      media: formatMediaMap(listMedia()),
+    });
+  } catch (err) {
+    console.error('Content list error:', err);
+    return c.json({ ok: false, error: 'Content error' }, 500);
+  }
+});
+
 app.get('/api/content/:key', (c) => {
   const key = c.req.param('key');
-  const value = getContent(key);
-  return c.json({ ok: true, key, value });
+  const content = getContent(key);
+
+  if (!content) {
+    return c.json({ ok: false, error: 'Content key not found' }, 404);
+  }
+
+  return c.json({ ok: true, key, content: formatContentItem(content) });
 });
 
 app.post('/api/content/:key', async (c) => {
-  const key = c.req.param('key');
-  const { value } = await c.req.json();
-  setContent(key, String(value || ''));
-  return c.json({ ok: true, key, value });
+  try {
+    if (!hasAdminSecret(c.req.header('X-Admin-Secret'))) {
+      return c.json({ ok: false, error: 'Unauthorized' }, 401);
+    }
+
+    const key = normalizeKey(c.req.param('key'));
+    if (!key) return c.json({ ok: false, error: 'Invalid content key' }, 400);
+
+    const body = await c.req.json();
+    const value = typeof body.value === 'string' ? body.value.slice(0, 12000) : '';
+    const type = normalizeContentType(body.type);
+    const section = normalizeString(body.section, 120) || undefined;
+    const label = normalizeString(body.label, 160) || undefined;
+    const content = setContent(key, { value, type, section, label });
+
+    return c.json({ ok: true, key, content: content ? formatContentItem(content) : null });
+  } catch (err) {
+    console.error('Content update error:', err);
+    return c.json({ ok: false, error: 'Content update error' }, 500);
+  }
+});
+
+app.post('/api/media/:key', async (c) => {
+  try {
+    if (!hasAdminSecret(c.req.header('X-Admin-Secret'))) {
+      return c.json({ ok: false, error: 'Unauthorized' }, 401);
+    }
+
+    const key = normalizeKey(c.req.param('key'));
+    if (!key) return c.json({ ok: false, error: 'Invalid media key' }, 400);
+
+    const form = await c.req.formData();
+    const file = form.get('file');
+
+    if (!(file instanceof File)) {
+      return c.json({ ok: false, error: 'Image file is required' }, 400);
+    }
+
+    if (file.size > maxImageBytes) {
+      return c.json({ ok: false, error: 'Image is too large' }, 400);
+    }
+
+    const saved = await saveImageUpload({
+      key,
+      bytes: new Uint8Array(await file.arrayBuffer()),
+      mimeType: file.type,
+      originalName: file.name,
+    });
+    const media = setMedia(key, {
+      filePath: saved.filePath,
+      publicUrl: saved.publicUrl,
+      originalName: saved.originalName,
+      mimeType: saved.mimeType,
+      section: normalizeString(form.get('section'), 120) || undefined,
+      label: normalizeString(form.get('label'), 160) || undefined,
+    });
+
+    return c.json({ ok: true, key, publicUrl: saved.publicUrl, media: media ? formatMediaItem(media) : null });
+  } catch (err) {
+    console.error('Media upload error:', err);
+    const message = err instanceof Error ? err.message : 'Media upload error';
+    const status = /Unsupported|large/i.test(message) ? 400 : 500;
+    return c.json({ ok: false, error: message }, status);
+  }
 });
 
 serve({ fetch: app.fetch, port });
@@ -210,6 +319,14 @@ function normalizeString(value: unknown, maxLength: number) {
   return String(value).replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, maxLength);
 }
 
+function normalizeKey(value: unknown) {
+  return normalizeString(value, 80).replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
+function normalizeContentType(value: unknown): ContentType | undefined {
+  return value === 'text' || value === 'html' || value === 'url' ? value : undefined;
+}
+
 function normalizeNumber(value: unknown) {
   const number = Number(value);
   return Number.isFinite(number) ? number : undefined;
@@ -231,4 +348,45 @@ async function readOptionalJson(request: Request) {
   } catch {
     return null;
   }
+}
+
+function hasAdminSecret(value: string | undefined) {
+  return Boolean(adminSecret && value && value === adminSecret);
+}
+
+function formatContentMap(rows: ReturnType<typeof listContent>) {
+  return Object.fromEntries(rows.map((row) => [row.key, formatContentItem(row)]));
+}
+
+function formatContentItem(row: NonNullable<ReturnType<typeof getContent>>) {
+  return {
+    value: row.value,
+    type: row.type,
+    section: row.section,
+    label: row.label,
+    updatedAt: row.updated_at,
+  };
+}
+
+function formatMediaMap(rows: ReturnType<typeof listMedia>) {
+  return Object.fromEntries(rows.map((row) => [row.key, formatMediaItem(row)]));
+}
+
+function formatMediaItem(row: NonNullable<ReturnType<typeof getMedia>>) {
+  return {
+    publicUrl: row.public_url || null,
+    section: row.section,
+    label: row.label,
+    originalName: row.original_name,
+    mimeType: row.mime_type,
+    updatedAt: row.updated_at,
+  };
+}
+
+function mimeTypeFromFile(fileName: string) {
+  const extension = extname(fileName).toLowerCase();
+  if (extension === '.jpg' || extension === '.jpeg') return 'image/jpeg';
+  if (extension === '.png') return 'image/png';
+  if (extension === '.webp') return 'image/webp';
+  return 'application/octet-stream';
 }

@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3';
 import { mkdirSync } from 'fs';
 import { dirname, join } from 'path';
+import { contentKeys, mediaKeys, type ContentType } from './contentKeys.js';
 
 const dbPath = process.env.DB_PATH || join(process.cwd(), 'data', 'leads.db');
 mkdirSync(dirname(dbPath), { recursive: true });
@@ -65,6 +66,20 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS site_content (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL,
+    type TEXT DEFAULT 'text',
+    section TEXT,
+    label TEXT,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS media (
+    key TEXT PRIMARY KEY,
+    file_path TEXT NOT NULL,
+    public_url TEXT NOT NULL,
+    original_name TEXT,
+    mime_type TEXT,
+    section TEXT,
+    label TEXT,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -75,6 +90,13 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 `);
+
+ensureColumn('site_content', 'type', "TEXT DEFAULT 'text'");
+ensureColumn('site_content', 'section', 'TEXT');
+ensureColumn('site_content', 'label', 'TEXT');
+ensureColumn('site_content', 'updated_at', 'DATETIME');
+db.prepare('UPDATE site_content SET updated_at = CURRENT_TIMESTAMP WHERE updated_at IS NULL').run();
+seedEditableKeys();
 
 export interface LeadInput {
   name: string;
@@ -107,6 +129,42 @@ export interface EventInput {
 }
 
 export type StatsPeriod = 'today' | 'week' | 'month';
+
+export interface SiteContentRow {
+  key: string;
+  value: string;
+  type: ContentType;
+  section: string | null;
+  label: string | null;
+  updated_at: string;
+}
+
+export interface SiteContentInput {
+  value: string;
+  type?: ContentType;
+  section?: string | null;
+  label?: string | null;
+}
+
+export interface MediaRow {
+  key: string;
+  file_path: string;
+  public_url: string;
+  original_name: string | null;
+  mime_type: string | null;
+  section: string | null;
+  label: string | null;
+  updated_at: string;
+}
+
+export interface MediaInput {
+  filePath: string;
+  publicUrl: string;
+  originalName?: string | null;
+  mimeType?: string | null;
+  section?: string | null;
+  label?: string | null;
+}
 
 export function createLead(input: LeadInput) {
   const stmt = db.prepare(
@@ -258,18 +316,71 @@ export function getAiReports(limit = 10) {
   ).all(safeLimit) as { id: number; period: string; report_text: string; model: string | null; created_at: string }[];
 }
 
-export function getContent(key: string) {
-  const stmt = db.prepare('SELECT value FROM site_content WHERE key = ?');
-  const row = stmt.get(key) as { value: string } | undefined;
-  return row?.value ?? null;
+export function listContent() {
+  return db.prepare(
+    `SELECT key, value, COALESCE(type, 'text') as type, section, label, updated_at
+     FROM site_content ORDER BY section, label, key`
+  ).all() as SiteContentRow[];
 }
 
-export function setContent(key: string, value: string) {
+export function getContent(key: string) {
+  return db.prepare(
+    `SELECT key, value, COALESCE(type, 'text') as type, section, label, updated_at
+     FROM site_content WHERE key = ?`
+  ).get(key) as SiteContentRow | undefined;
+}
+
+export function setContent(key: string, input: string | SiteContentInput) {
+  const value = typeof input === 'string' ? input : input.value;
+  const definition = contentKeys.find((item) => item.key === key);
+  const type = typeof input === 'string' ? definition?.type || 'text' : input.type || definition?.type || 'text';
+  const section = typeof input === 'string' ? definition?.section || null : input.section ?? definition?.section ?? null;
+  const label = typeof input === 'string' ? definition?.label || null : input.label ?? definition?.label ?? null;
   const stmt = db.prepare(
-    `INSERT INTO site_content (key, value) VALUES (?, ?)
-     ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=CURRENT_TIMESTAMP`
+    `INSERT INTO site_content (key, value, type, section, label) VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(key) DO UPDATE SET
+       value=excluded.value,
+       type=excluded.type,
+       section=excluded.section,
+       label=excluded.label,
+       updated_at=CURRENT_TIMESTAMP`
   );
-  stmt.run(key, value);
+  stmt.run(key, value, type, section, label);
+  return getContent(key);
+}
+
+export function listMedia() {
+  return db.prepare(
+    `SELECT key, file_path, public_url, original_name, mime_type, section, label, updated_at
+     FROM media ORDER BY section, label, key`
+  ).all() as MediaRow[];
+}
+
+export function getMedia(key: string) {
+  return db.prepare(
+    `SELECT key, file_path, public_url, original_name, mime_type, section, label, updated_at
+     FROM media WHERE key = ?`
+  ).get(key) as MediaRow | undefined;
+}
+
+export function setMedia(key: string, input: MediaInput) {
+  const definition = mediaKeys.find((item) => item.key === key);
+  const section = input.section ?? definition?.section ?? null;
+  const label = input.label ?? definition?.label ?? null;
+  const stmt = db.prepare(
+    `INSERT INTO media (key, file_path, public_url, original_name, mime_type, section, label)
+     VALUES (?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT(key) DO UPDATE SET
+       file_path=excluded.file_path,
+       public_url=excluded.public_url,
+       original_name=excluded.original_name,
+       mime_type=excluded.mime_type,
+       section=excluded.section,
+       label=excluded.label,
+       updated_at=CURRENT_TIMESTAMP`
+  );
+  stmt.run(key, input.filePath, input.publicUrl, input.originalName || null, input.mimeType || null, section, label);
+  return getMedia(key);
 }
 
 export function addAdmin(chatId: number, username?: string, firstName?: string) {
@@ -288,3 +399,44 @@ export function removeAdmin(chatId: number) {
   db.prepare('DELETE FROM admins WHERE chat_id = ?').run(chatId);
 }
 
+function ensureColumn(table: string, column: string, definition: string) {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+  if (columns.some((item) => item.name === column)) return;
+
+  try {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+  } catch (err) {
+    console.warn(`Could not add ${table}.${column}:`, err);
+  }
+}
+
+function seedEditableKeys() {
+  const contentStmt = db.prepare(
+    `INSERT INTO site_content (key, value, type, section, label)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(key) DO UPDATE SET
+       type=COALESCE(site_content.type, excluded.type),
+       section=COALESCE(site_content.section, excluded.section),
+       label=COALESCE(site_content.label, excluded.label)`
+  );
+
+  const mediaStmt = db.prepare(
+    `INSERT INTO media (key, file_path, public_url, original_name, mime_type, section, label)
+     VALUES (?, '', '', NULL, NULL, ?, ?)
+     ON CONFLICT(key) DO UPDATE SET
+       section=COALESCE(media.section, excluded.section),
+       label=COALESCE(media.label, excluded.label)`
+  );
+
+  const transaction = db.transaction(() => {
+    for (const item of contentKeys) {
+      contentStmt.run(item.key, item.defaultValue, item.type, item.section, item.label);
+    }
+
+    for (const item of mediaKeys) {
+      mediaStmt.run(item.key, item.section, item.label);
+    }
+  });
+
+  transaction();
+}

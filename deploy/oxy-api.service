@@ -12,9 +12,6 @@ ExecStart=/usr/bin/node /opt/oxy/api/dist/index.js
 Restart=always
 RestartSec=5
 NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=full
-ReadWritePaths=/var/lib/oxy /opt/oxy/api/data
 
 [Install]
 WantedBy=multi-user.target

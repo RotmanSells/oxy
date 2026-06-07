@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 
 const port = 3199;
 const tempDir = await mkdtemp(join(tmpdir(), 'integra-api-smoke-'));
+const adminSecret = 'smoke-admin-secret';
 const env = {
   ...process.env,
   PORT: String(port),
@@ -14,6 +15,8 @@ const env = {
   OPENAI_API_KEY: '',
   CORS_ORIGIN: '*',
   DB_PATH: join(tempDir, 'smoke.db'),
+  UPLOAD_DIR: join(tempDir, 'uploads'),
+  ADMIN_SECRET: adminSecret,
 };
 
 const server = spawn(process.execPath, ['dist/index.js'], {
@@ -34,6 +37,31 @@ try {
 
   const health = await request('/');
   assert.equal(health.ok, true);
+
+  const contentList = await request('/api/content');
+  assert.equal(contentList.ok, true);
+  assert.equal(contentList.content.hero_title.label, 'Главный заголовок');
+  assert.equal(contentList.media.hero_bg.label, 'Главное фото');
+
+  const unauthorizedContent = await fetch(`http://localhost:${port}/api/content/hero_title`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ value: 'Should fail' }),
+  });
+  assert.equal(unauthorizedContent.status, 401);
+
+  const updatedContent = await request('/api/content/hero_title', {
+    method: 'POST',
+    headers: { 'X-Admin-Secret': adminSecret },
+    body: { value: 'Smoke title', type: 'text', section: 'hero', label: 'Smoke label' },
+  });
+  assert.equal(updatedContent.ok, true);
+  assert.equal(updatedContent.content.value, 'Smoke title');
+
+  const contentItem = await request('/api/content/hero_title');
+  assert.equal(contentItem.ok, true);
+  assert.equal(contentItem.content.value, 'Smoke title');
+  assert.equal(contentItem.content.section, 'hero');
 
   const visit = await request('/api/visit', {
     method: 'POST',
@@ -121,7 +149,10 @@ async function waitForServer(getOutput, timeoutMs) {
 async function request(path, options = {}) {
   const response = await fetch(`http://localhost:${port}${path}`, {
     method: options.method || 'GET',
-    headers: options.body ? { 'Content-Type': 'application/json' } : undefined,
+    headers: {
+      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(options.headers || {}),
+    },
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
   const json = await response.json();

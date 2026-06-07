@@ -16,7 +16,7 @@ if [[ ! -d "$REPO_DIR" ]]; then
   exit 1
 fi
 
-mkdir -p "$SITE_DIR" "$API_DIR" /var/lib/oxy
+mkdir -p "$SITE_DIR" "$API_DIR" /var/lib/oxy/uploads
 
 rsync -a --delete \
   --exclude='.git' \

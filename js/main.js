@@ -50,6 +50,10 @@ const Utils = {
 
     loadImage(src) {
         return new Promise((resolve, reject) => {
+            if (!src) {
+                reject(new Error('Image source is empty'));
+                return;
+            }
             const img = new Image();
             img.onload = () => resolve(img);
             img.onerror = reject;
@@ -71,6 +75,268 @@ const Utils = {
         return fallback || key;
     }
 };
+
+// ========================================
+//   IMAGE LOADING MANAGER
+// ========================================
+class ImageLoadingManager {
+    constructor() {
+        this.cache = new Map();
+        this.loadedSources = new Set();
+        this.sectionOrder = [];
+        this.sectionSources = new Map();
+        this.sectionObserver = null;
+        this.nearViewportObserver = null;
+        this.abortController = new AbortController();
+        this.init();
+    }
+
+    init() {
+        this.collectSectionSources();
+        this.prioritizeInitialImages();
+        this.preloadCriticalImages();
+        this.setupSectionPreloadObserver();
+        this.setupNearViewportObserver();
+        this.preloadWhenIdle(() => this.preloadInitialWindow());
+    }
+
+    applyDeferredBackground(element) {
+        const bgSrc = element?.dataset?.bgSrc;
+        if (!bgSrc || element.style.backgroundImage) return;
+
+        element.style.backgroundImage = `url('${bgSrc}')`;
+    }
+
+    collectSectionSources() {
+        this.sectionOrder = Utils.qsa('section[id]').map(section => section.id);
+        this.sectionSources.clear();
+
+        this.sectionOrder.forEach(sectionId => {
+            const sources = new Set();
+
+            Utils.qsa(`[data-section="${sectionId}"]`).forEach(element => {
+                this.getElementImageSources(element).forEach(src => sources.add(src));
+                Utils.qsa('img, [style*="background-image"], [data-bg-src]', element).forEach(child => {
+                    this.getElementImageSources(child).forEach(src => sources.add(src));
+                });
+            });
+
+            const section = document.getElementById(sectionId);
+            if (section) {
+                Utils.qsa('img, [style*="background-image"], [data-bg-src]', section).forEach(element => {
+                    this.getElementImageSources(element).forEach(src => sources.add(src));
+                });
+            }
+
+            this.sectionSources.set(sectionId, Array.from(sources));
+        });
+    }
+
+    prioritizeInitialImages() {
+        const criticalImages = Utils.qsa('.section-img.active img, .section-img[data-section="hero"] img, .section-img[data-section="about"] img');
+
+        criticalImages.forEach(img => {
+            img.loading = 'eager';
+            img.fetchPriority = 'high';
+            if (!img.decoding || img.closest('.section-img')?.dataset.section !== 'hero') {
+                img.decoding = 'async';
+            }
+        });
+    }
+
+    preloadCriticalImages() {
+        this.preloadSectionById('hero', { priority: 'high' });
+        this.preloadSectionById('about', { priority: 'high' });
+    }
+
+    preloadInitialWindow() {
+        this.sectionOrder.slice(0, 3).forEach(sectionId => {
+            this.preloadSectionById(sectionId, { priority: 'low' });
+        });
+    }
+
+    setupSectionPreloadObserver() {
+        if (!('IntersectionObserver' in window)) {
+            this.preloadAllInBackground();
+            return;
+        }
+
+        this.sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                const sectionId = entry.target.id;
+                this.preloadSectionNeighborhood(sectionId);
+            });
+        }, { rootMargin: '125% 0px 125% 0px', threshold: 0.01 });
+
+        Utils.qsa('section[id]').forEach(section => this.sectionObserver.observe(section));
+    }
+
+    setupNearViewportObserver() {
+        if (!('IntersectionObserver' in window)) return;
+
+        this.nearViewportObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                this.getElementImageSources(entry.target).forEach(src => {
+                    this.preload(src, { priority: 'low' });
+                });
+
+                this.nearViewportObserver.unobserve(entry.target);
+            });
+        }, { rootMargin: '900px 0px', threshold: 0.01 });
+
+        Utils.qsa('img[loading="lazy"], [style*="background-image"], [data-bg-src]').forEach(element => {
+            if (element.closest('.bg-slider, .section-images-layer')) return;
+            this.nearViewportObserver.observe(element);
+        });
+    }
+
+    preloadSectionNeighborhood(sectionId) {
+        const index = this.sectionOrder.indexOf(sectionId);
+        if (index === -1) return;
+
+        [index - 1, index, index + 1, index + 2].forEach(sectionIndex => {
+            const nextSectionId = this.sectionOrder[sectionIndex];
+            if (nextSectionId) this.preloadSectionById(nextSectionId, { priority: 'low' });
+        });
+    }
+
+    preloadSectionById(sectionId, options = {}) {
+        const sources = this.sectionSources.get(sectionId) || [];
+        sources.forEach(src => this.preload(src, options));
+    }
+
+    preloadAllInBackground() {
+        this.preloadWhenIdle(() => {
+            this.sectionOrder.forEach(sectionId => this.preloadSectionById(sectionId, { priority: 'low' }));
+        });
+    }
+
+    preload(src, options = {}) {
+        const normalizedSrc = this.normalizeSrc(src);
+        if (!normalizedSrc) return Promise.resolve();
+        if (this.cache.has(normalizedSrc)) return this.cache.get(normalizedSrc);
+
+        const promise = new Promise(resolve => {
+            const img = new Image();
+            if ('fetchPriority' in img) img.fetchPriority = options.priority || 'low';
+            img.decoding = 'async';
+            img.onload = () => {
+                this.loadedSources.add(normalizedSrc);
+                resolve(true);
+            };
+            img.onerror = () => resolve(false);
+            img.src = normalizedSrc;
+        });
+
+        this.cache.set(normalizedSrc, promise);
+        return promise;
+    }
+
+    isLoaded(src) {
+        const normalizedSrc = this.normalizeSrc(src);
+        if (!normalizedSrc) return true;
+        return this.loadedSources.has(normalizedSrc);
+    }
+
+    async ensureSectionReady(sectionId) {
+        if (!sectionId) return true;
+
+        const sources = this.sectionSources.get(sectionId) || [];
+        if (!sources.length) return true;
+
+        const results = await Promise.all(sources.map(src => this.preload(src)));
+        return results.some(Boolean);
+    }
+
+    async ensureElementReady(element) {
+        if (!element) return true;
+
+        const sources = new Set(this.getElementImageSources(element));
+        Utils.qsa('img, [style*="background-image"], [data-bg-src]', element).forEach(child => {
+            this.getElementImageSources(child).forEach(src => sources.add(src));
+        });
+
+        if (!sources.size) return true;
+
+        const results = await Promise.all(Array.from(sources).map(src => this.preload(src)));
+        const isReady = results.some(Boolean);
+
+        if (isReady) {
+            this.applyDeferredBackground(element);
+            Utils.qsa('[data-bg-src]', element).forEach(child => this.applyDeferredBackground(child));
+        }
+
+        return isReady;
+    }
+
+    refresh() {
+        this.collectSectionSources();
+        this.prioritizeInitialImages();
+        this.preloadCriticalImages();
+
+        if (this.nearViewportObserver) {
+            Utils.qsa('img[loading="lazy"], [style*="background-image"], [data-bg-src]').forEach(element => {
+                if (element.closest('.bg-slider, .section-images-layer')) return;
+                this.nearViewportObserver.observe(element);
+            });
+        }
+    }
+
+    getElementImageSources(element) {
+        const sources = new Set();
+
+        if (element.matches?.('img')) {
+            const src = element.currentSrc || element.getAttribute('src');
+            if (src) sources.add(src);
+        }
+
+        const inlineBackground = element.style?.backgroundImage;
+        this.extractBackgroundSources(inlineBackground).forEach(src => sources.add(src));
+
+        const deferredBackground = element.dataset?.bgSrc;
+        if (deferredBackground) sources.add(deferredBackground);
+
+        return Array.from(sources);
+    }
+
+    extractBackgroundSources(backgroundImage) {
+        if (!backgroundImage || backgroundImage === 'none') return [];
+
+        return Array.from(backgroundImage.matchAll(/url\(["']?([^"')]+)["']?\)/g))
+            .map(match => match[1])
+            .filter(Boolean);
+    }
+
+    normalizeSrc(src) {
+        const cleanSrc = String(src || '').trim();
+        if (!cleanSrc || cleanSrc.startsWith('data:')) return '';
+
+        try {
+            return new URL(cleanSrc, window.location.href).href;
+        } catch (err) {
+            return cleanSrc;
+        }
+    }
+
+    preloadWhenIdle(callback) {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(callback, { timeout: 1500 });
+            return;
+        }
+
+        window.setTimeout(callback, 250);
+    }
+
+    destroy() {
+        this.abortController.abort();
+        if (this.sectionObserver) this.sectionObserver.disconnect();
+        if (this.nearViewportObserver) this.nearViewportObserver.disconnect();
+    }
+}
 
 // ========================================
 //   PRELOADER
@@ -285,6 +551,7 @@ class SectionImagesSlider {
         this.images = Utils.qsa('.section-img');
         this.sections = Utils.qsa('section[id]');
         this.currentImage = -1; // Changed to -1 to force initial activation
+        this.pendingImageRequest = 0;
         this.imagesMap = new Map();
         this.observer = null;
         this.init();
@@ -314,9 +581,32 @@ class SectionImagesSlider {
 
     goToImage(index) {
         if (index === this.currentImage || !this.images[index]) return;
-        
+
+        const targetImage = this.images[index];
+        const sectionId = targetImage.dataset.section;
+        const requestId = ++this.pendingImageRequest;
+        const loader = window.app?.components?.imageLoadingManager;
+
+        if (loader) {
+            if (sectionId) loader.preloadSectionNeighborhood(sectionId);
+
+            loader.ensureElementReady(targetImage).then(isReady => {
+                if (requestId !== this.pendingImageRequest || !isReady) return;
+                this.activateImage(index);
+            });
+            return;
+        }
+
+        this.activateImage(index);
+    }
+
+    activateImage(index) {
         if (this.currentImage >= 0 && this.images[this.currentImage]) {
             this.images[this.currentImage].classList.remove('active');
+        } else {
+            this.images.forEach((image, imageIndex) => {
+                if (imageIndex !== index) image.classList.remove('active');
+            });
         }
         
         this.currentImage = index;
@@ -336,6 +626,7 @@ class BackgroundSlider {
         this.slides = Utils.qsa('.slide');
         this.sections = Utils.qsa('section[id]');
         this.currentSlide = -1; // Changed to -1 to force initial activation
+        this.pendingSlideRequest = 0;
         this.slidesMap = new Map();
         this.observer = null;
         this.init();
@@ -365,9 +656,32 @@ class BackgroundSlider {
 
     goToSlide(index) {
         if (index === this.currentSlide || !this.slides[index]) return;
-        
+
+        const targetSlide = this.slides[index];
+        const sectionId = targetSlide.dataset.section;
+        const requestId = ++this.pendingSlideRequest;
+        const loader = window.app?.components?.imageLoadingManager;
+
+        if (loader) {
+            if (sectionId) loader.preloadSectionNeighborhood(sectionId);
+
+            loader.ensureElementReady(targetSlide).then(isReady => {
+                if (requestId !== this.pendingSlideRequest || !isReady) return;
+                this.activateSlide(index);
+            });
+            return;
+        }
+
+        this.activateSlide(index);
+    }
+
+    activateSlide(index) {
         if (this.currentSlide >= 0 && this.slides[this.currentSlide]) {
             this.slides[this.currentSlide].classList.remove('active');
+        } else {
+            this.slides.forEach((slide, slideIndex) => {
+                if (slideIndex !== index) slide.classList.remove('active');
+            });
         }
         
         this.currentSlide = index;
@@ -438,7 +752,7 @@ class MobileMenu {
         document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
         
         window.addEventListener('resize', Utils.debounce(() => {
-            if (window.innerWidth > 768 && this.isOpen) this.closeMenu();
+            if (window.innerWidth > 1024 && this.isOpen) this.closeMenu();
         }, 250), { signal });
     }
     
@@ -697,6 +1011,159 @@ class ScrollIndicator {
 // ========================================
 //   SITE ANALYTICS
 // ========================================
+class DynamicContent {
+    constructor() {
+        this.apiBase = this.getApiBase();
+        this.abortController = new AbortController();
+        this.init();
+    }
+
+    init() {
+        if (!this.apiBase || this.getLanguage() !== 'ru') return;
+        this.load();
+    }
+
+    getApiBase() {
+        const explicitBase = String(window.API_BASE || '').trim();
+        if (explicitBase) return explicitBase.replace(/\/$/, '');
+
+        const apiUrl = String(window.API_URL || '').trim();
+        if (!apiUrl || apiUrl === '#' || /your-api|example\.com|localhost:3000\/api\/contact/i.test(apiUrl)) return '';
+        return apiUrl.replace(/\/api\/contact\/?$/, '').replace(/\/$/, '');
+    }
+
+    getLanguage() {
+        return (document.documentElement.lang || 'ru').toLowerCase().slice(0, 2);
+    }
+
+    async load() {
+        try {
+            const response = await fetch(`${this.apiBase}/api/content`, {
+                method: 'GET',
+                signal: this.abortController.signal,
+            });
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (!data || data.ok !== true) return;
+
+            this.applyContent(data.content || {});
+            this.applyMedia(data.media || {});
+        } catch (err) {
+        }
+    }
+
+    applyContent(content) {
+        Utils.qsa('[data-content]').forEach((element) => {
+            const key = element.getAttribute('data-content');
+            const item = key && content[key];
+            if (!item || typeof item.value !== 'string' || !item.value.trim()) return;
+
+            this.applyText(element, key, item.value);
+            this.applyContactHref(element, key, item.value);
+        });
+    }
+
+    applyText(element, key, value) {
+        if (key === 'hero_title') {
+            const lines = value.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+            const titleLines = Utils.qsa('.title-line', element);
+            if (titleLines.length) {
+                titleLines.forEach((lineElement, index) => {
+                    lineElement.textContent = lines[index] || '';
+                });
+                return;
+            }
+        }
+
+        if (element.matches('a')) {
+            const label = element.querySelector('span[data-i18n]');
+            if (label) label.textContent = this.getContactLabel(key, value);
+            return;
+        }
+
+        element.textContent = value;
+    }
+
+    applyContactHref(element, key, value) {
+        if (!element.matches('a')) return;
+
+        if (key === 'contacts_phone') {
+            element.href = `tel:${this.normalizePhone(value)}`;
+            element.textContent = value;
+        }
+
+        if (key === 'contacts_telegram') {
+            element.href = this.toTelegramUrl(value);
+        }
+
+        if (key === 'contacts_whatsapp') {
+            element.href = this.toWhatsappUrl(value);
+        }
+    }
+
+    getContactLabel(key, value) {
+        if (key === 'contacts_telegram') return 'Telegram';
+        if (key === 'contacts_whatsapp') return 'WhatsApp';
+        return value;
+    }
+
+    normalizePhone(value) {
+        const trimmed = String(value || '').trim();
+        const plus = trimmed.startsWith('+') ? '+' : '';
+        return plus + trimmed.replace(/\D/g, '');
+    }
+
+    toTelegramUrl(value) {
+        const trimmed = String(value || '').trim();
+        if (/^https?:\/\//i.test(trimmed)) return trimmed;
+        return `https://t.me/${trimmed.replace(/^@/, '')}`;
+    }
+
+    toWhatsappUrl(value) {
+        const trimmed = String(value || '').trim();
+        if (/^https?:\/\//i.test(trimmed)) return trimmed;
+        return `https://wa.me/${trimmed.replace(/\D/g, '')}`;
+    }
+
+    applyMedia(media) {
+        Utils.qsa('[data-media-src]').forEach((element) => {
+            const key = element.getAttribute('data-media-src');
+            const item = key && media[key];
+            if (item && item.publicUrl && element.matches('img')) {
+                element.src = this.resolvePublicUrl(item.publicUrl);
+            }
+        });
+
+        Utils.qsa('[data-media-bg]').forEach((element) => {
+            const key = element.getAttribute('data-media-bg');
+            const item = key && media[key];
+            if (item && item.publicUrl) {
+                const publicUrl = this.resolvePublicUrl(item.publicUrl);
+
+                if (element.dataset.bgSrc !== undefined && !element.classList.contains('active')) {
+                    element.dataset.bgSrc = publicUrl;
+                    element.style.removeProperty('background-image');
+                    return;
+                }
+
+                element.style.backgroundImage = `url('${publicUrl}')`;
+            }
+        });
+
+        window.app?.components?.imageLoadingManager?.refresh();
+    }
+
+    resolvePublicUrl(url) {
+        if (/^https?:\/\//i.test(url)) return url;
+        return `${this.apiBase}${String(url).startsWith('/') ? '' : '/'}${url}`;
+    }
+
+    destroy() {
+        this.abortController.abort();
+    }
+}
+
 class SiteAnalytics {
     constructor() {
         this.apiBase = this.getApiBase();
@@ -894,6 +1361,9 @@ class ContactForm {
 
     getFieldError(input) {
         if (input.required && !input.value.trim()) return true;
+        if (input.type === 'checkbox' && input.required) {
+            return !input.checked;
+        }
         if (input.type === 'email' && input.value.trim()) {
             return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
         }
@@ -1177,7 +1647,6 @@ class Carousel {
         const item = this.items[this.currentIndex];
 
         if (item.tagName === 'VIDEO') {
-            // Remove previous listener to avoid duplicates
             if (this.endedHandler) {
                 item.removeEventListener('ended', this.endedHandler);
             }
@@ -1724,6 +2193,8 @@ class App {
     }
     
     init() {
+        this.register('imageLoadingManager', () => new ImageLoadingManager());
+        this.register('dynamicContent', () => new DynamicContent());
         this.register('analytics', () => new SiteAnalytics());
         this.register('backgroundSlider', () => new BackgroundSlider());
         this.register('sectionImagesSlider', () => new SectionImagesSlider());

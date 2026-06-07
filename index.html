@@ -17,8 +17,12 @@
     <title>INTEGRA KOTOVA — Строительство. Дизайн. Земля. Туристический бизнес под ключ. Инвестиции.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" href="assets/images/site/photo_2026-06-04_00-08-30.webp" imagesrcset="assets/images/site/photo_2026-06-04_00-08-30.webp" fetchpriority="high">
-    <link rel="stylesheet" href="css/style.css?v=20260606">
+    <link rel="preload" as="image" href="assets/images/site/photo_2026-06-04_00-08-30.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/site/photo_2026-06-04_00-08-37.webp" fetchpriority="high">
+    <link rel="preload" as="video" href="assets/videos/site/land_03.mp4" type="video/mp4">
+    <link rel="preload" as="video" href="assets/videos/site/construction_04.mp4" type="video/mp4">
+    <link rel="preload" as="video" href="assets/videos/site/tourism_2026-06-08.mp4" type="video/mp4">
+    <link rel="stylesheet" href="css/style.css?v=20260608-5">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script type="application/ld+json">
         {
@@ -65,42 +69,42 @@
     <!-- Background Slider -->
     <div class="bg-slider" id="bgSlider">
         <div class="slide active" data-section="hero" data-media-bg="hero_bg" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-30.webp')"></div>
-        <div class="slide" data-section="about" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-37.webp')"></div>
-        <div class="slide" data-section="projects" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-34.webp')"></div>
-        <div class="slide" data-section="services" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-35.webp')"></div>
-        <div class="slide" data-section="advantages" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-37.webp')"></div>
-        <div class="slide" data-section="agclub" style="background-image: url('assets/images/featured/photo_2026-06-03_02-12-27.webp')"></div>
-        <div class="slide" data-section="contacts" data-media-bg="contacts_bg" style="background-image: url('assets/images/site/photo_2026-06-04_00-08-20.webp')"></div>
+        <div class="slide" data-section="about" data-bg-src="assets/images/site/photo_2026-06-04_00-08-37.webp"></div>
+        <div class="slide" data-section="projects" data-bg-src="assets/images/site/photo_2026-06-04_00-08-34.webp"></div>
+        <div class="slide" data-section="services" data-bg-src="assets/images/site/photo_2026-06-04_00-08-35.webp"></div>
+        <div class="slide" data-section="advantages" data-bg-src="assets/images/site/photo_2026-06-04_00-08-37.webp"></div>
+        <div class="slide" data-section="agclub" data-bg-src="assets/images/featured/photo_2026-06-03_02-12-27.webp"></div>
+        <div class="slide" data-section="contacts" data-media-bg="contacts_bg" data-bg-src="assets/images/site/photo_2026-06-04_00-08-20.webp"></div>
     </div>
 
     <!-- Section Images Layer -->
     <div class="section-images-layer" id="sectionImagesLayer">
         <div class="section-img active" data-section="hero">
-            <img src="assets/images/site/photo_2026-06-04_00-08-30.webp" alt="" loading="eager" data-media-src="hero_bg">
+            <img src="assets/images/site/photo_2026-06-04_00-08-30.webp" alt="" loading="eager" fetchpriority="high" decoding="sync" data-media-src="hero_bg">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="about">
-            <img src="assets/images/site/photo_2026-06-04_00-08-37.webp" alt="" loading="lazy">
+            <img src="assets/images/site/photo_2026-06-04_00-08-37.webp" alt="" loading="eager" fetchpriority="high" decoding="async">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="projects">
-            <img src="assets/images/site/photo_2026-06-04_00-08-34.webp" alt="" loading="lazy">
+            <img src="assets/images/site/photo_2026-06-04_00-08-34.webp" alt="" loading="lazy" decoding="async">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="services">
-            <img src="assets/images/site/photo_2026-06-04_00-08-35.webp" alt="" loading="lazy">
+            <img src="assets/images/site/photo_2026-06-04_00-08-35.webp" alt="" loading="lazy" decoding="async">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="advantages">
-            <img src="assets/images/site/photo_2026-06-04_00-08-23.webp" alt="" loading="lazy">
+            <img src="assets/images/site/photo_2026-06-04_00-08-23.webp" alt="" loading="lazy" decoding="async">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="agclub">
-            <img src="assets/images/featured/photo_2026-06-03_02-12-27.webp" alt="" loading="lazy">
+            <img src="assets/images/featured/photo_2026-06-03_02-12-27.webp" alt="" loading="lazy" decoding="async">
             <div class="section-img-overlay"></div>
         </div>
         <div class="section-img" data-section="contacts">
-            <img src="assets/images/site/photo_2026-06-04_00-08-20.webp" alt="" loading="lazy" data-media-src="contacts_bg">
+            <img src="assets/images/site/photo_2026-06-04_00-08-20.webp" alt="" loading="lazy" decoding="async" data-media-src="contacts_bg">
             <div class="section-img-overlay"></div>
         </div>
     </div>
@@ -418,9 +422,13 @@
                     <div class="service-glass">
                         <span class="service-badge">Популярное</span>
                         <div class="service-visual carousel">
-                            <img class="active" src="assets/images/site/land_01.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
-                            <video src="assets/videos/site/land_03.mp4" muted playsinline preload="metadata"></video>
-                            <img src="assets/images/site/land_02.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <video class="active" src="assets/videos/site/land_03.mp4" muted playsinline autoplay preload="auto"></video>
+                            <img src="assets/images/site/land_lot_10_11_14.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <img src="assets/images/site/land_lot_10_11_12.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <img src="assets/images/site/land_lot_10_11_10.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <img src="assets/images/site/land_lot_14_3.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <img src="assets/images/site/land_lot_10_11_4.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
+                            <img src="assets/images/site/land_lot_10_11_19.webp" alt="Участки и недвижимость" loading="lazy" decoding="async">
                         </div>
                         <h3 class="service-title" data-i18n="service_land">Участки и недвижимость</h3>
                         <p class="service-desc" data-i18n="service_land_desc">Подбор и оформление земельных участков под строительство и туристический бизнес. Через официального партнёра DIGNISI — покупка и продажа недвижимости в Ереване и Армении: квартиры, апартаменты, коммерческая недвижимость. Юридическое сопровождение, проверка кредитоспособности в офисе.</p>
@@ -436,8 +444,8 @@
                 <div class="service-card">
                     <div class="service-glass">
                         <div class="service-visual carousel">
-                            <img class="active" src="assets/images/site/construction_01.webp" alt="Строительство" loading="lazy" decoding="async">
-                            <video src="assets/videos/site/construction_04.mp4" muted playsinline preload="metadata"></video>
+                            <video class="active" src="assets/videos/site/construction_04.mp4" muted playsinline autoplay preload="auto"></video>
+                            <img src="assets/images/site/construction_01.webp" alt="Строительство" loading="lazy" decoding="async">
                             <img src="assets/images/site/construction_02.webp" alt="Строительство" loading="lazy" decoding="async">
                             <img src="assets/images/site/construction_03.webp" alt="Строительство" loading="lazy" decoding="async">
                         </div>
@@ -455,11 +463,11 @@
                 <div class="service-card">
                     <div class="service-glass">
                         <div class="service-visual carousel">
-                            <img class="active" src="assets/images/site/glamping_01.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
-                            <img src="assets/images/site/glamping_02.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
-                            <img src="assets/images/site/glamping_03.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
-                            <img src="assets/images/site/glamping_04.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
-                            <img src="assets/images/featured/photo_2026-06-01_20-02-17.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
+                            <video class="active" src="assets/videos/site/tourism_2026-06-08.mp4" muted playsinline autoplay preload="auto"></video>
+                            <img src="assets/images/site/tourism_2026-06-08_01-34-56.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
+                            <img src="assets/images/site/tourism_2026-06-08_01-34-55.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
+                            <img src="assets/images/site/tourism_2026-06-08_01-34-54-2.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
+                            <img src="assets/images/site/tourism_2026-06-08_01-34-54.webp" alt="Туристический бизнес под ключ" loading="lazy" decoding="async">
                         </div>
                         <h3 class="service-title" data-i18n="service_tourism">Туристический бизнес под ключ</h3>
                         <p class="service-desc" data-i18n="service_tourism_desc">Создаём туристические объекты как бизнес: концепция, участок, проектирование, строительство, запуск и управление.</p>
@@ -716,6 +724,18 @@
                         <label for="message" data-i18n="form_message">О проекте</label>
                         <textarea id="message" name="message" rows="4" placeholder="Расскажите кратко о вашем проекте или задаче..." data-i18n-placeholder="form_message_placeholder" autocomplete="off"></textarea>
                     </div>
+                    <div class="form-consent">
+                        <input type="checkbox" id="privacyConsent" name="privacyConsent" aria-describedby="privacyConsentError" required>
+                        <span class="form-consent-box" aria-hidden="true"></span>
+                        <label for="privacyConsent">
+                            <span class="form-consent-kicker">Безопасно и конфиденциально</span>
+                            <span class="form-consent-text">
+                                Я согласен(на) на обработку персональных данных и принимаю
+                                <a href="/privacy.html" target="_blank" rel="noopener">Политику конфиденциальности</a>.
+                            </span>
+                        </label>
+                        <span class="field-error" id="privacyConsentError">Подтвердите согласие на обработку данных</span>
+                    </div>
                     <p class="form-status" id="formStatus" aria-live="polite" aria-atomic="true"></p>
                     <button type="submit" class="form-submit" data-default-i18n="form_submit">
                         <span data-i18n="form_submit">ОТПРАВИТЬ ЗАЯВКУ</span>
@@ -805,6 +825,11 @@
                 <p><a href="https://www.instagram.com/kotova_kurator?igsh=c3F2ZnRkcWZ0dnI5" target="_blank" rel="noopener" data-i18n="footer_instagram">Instagram</a></p>
                 <p><a href="https://vk.ru/id271308283" target="_blank" rel="noopener" data-i18n="footer_vk">VK</a></p>
             </div>
+            <div class="cta-footer-col">
+                <h4>Документы</h4>
+                <p>&copy; 2026 Integra Kotova. Все права защищены.</p>
+                <p><a href="/privacy.html">Политика конфиденциальности</a></p>
+            </div>
         </footer>
     </section>
     </main>
@@ -836,6 +861,6 @@
         window.API_URL = window.API_URL || (window.API_BASE ? window.API_BASE.replace(/\/$/, '') + '/api/contact' : '');
     </script>
     <script src="js/translations.js?v=20260608"></script>
-    <script src="js/main.js?v=20260608"></script>
+    <script src="js/main.js?v=20260608-5"></script>
 </body>
 </html>
